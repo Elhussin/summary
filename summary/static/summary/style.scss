@@ -1,0 +1,258 @@
+$font-stack: Arial, sans-serif;
+$transition: background-color 0.5s, color, 01s;
+$primary-color: #344e41;
+$secand-color: #3a5a40;
+$therd-color: #5c7650;
+$forth-color: #a3b18a;
+$color: #dad7cd;
+
+%flex-containers {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+%grid{
+    // margin: 20px auto;
+    background-color: #eee;
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    /*refrection جزء من باقي المساحة*/
+    gap: 1rem;
+}
+%grid-iteam{
+
+    color: white;
+    // padding: 20px;
+    font-size: 20px;
+    font-weight: bold;
+
+}
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+.certfi-grid{
+  @extend %grid;
+
+}
+
+.grid-iteam{
+  @extend %grid-iteam;
+  img{
+    width: auto;
+    height: auto;
+
+  }
+}
+
+body {
+  transition: $transition;
+  font: 100% $font-stack;
+  margin: 0;
+  background-color: $color;
+  color: $primary-color;
+
+}
+
+body.light-mode {
+  background-color: $color;
+  color: $primary-color;
+}
+
+body.dark-mode {
+  background-color: $primary-color;
+  color: $forth-color;
+}
+
+.header {
+  @extend %flex-containers;
+  transition: $transition;
+  padding: 1em;
+  align-items: center;
+
+
+  img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+  }
+
+
+  .leng-select {
+    // opacity: 0;
+    width: 43;
+    height: 25;
+    // margin: 0px;
+    padding: 0px 5px 4px 4px;
+    text-align: center;
+    border: 0px;
+    background-color: #344e41;
+    color: #a3b18a;
+    border-radius: 34px;
+    cursor: pointer;
+  }
+  option {
+    border-radius: 50%;
+
+
+  }
+
+
+  .title{
+    text-align: center;
+    margin:auto;
+    padding: 0;
+  }
+  .leng-select:focus-visible {
+    outline: $color auto 0px;
+  }
+
+  
+}
+header.light-mode {
+  background-color: $therd-color;
+}
+
+header.dark-mode {
+  background-color:$primary-color;
+}
+
+
+.nav-small-button {
+  display: none;
+}
+/* dark mode button */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 25px;
+
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 3px;
+    background-color: $primary-color;
+    transition: 0.4s;
+  }
+
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 15px;
+    width: 15px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+  }
+
+  input:checked + .slider {
+    background-color: $color;
+  }
+  input:focus + .slider {
+    box-shadow: 0 0 1px $color;
+  }
+  input:checked + .slider:before {
+    transform: translateX(26px);
+  }
+  .slider.round {
+    border-radius: 34px;
+  }
+  .slider.round:before {
+    border-radius: 50%;
+  }
+}
+
+/* nav box */
+.navigation {
+  background-color:$forth-color;
+  ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    list-style: none;
+    li {
+      // margin-left: 20px;
+      display: inline-block;
+    }
+    a {
+        display: block;
+        padding: 6px 12px;
+        text-decoration: none;
+      }
+  }
+  li:hover{
+    background-color: $color
+  }
+  
+}
+.main {
+  @extend %flex-containers;
+  artical {
+    flex-grow: 2;
+  }
+
+
+}
+
+.footer {
+  background-color: $therd-color;
+  justify-content: center;
+  display: flex;
+}
+
+
+@media (max-width: 800px) {
+  .certfi-grid{
+ grid-template-columns: auto;
+  }
+
+    .header{
+      flex-direction: column;
+    img{
+      width: 100px;
+      height: 100px;
+      margin: 20px;
+      order: -1;
+    }
+    }
+
+    .nav-small{
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      width: 100%;  
+      align-items: center;
+      
+    }
+    .nav-small-button {
+      display: block;
+    }
+
+  .main{
+      flex-direction: column;
+  }
+  .navigation{
+      display: none;
+      ul{
+        flex-direction: column;
+      }
+ 
+  }
+
+  
+}
