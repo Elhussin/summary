@@ -143,23 +143,30 @@ header.dark-mode {
   border-radius: 50%;
 }
 
+.message-alrt, .navigation ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.navigation ul a {
+  display: block;
+  text-decoration: none;
+  padding: 6px 12px;
+}
+
 /* nav box */
 .navigation {
   background-color: #a3b18a;
 }
 .navigation ul {
-  margin: 0;
-  padding: 0;
   display: flex;
-  list-style: none;
 }
 .navigation ul li {
   display: inline-block;
 }
 .navigation ul a {
   display: block;
-  padding: 6px 12px;
-  text-decoration: none;
 }
 .navigation li:hover {
   background-color: #dad7cd;
@@ -167,6 +174,11 @@ header.dark-mode {
 
 .main artical {
   flex-grow: 2;
+}
+
+.message-alrt {
+  background-color: #344e41;
+  color: #dad7cd;
 }
 
 .footer {

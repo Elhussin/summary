@@ -6,6 +6,7 @@ $therd-color: #5c7650;
 $forth-color: #a3b18a;
 $color: #dad7cd;
 
+
 %flex-containers {
   display: flex;
   justify-content: space-between;
@@ -179,23 +180,31 @@ header.dark-mode {
     border-radius: 50%;
   }
 }
+%ul{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+%ul-a{
+  display: block;
+  text-decoration: none;
+  padding: 6px 12px;
 
+}
 /* nav box */
 .navigation {
   background-color:$forth-color;
   ul {
-    margin: 0;
-    padding: 0;
+    @extend %ul;
     display: flex;
-    list-style: none;
+
     li {
       // margin-left: 20px;
       display: inline-block;
     }
     a {
+      @extend %ul-a;
         display: block;
-        padding: 6px 12px;
-        text-decoration: none;
       }
   }
   li:hover{
@@ -210,6 +219,13 @@ header.dark-mode {
   }
 
 
+}
+
+.message-alrt{
+  @extend %ul ;
+  background-color: $primary-color;
+  color: $color ;
+ 
 }
 
 .footer {
