@@ -4,6 +4,9 @@
 ``
 pip freeze > requirements.txt
 ``
+
+  pip install -r .\requirements.txt
+  ``
 * install python
     ```
     python -m pip install --upgrade pip
@@ -21,7 +24,7 @@ pip freeze > requirements.txt
 * active vnev
   - command
   ```sh
-  cd venv
+  cd env
   Scripts\activate
   ```
   ``
@@ -34,26 +37,42 @@ pip freeze > requirements.txt
   Scripts\Activate.ps1
   ```
 
+* install  requirements
+  ``
 
-* Create projeact
+<!-- *TO  Create projeact
 
 ```python
 python -m django startproject summayies_app
-```
+``` -->
+
+<!-- 
+TO Create App
+
+``python manage.py startapp summary`` -->
+
+### Creat db in mysql server
+* add database configer in app setting file 
+``
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'cs50_summary',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
+}
+``
 
 
-Create App
-
-``python manage.py startapp summary``
-
-* run app
-  ``python manage.py runserver``
-* install mysqlclient
+<!-- * install mysqlclient
 
   ```
   pip install mysqlclient
-  ```
-* makemigrations
+  ``` -->
+### Make  makemigrations
 
   ```
   python manage.py makemigrations
@@ -62,13 +81,18 @@ Create App
   ```
     python manage.py migrate
   ```
+
+* run app
+  ``python manage.py runserver``
+
+
 * createsuperuser 
 
      ``
      python manage.py createsuperuser
      ``
 
-* 
+* usee Sass 
     ```
     sass --watch style.scss styles.css
     ```
