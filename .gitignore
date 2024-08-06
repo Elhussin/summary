@@ -5,3 +5,4 @@ summary/migrations/
 db.sqlite3
 venv/
 env/
+styles.css.map

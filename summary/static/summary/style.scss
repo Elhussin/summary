@@ -52,9 +52,12 @@ $color: #dad7cd;
 body {
   transition: $transition;
   font: 100% $font-stack;
-  margin: 0;
+  // margin: 0;
   background-color: $color;
   color: $primary-color;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 
 }
 
@@ -211,8 +214,15 @@ header.dark-mode {
 
 .footer {
   background-color: $therd-color;
-  justify-content: center;
+  justify-content: space-between;
   display: flex;
+  margin-top: auto;
+  padding: 10px;
+  align-items: center;
+  color: $color;
+  a{
+    color: $color;;
+  }
 }
 
 
