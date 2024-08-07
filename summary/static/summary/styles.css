@@ -219,6 +219,7 @@ header.dark-mode {
   }
   .main {
     flex-direction: column;
+    justify-content: center;
   }
   .navigation {
     display: none;

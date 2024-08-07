@@ -59,7 +59,7 @@
        
                 {% if user.is_authenticated %}
                 <li   class="nav-item" id="profile">
-                    <a class="nav-link btn" data-section="Profile" ><strong id="username">{{ user.username }} </strong></a>
+                    <a class="nav-link btn" data-section="Profile" ><strong id="username">{{ user.username|title  }} </strong></a>
                 </li>
                 <li class="nav-item" id="Courses">
                     <a class="nav-link btn"  data-section="Courses" >Courses</a> 
@@ -68,7 +68,7 @@
                     <a class="nav-link btn" data-section="Fovarite"  >Fovarite</a>
                 </li>
                 <li class="nav-item">
-                    <a class="" href="{% url 'logout' %}">Log Out</a>
+                    <a class="nav-link btn" href="{% url 'logout' %}">Log Out</a>
                 </li>
                 {% else %}
                 <li class="nav-item" id="Courses">
@@ -76,9 +76,9 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="" href="{% url 'login' %}">Log In</a>
+                    <a class="nav-link btn" href="{% url 'login' %}">Log In</a>
                 </li>
-                <li> <a class="nav-link" href="{% url 'register' %}">Register</a></li>
+                <li> <a class="nav-link btn" href="{% url 'register' %}">Register</a></li>
 
       `     
             {% endif %}

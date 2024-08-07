@@ -3,37 +3,36 @@ from summary.models import User
 from django import forms
 from django.forms import ModelForm, TextInput, EmailInput,PasswordInput
 
-class UserRegistrationForm(forms.ModelForm):
-    # password = forms.CharField(widget=forms.PasswordInput)
-
-    # class Meta:
-    #     model = User
-    #     fields = ['email', 'first_name', 'last_name', 'password']
+class UserRegistraForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['email', 'first_name', 'last_name','password']
+        fields = ['email','username', 'first_name', 'last_name','password']
         widgets = {
             'first_name': TextInput(attrs={
                 'class': "form-control",
-                'style': 'max-width: 300px;',
+                'style': 'width: 400px; max-width:90%; margin:auto;',
                 'placeholder': 'First Name'
                 }),
  
             'last_name': TextInput(attrs={
                 'class': "form-control",
-                'style': 'max-width: 300px;',
+                'style': 'width: 400px; max-width:90%; margin:auto;',
                 'placeholder': 'Last Name'
+                }),
+            'username': TextInput(attrs={
+                'class': "form-control",
+                'style': 'width: 400px; max-width:90%; margin:auto;',
+                'placeholder': 'User Name'
                 }),
             
             'email': EmailInput(attrs={
                 'class': "form-control", 
-                'style': 'max-width: 300px;',
+                'style': 'width: 400px; max-width:90%; margin:auto;',
                 'placeholder': 'Email'
                 }),
             'password': PasswordInput(attrs={
                 'class': "form-control", 
-                'style': 'max-width: 300px;',
+                'style': 'width: 400px; max-width:90%; margin:auto;',
                 'placeholder': 'Password'
                 }),
-
         }

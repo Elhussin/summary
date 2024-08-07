@@ -19,7 +19,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
 from django.contrib import messages
-from summary.forms import UserRegistrationForm
+from summary.forms import UserRegistraForm
 
 # Create your views here.
 User = get_user_model()
@@ -81,37 +81,10 @@ def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
 
-# def register(request):
-#     if request.method == "POST":
-#         email = request.POST["email"]
-#         username = request.POST["name"]
-#         # Ensure password matches confirmation
-#         password = request.POST["password"]
-#         confirmation = request.POST["confirmation"]
-
-#         if password != confirmation:
-#             return render(
-#                 request, "summary/register.html", {"message": "Passwords must match."}
-#             )
-#         # Attempt to create new user
-#         try:
-#             user = User.objects.create_user(username, email, password)
-#             user.save()
-#         except IntegrityError as e:
-#             print(e)
-#             return render(
-#                 request,
-#                 "summary/register.html",
-#                 {"message": "Email address already taken."},
-#             )
-#         login(request, user)
-#         return HttpResponseRedirect(reverse("index"))
-#     else:
-#         return render(request, "summary/register.html")
 
 def register(request):
     if request.method == 'POST':
-        form = UserRegistrationForm(request.POST)
+        form = UserRegistraForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
             user.set_password(form.cleaned_data['password'])
@@ -119,5 +92,5 @@ def register(request):
             messages.success(request, 'Account created successfully')
             return redirect('login')
     else:
-        form = UserRegistrationForm()
+        form = UserRegistraForm()
     return render(request, 'summary/register.html', {'form': form})
