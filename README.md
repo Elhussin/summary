@@ -96,3 +96,13 @@ DATABASES = {
     ```
     sass --watch style.scss styles.css
     ```
+
+
+# USE To handel JavaScript API
+
+    ``
+    npm install axios
+    or use it in page
+      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    ``
