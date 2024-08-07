@@ -17,7 +17,7 @@ const getCourses = async () => {
   }
 };
 
-// الحصول على دورة واحدة
+// Get one course
 const getCourse = async (id) => {
   try {
     const response = await axios.get(`${API_URL}${id}/`);
@@ -28,7 +28,7 @@ const getCourse = async (id) => {
   }
 };
 
-// إضافة دورة جديدة
+//Add new course
 const addCourse = async (courseData) => {
   try {
     const response = await axios.post(API_URL, courseData);
@@ -39,7 +39,7 @@ const addCourse = async (courseData) => {
   }
 };
 
-// تعديل دورة موجودة
+// Edit iteam
 const updateCourse = async (id, courseData) => {
   try {
     const response = await axios.put(`${API_URL}${id}/`, courseData);
@@ -50,7 +50,7 @@ const updateCourse = async (id, courseData) => {
   }
 };
 
-// حذف دورة
+// Delate iteam
 const deleteCourse = async (id) => {
   try {
     await axios.delete(`${API_URL}${id}/`);

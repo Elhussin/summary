@@ -1,16 +1,18 @@
-import { getCourses, getCourse, addCourse, updateCourse, deleteCourse } from './api-script.js';
-
-// الحصول على جميع الدورات وعرضها في وحدة التحكم
+import { getCourses, getCourse, addCourse, updateCourse, deleteCourse } from './api.js';
+const cardsContainer = document.getElementById('cards-container');
+//featc all course end view
 const fetchCourses = async () => {
   try {
     const courses = await getCourses();
     console.log('Courses:', courses);
+    renderCards(courses);
+
   } catch (error) {
     console.error('Error:', error);
   }
 };
-
-// إضافة دورة جديدة
+fetchCourses()
+// Add new Course 
 const createCourse = async () => {
   const newCourse = {
     title: 'New Course',
@@ -26,7 +28,7 @@ const createCourse = async () => {
   }
 };
 
-// تحديث دورة
+// Updat Course
 const modifyCourse = async (id) => {
   const updatedData = {
     title: 'Updated Course Title',
@@ -41,7 +43,7 @@ const modifyCourse = async (id) => {
   }
 };
 
-// حذف دورة
+// delate Course
 const removeCourse = async (id) => {
   try {
     await deleteCourse(id);
@@ -56,3 +58,19 @@ const removeCourse = async (id) => {
 // createCourse();
 // modifyCourse(1);  // استبدل 1 بـ ID الدورة التي تريد تحديثها
 // removeCourse(1);  // استبدل 1 بـ ID الدورة التي تريد حذفها
+
+
+const renderCards = (data) => {
+    cardsContainer.innerHTML = data.map(item => `
+       <a href="api/courses/${item.id}">
+        <div class="card">
+            <img src="${item.image}" alt="${item.name}">
+            <div class="card-content">
+                <h2 class="card-title">${item.name}</h2>
+                <p class="card-description">${item.description}</p>
+            </div>
+        </div>
+        <a>
+    `).join('');
+};
+

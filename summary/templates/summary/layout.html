@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{% block title %}Summaries{% endblock %}</title>
-    <link rel="shortcut icon" href=" {% static '/summary/logo.PNG' %}" type="image/x-icon">
+    <link rel="shortcut icon" href=" {% static '/summary/img/logo.PNG' %}" type="image/x-icon">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'summary/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'summary/css/styles.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     {% block script %}{% endblock %}
 
@@ -16,7 +16,7 @@
 <body>
         <header id="header" class="header">
             <div class="logo">
-                <a href="{% url 'index' %}" title="Home"> <img  class="img-header"  src="{% static 'summary/logo.PNG' %}" alt="icon"></a>
+                <a href="{% url 'index' %}" title="Home"> <img  class="img-header"  src="{% static 'summary/img/logo.PNG' %}" alt="icon"></a>
             </div>
             <div class="title">
                 <h1 id="title">Summaries</h1>
@@ -270,10 +270,10 @@
         </div>  
     </footer>
 
-    <script src="{% static 'summary/js/script-design.js' %}"></script>
+    <script src="{% static 'summary/js/design.js' %}"></script>
     <script type="module"  src="{% static 'summary/js/course.js' %}"></script>
 
-    <!-- <script type="module"  src="static/summary/js/course.js"></script> -->
+
 
 </body>
 </html>

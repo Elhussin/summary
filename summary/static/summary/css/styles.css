@@ -179,6 +179,8 @@ header.dark-mode {
 .message-alrt {
   background-color: #344e41;
   color: #dad7cd;
+  width: 100%;
+  padding: 10px;
 }
 
 .footer {
@@ -192,6 +194,46 @@ header.dark-mode {
 }
 .footer a {
   color: #dad7cd;
+}
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+  justify-content: center;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  overflow: hidden;
+  transition: transform 0.2s;
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+}
+
+.card-content {
+  padding: 15px;
+}
+
+.card-title {
+  font-size: 1.5em;
+  margin: 0;
+}
+
+.card-description {
+  color: #555;
+  margin: 10px 0 0;
+}
+
+.card:hover {
+  transform: scale(1.05);
 }
 
 @media (max-width: 800px) {
