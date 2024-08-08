@@ -1,6 +1,7 @@
 import { getCourses, getCourse, addCourse, updateCourse, deleteCourse } from './api.js';
 const cardsContainer = document.getElementById('cards-container');
 //featc all course end view
+
 const fetchCourses = async () => {
   try {
     const courses = await getCourses();
@@ -12,6 +13,9 @@ const fetchCourses = async () => {
   }
 };
 fetchCourses()
+
+
+
 // Add new Course 
 const createCourse = async () => {
   const newCourse = {
@@ -61,16 +65,49 @@ const removeCourse = async (id) => {
 
 
 const renderCards = (data) => {
-    cardsContainer.innerHTML = data.map(item => `
-       <a href="api/courses/${item.id}">
-        <div class="card">
-            <img src="${item.image}" alt="${item.name}">
-            <div class="card-content">
-                <h2 class="card-title">${item.name}</h2>
-                <p class="card-description">${item.description}</p>
-            </div>
+    cardsContainer.innerHTML='' 
+    cardsContainer.innerHTML += data.map(item => `
+       
+        <div class="card" id="${item.id}" >
+            <a class="nav-link btn" href="/">         
+            
+                  <img src="${item.image}" alt="${item.name}">
+                  <div class="card-content">
+                      <h2 class="card-title">${item.name}</h2>
+                      <p class="card-description">${item.description}</p>
+                  </div>
+            </a>
         </div>
-        <a>
+
     `).join('');
+
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', (event) => {
+          event.preventDefault(); // block aout link redireact 
+          const itemId = card.id;
+          console.log(itemId)
+
+          // // العثور على العنصر المقابل للبطاقة
+          // const item = data.find(i => i.id == itemId);
+          // if (item) {
+          //     // هنا يمكنك عرض جميع البيانات المرتبطة بالعنصر
+          //     displayItemDetails(item);
+          // }
+      });
+    });
 };
 
+
+
+
+const fetchOneCourse = async (id) => {
+  try {
+    const course = await getCourse(id);
+    console.log('Courses:', course);
+
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
+
+fetchOneCourse(1)

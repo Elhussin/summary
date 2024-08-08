@@ -64,7 +64,6 @@ function applyTranslations(language) {
         }
     });
     document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
-
 }
 
 // Event listener for language switcher

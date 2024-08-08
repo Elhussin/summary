@@ -30,25 +30,13 @@ def index(request):
     return render(request, 'summary/index.html')
 
 
-class MyModelList(APIView):
-    def get(self, request):
-        Coursemodels = Course.objects.all()
-        serializer = CourseSerializer(Coursemodels, many=True)
-        return Response(serializer.data)
-
-    def post(self, request):
-        serializer = CourseSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 class SummarySerializer(viewsets.ModelViewSet):
     """
     API endpoint that allows Summary to be viewed or edited.
     """
     queryset = Summary.objects.all().order_by('course')
     serializer_class = SummarySerializer
+    
     
 class SummaryViewSet(viewsets.ModelViewSet):
     """
