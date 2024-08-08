@@ -1,6 +1,9 @@
 // import axios from 'axios';
 
-const API_URL = 'http://127.0.0.1:8000/api/courses/';
+// const API_URL = 'http://127.0.0.1:8000/api/courses/';
+
+const API_URL = 'http://127.0.0.1:8000/api/summaries/';
+
 // {
 //   "summaries": "http://127.0.0.1:8000/api/summaries/",
 //   "courses": "http://127.0.0.1:8000/api/courses/"

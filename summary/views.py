@@ -29,27 +29,13 @@ User = get_user_model()
 def index(request):
     return render(request, 'summary/index.html')
 
-
-class SummarySerializer(viewsets.ModelViewSet):
+class SummaryViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows Summary to be viewed or edited.
     """
     queryset = Summary.objects.all().order_by('course')
     serializer_class = SummarySerializer
-    
-    
-class SummaryViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows Summary to be viewed or edited.
-    """
-    serializer_class = SummarySerializer
 
-    def get_queryset(self):
-        queryset = Summary.objects.all().order_by('course')
-        course_id = self.kwargs.get('course_id', None)
-        if course_id is not None:
-            queryset = queryset.filter(course_id=course_id)
-        return queryset
     
 class CourseViewSet(viewsets.ModelViewSet):
     """
@@ -97,3 +83,26 @@ def register(request):
     else:
         form = UserRegistraForm()
     return render(request, 'summary/register.html', {'form': form})
+
+
+
+# class SummarySerializer(viewsets.ModelViewSet):
+#     """
+#     API endpoint that allows Summary to be viewed or edited.
+#     """
+#     queryset = Summary.objects.all().order_by('course')
+#     serializer_class = SummarySerializer
+    
+    
+# class SummaryViewSet(viewsets.ModelViewSet):
+#     """
+#     API endpoint that allows Summary to be viewed or edited.
+#     """
+#     serializer_class = SummarySerializer
+
+#     def get_queryset(self):
+#         queryset = Summary.objects.all().order_by('course')
+#         course_id = self.kwargs.get('course_id', None)
+#         if course_id is not None:
+#             queryset = queryset.filter(course_id=course_id)
+#         return queryset
