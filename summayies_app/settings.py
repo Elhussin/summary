@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-zssa8wu8!s_h!lz9=198h+ui&0w^ttjyq0k+$q6)z8p-ylw$lb
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -77,6 +78,7 @@ WSGI_APPLICATION = 'summayies_app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+#  sqlitt datbases
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -84,6 +86,8 @@ WSGI_APPLICATION = 'summayies_app.wsgi.application'
 #     }
 # }
 
+
+# Mysql Database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -95,6 +99,7 @@ DATABASES = {
     }
 }
 
+# Romte db mysql 
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
@@ -105,6 +110,40 @@ DATABASES = {
 #         'PORT': '3306',
 #     }
 # }
+
+# POSTGRES wit out pgpass.conf 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv('postgres'),
+#         'USER': os.getenv('postgres'),
+#         'PASSWORD': os.getenv('123456'),
+#         'HOST': 'localhost',
+#         'PORT': 5432,
+#     }
+# }
+# POSTGRES wit  pgpass.conf 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'postgres',
+#         'USER': 'postgres',
+#         'PASSWORD': '',  # keep it null
+#         'HOST': 'localhost',
+#         'PORT': '5050',
+#     }
+# }
+# aws postgresql
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'adminsummary',
+        'PASSWORD': 'Ah0108704401',  # keep it null
+        'HOST': 'summary.c1wigu0i4w7k.eu-north-1.rds.amazonaws.com',
+        'PORT': '5432',
+    }
+}
 
 
 # Password validation
