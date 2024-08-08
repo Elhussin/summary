@@ -9,13 +9,15 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from .models import User, Course, Summary, Coments, Like, Fovarite
 from django.contrib.auth.models import Group, User
+# rest 
 from rest_framework import permissions, viewsets
+from rest_framework.views import APIView
 from .serializers import SummarySerializer, CourseSerializer,LikeSerializer,ComentsSerializer,FovariteSerializer,SummaryFovariteSerializer , SummaryLikeSerializer ,SummaryComentsSerializer
-
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import action
 # Create your views here.
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+# from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
 from django.contrib import messages
@@ -27,6 +29,19 @@ User = get_user_model()
 def index(request):
     return render(request, 'summary/index.html')
 
+
+class MyModelList(APIView):
+    def get(self, request):
+        Coursemodels = Course.objects.all()
+        serializer = CourseSerializer(Coursemodels, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = CourseSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class SummarySerializer(viewsets.ModelViewSet):
     """
