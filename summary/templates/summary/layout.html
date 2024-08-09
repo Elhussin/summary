@@ -59,8 +59,14 @@
        
                 {% if user.is_authenticated %}
                 <li   class="nav-item" id="profile">
-                    <a class="nav-link btn" data-section="Profile" ><strong id="username">{{ user.username|title  }} </strong></a>
+                    <a class="nav-link btn" data-section="Profile"   href="{% url 'profile' %}" ><strong id="username">{{ user.username|title  }} </strong></a>
                 </li>
+                {% if user.is_superuser %}
+                <li   class="nav-item" id="profile">
+                    <a class="nav-link btn" href="/admin" ><strong id="username">Admin </strong></a>
+                </li>
+                    {% endif %}
+
                 <li class="nav-item" id="Courses">
                     <a class="nav-link btn"  data-section="Courses" >Courses</a> 
                 </li>

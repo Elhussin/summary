@@ -88,18 +88,73 @@ WSGI_APPLICATION = 'summayies_app.wsgi.application'
 
 
 # Mysql Database
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'cs50_summary',
+#         'USER': 'root',
+#         'PASSWORD': '',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
+
+# Romte db mysql 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': '4499634_summary',
+#         'USER': '4499634_summary',
+#         'PASSWORD': 'Ah@0540919725',
+#         'HOST': 'pdb1049.awardspace.net',
+#         'PORT': '3306',
+#     }
+# }
+
+# POSTGRES wit out pgpass.conf 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv('postgres'),
+#         'USER': os.getenv('postgres'),
+#         'PASSWORD': os.getenv('123456'),
+#         'HOST': 'localhost',
+#         'PORT': 5432,
+#     }
+# }
+# POSTGRES wit  pgpass.conf 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'postgres',
+#         'USER': 'postgres',
+#         'PASSWORD': '',  # keep it null
+#         'HOST': 'localhost',
+#         'PORT': '5050',
+#     }
+# }
+# aws postgresql
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'cs50_summary',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'adminsummary',
+        'PASSWORD': 'Ah0108704401',  # keep it null
+        'HOST': 'summary.cbmo4ymygwn8.us-east-1.rds.amazonaws.com',
+        'PORT': '5432',
     }
 }
-
-
+# docker datbase configer
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv('POSTGRES_DB'),
+#         'USER': os.getenv('POSTGRES_USER'),
+#         'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+#         'HOST': 'db',
+#         'PORT': 5432,
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
