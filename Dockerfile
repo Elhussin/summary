@@ -1,8 +1,10 @@
 
 # Use an official Python runtime as a parent image
 FROM python:3
-
+# هذا الأمر يقوم بتعطيل كتابة الملفات البايتية (.pyc) على القرص.
 ENV PYTHONDONTWRITEBYTECODE=1
+# هذا الأمر يقوم بتعطيل التخزين المؤقت للإخراج (output buffering) في Python.
+
 ENV PYTHONUNBUFFERED=1
 # Set the working directory
 

@@ -1,53 +1,43 @@
-# Django>=3.0,<4.0
-# psycopg2>=2.8
-ervices:
-  db:
-    image: postgres
-    volumes:
-      - ./data/db:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-  web:
-    build: .
-    command: python manage.py runserver 0.0.0.0:8000
-    volumes:
-      - .:/code
-    ports:
-      - "8000:8000"
-    environment:
-      - POSTGRES_NAME=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-    depends_on:
-      - db
 
-
-version: '3.8'
+# version: '3.8'
 
 services:
   web:
+  # to select app direacti to build app
     build: .
-    command: gunicorn your_project_name.wsgi:application --bind 0.0.0.0:8000
+    # wep server to start djnjo + host &port
+    # نستخدم gunicorn كخادم ويب بدلاً من runserver لأنه أكثر قوة لإنتاج البيئة.
+
+    command: gunicorn summayies_app.wsgi:application --bind 0.0.0.0:8000
+    # add volume to selct app root
     volumes:
       - .:/app
+      # select tho port out of the continear 
+      # localhost:8000
     ports:
       - "8000:8000"
+      # env vilt to add scret key like apui key and datbase paswored
     env_file:
       - .env
+      # this min to work wep db is reqieard 
     depends_on:
       - db
 
   db:
+  # postgres version 15
+
     image: postgres:15
+    # postgres data will save in this volume 
     volumes:
       - postgres_data:/var/lib/postgresql/data/
+
     environment:
-      POSTGRES_DB: your_db_name
-      POSTGRES_USER: your_db_user
-      POSTGRES_PASSWORD: your_db_password
+      POSTGRES_DB: postgres
+      POSTGRES_USER: adminsummary
+      POSTGRES_PASSWORD: Ah0108704401
       POSTGRES_HOST_AUTH_METHOD: trust
 
 volumes:
   postgres_data:
+
+

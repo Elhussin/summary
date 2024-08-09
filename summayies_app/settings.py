@@ -134,17 +134,27 @@ WSGI_APPLICATION = 'summayies_app.wsgi.application'
 #     }
 # }
 # aws postgresql
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'postgres',
+#         'USER': 'adminsummary',
+#         'PASSWORD': 'Ah0108704401',  # keep it null
+#         'HOST': 'summary.cbmo4ymygwn8.us-east-1.rds.amazonaws.com',
+#         'PORT': '5432',
+#     }
+# }
+# docker datbase configer
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'adminsummary',
-        'PASSWORD': 'Ah0108704401',  # keep it null
-        'HOST': 'summary.cbmo4ymygwn8.us-east-1.rds.amazonaws.com',
-        'PORT': '5432',
+        'NAME': os.getenv('POSTGRES_DB'),
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'HOST': 'db',
+        'PORT': 5432,
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
