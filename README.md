@@ -63,7 +63,8 @@ TO Create App
     ``        pip install mysqlclient        ``
 
 ### Use  PostgreSQL
-
+-pip install postgres
+* for locall host
 - [Downloud](https://www.postgresql.org/download/)
 - ofter install App
 - open sql Shell

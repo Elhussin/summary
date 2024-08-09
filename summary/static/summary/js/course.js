@@ -109,7 +109,7 @@ const fetchOneCourse = async (id) => {
     console.error('Error:', error);
   }
 };
-fetchOneCourse()
+// fetchOneCourse()
 
 // const renderCards = (data) => {
 //   // تفريغ محتوى الحاوية قبل إضافة البطاقات الجديدة
@@ -152,4 +152,4 @@ fetchOneCourse()
 //   alert(`Name: ${item.name}\nDescription: ${item.description}`);
 // };
 
-fetchOneCourse(1)
+// fetchOneCourse(1)

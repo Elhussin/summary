@@ -88,16 +88,16 @@ WSGI_APPLICATION = 'summayies_app.wsgi.application'
 
 
 # Mysql Database
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'cs50_summary',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'cs50_summary',
+#         'USER': 'root',
+#         'PASSWORD': '',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
 
 # Romte db mysql 
 # DATABASES = {
@@ -140,7 +140,7 @@ DATABASES = {
         'NAME': 'postgres',
         'USER': 'adminsummary',
         'PASSWORD': 'Ah0108704401',  # keep it null
-        'HOST': 'summary.c1wigu0i4w7k.eu-north-1.rds.amazonaws.com',
+        'HOST': 'summary.cbmo4ymygwn8.us-east-1.rds.amazonaws.com',
         'PORT': '5432',
     }
 }
