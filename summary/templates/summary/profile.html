@@ -1,17 +1,23 @@
 {% extends "summary/layout.html" %}
 
-
-
-
 {% block title %}Profile{% endblock %}
+
+
+{% block left-side %}
+    <div>
+        <strong > You are Welcome Mr {{ user.username|title  }} </strong>
+    </div>
+{% if user.is_superuser %}
+
+    <a class="nav-link btn" href="/admin" ><strong id="username">Add New Course </strong></a>
+
+    {% endif %}
+
+{% endblock %}
 
 
 {% block body %}
 
-
-
-
-
-<h2> Profile  </h2>
+<h2> Profile </h2>
 
 {% endblock %}

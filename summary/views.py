@@ -153,7 +153,7 @@ def register(request):
 #          form = addform.creatlist()
 #          return render(request, "auctions/creatList.html",{'form': form})
 
-
+@login_required(login_url='/login')
 def usersProfile(request):
     if request.method == "POST":
         

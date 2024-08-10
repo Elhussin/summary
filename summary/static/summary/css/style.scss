@@ -5,6 +5,7 @@ $secand-color: #3a5a40;
 $therd-color: #5c7650;
 $forth-color: #a3b18a;
 $color: #dad7cd;
+$font-color:white;
 
 
 %flex-containers {
@@ -46,7 +47,6 @@ $color: #dad7cd;
   img{
     width: auto;
     height: auto;
-
   }
 }
 
@@ -69,7 +69,7 @@ body.light-mode {
 
 body.dark-mode {
   background-color: $primary-color;
-  color: $forth-color;
+  color:$font-color;
 }
 
 .header {
@@ -119,16 +119,13 @@ body.dark-mode {
 }
 header.light-mode {
   background-color: $therd-color;
+
 }
 
 header.dark-mode {
   background-color:$primary-color;
 }
 
-
-.nav-small-button {
-  display: none;
-}
 /* dark mode button */
 .switch {
   position: relative;
@@ -185,41 +182,35 @@ header.dark-mode {
   padding: 0;
   list-style: none;
 }
+
 %ul-a{
-  display: block;
   text-decoration: none;
   padding: 6px 12px;
-
 }
+
 /* nav box */
 .navigation {
   background-color:$forth-color;
   ul {
     @extend %ul;
     display: flex;
-
-    li {
-      // margin-left: 20px;
-      display: inline-block;
+    flex-flow:row;
     }
-    a {
-      @extend %ul-a;
-        display: block;
-      }
-  }
+
   li:hover{
     background-color: $color
   }
   
 }
+
 .main {
   @extend %flex-containers;
   artical {
     flex-grow: 2;
   }
-
-
 }
+
+
 
 .message-alrt{
   @extend %ul ;

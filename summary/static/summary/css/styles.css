@@ -47,7 +47,7 @@ body.light-mode {
 
 body.dark-mode {
   background-color: #344e41;
-  color: #a3b18a;
+  color: white;
 }
 
 .header {
@@ -89,10 +89,6 @@ header.light-mode {
 
 header.dark-mode {
   background-color: #344e41;
-}
-
-.nav-small-button {
-  display: none;
 }
 
 /* dark mode button */
@@ -149,24 +145,13 @@ header.dark-mode {
   list-style: none;
 }
 
-.navigation ul a {
-  display: block;
-  text-decoration: none;
-  padding: 6px 12px;
-}
-
 /* nav box */
 .navigation {
   background-color: #a3b18a;
 }
 .navigation ul {
   display: flex;
-}
-.navigation ul li {
-  display: inline-block;
-}
-.navigation ul a {
-  display: block;
+  flex-flow: row;
 }
 .navigation li:hover {
   background-color: #dad7cd;
