@@ -1,5 +1,5 @@
 @charset "UTF-8";
-.main, .header {
+.main, .navigation, .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -147,11 +147,14 @@ header.dark-mode {
 
 /* nav box */
 .navigation {
+  flex-direction: row;
   background-color: #a3b18a;
 }
 .navigation ul {
   display: flex;
-  flex-flow: row;
+}
+.navigation li {
+  display: inline-block;
 }
 .navigation li:hover {
   background-color: #dad7cd;
@@ -196,6 +199,7 @@ header.dark-mode {
   width: 300px;
   overflow: hidden;
   transition: transform 0.2s;
+  position: relative;
 }
 .card img {
   width: 100%;
@@ -214,6 +218,16 @@ header.dark-mode {
 }
 .card .card:hover {
   transform: scale(1.05);
+}
+.card .card-button {
+  position: absolute;
+  top: 0;
+  border-radius: 34px;
+  padding: 0;
+  margin: 0;
+}
+.card .card-button:hover {
+  border-color: white;
 }
 
 @media (max-width: 800px) {

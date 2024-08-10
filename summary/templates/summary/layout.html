@@ -54,9 +54,8 @@
         </header>
 
         <nav id="navigation" class="navigation">
-            <ul>
-
-
+              <ul>
+            <div  class="navigation-iteam" >    
                 {% if user.is_authenticated %}
                 <li   class="nav-item" id="profile">
                     <a class="nav-link btn nav-list" data-section="Profile"   href="{% url 'profile' %}" ><strong id="username">{{ user.username|title  }} </strong></a>
@@ -78,22 +77,33 @@
                 {% else %}
                 <li class="nav-item" id="Courses">
                     <a class="nav-link btn"  data-section="Courses" >Courses</a> 
+                </li>  
+            {% endif %}
+            </ul>
+
+        </div>
+        
+        <div>
+            {% if user.is_authenticated %}
+            <ul>
+                <li class="nav-item ">
+                    <a class="nav-link btn btn-danger" href="{% url 'logout' %}">Log Out</a>
                 </li>
 
+                {%else%}
                 <li class="nav-item" >
                     <a class="nav-link btn" href="{% url 'login' %}">Log In</a>
                 </li>
                 <li> <a class="nav-link btn " href="{% url 'register' %}">Register</a></li>
-      `     
-            {% endif %}
-            <li class="nav-item navigation-item ">
-                <a class="nav-link btn btn-danger" href="{% url 'logout' %}">Log Out</a>
-            </li>
             </ul>
+        {% endif %}
+        </div>
         </nav>
+        
+ 
 
 
-
+-
        
    
 
