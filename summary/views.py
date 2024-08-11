@@ -51,12 +51,12 @@ class SummaryViewSet(viewsets.ModelViewSet):
     serializer_class = SummarySerializer
 
 
+    
 class CourseViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows courses to be viewed, added, edited, or deleted.
+    API endpoint  to  viewed, added, edited, or deleted.
     """
-
-    queryset = Course.objects.all().order_by("created_at")
+    queryset = Course.objects.all().order_by('created_at')
     serializer_class = CourseSerializer
 
 
