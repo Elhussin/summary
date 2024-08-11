@@ -67,7 +67,6 @@ const favorite=`<svg width="40px" height="40px" viewBox="0 0 20.00 20.00" versio
 const renderCards = (data) => {
     cardsContainer.innerHTML='' 
     cardsContainer.innerHTML += data.map(item => `
-       
         <div class="card" id="${item.id}" >
             <a class="nav-link btn" href="/">         
             
@@ -88,6 +87,8 @@ const renderCards = (data) => {
 
     `).join('');
 
+
+    
     document.querySelectorAll('.card').forEach(card => {
       card.addEventListener('click', (event) => {
           event.preventDefault(); // block aout link redireact 
@@ -111,52 +112,53 @@ const fetchOneCourse = async (id) => {
   try {
     const course = await getCourse(id);
     console.log('1:', course);
-
+    renderoneCard(course)
   } catch (error) {
     console.error('Error:', error);
   }
 };
 // fetchOneCourse()
 
-// const renderCards = (data) => {
-//   // تفريغ محتوى الحاوية قبل إضافة البطاقات الجديدة
-//   cardsContainer.innerHTML = ''; 
+const renderoneCard= (data) => {
+  console.log("data",data)
+  // تفريغ محتوى الحاوية قبل إضافة البطاقات الجديدة
+  cardsContainer.innerHTML = ''; 
 
-//   // إضافة البطاقات الجديدة إلى الحاوية
-//   cardsContainer.innerHTML += data.map(item => `
-//       <div class="card" id="${item.id}">
-//           <a class="nav-link btn" href="#">         
-//               <img src="${item.image}" alt="${item.name}">
-//               <div class="card-content">
-//                   <h2 class="card-title">${item.name}</h2>
-//                   <p class="card-description">${item.description}</p>
-//               </div>
-//           </a>
-//       </div>
-//   `).join('');
+  // إضافة البطاقات الجديدة إلى الحاوية
+  cardsContainer.innerHTML += data.map(item => `
+      <div class="card" id="${item.id}">
+          <a class="nav-link btn" href="#">         
+              <img src="${item.image}" alt="${item.name}">
+              <div class="card-content">
+                  <h2 class="card-title">${item.name}</h2>
+                  <p class="card-description">${item.description}</p>
+              </div>
+          </a>
+      </div>
+  `).join('');
 
-//   // إضافة مستمعات الأحداث لكل بطاقة
-//   document.querySelectorAll('.card').forEach(card => {
-//       card.addEventListener('click', (event) => {
-//           event.preventDefault(); // منع الانتقال الافتراضي للرابط
-//           const itemId = card.id;
-//           // العثور على العنصر المقابل للبطاقة
-//           const item = data.find(i => i.id == itemId);
-//           if (item) {
-//               // هنا يمكنك عرض جميع البيانات المرتبطة بالعنصر
-//               displayItemDetails(item);
-//           }
-//       });
-//   });
-// };
+  // إضافة مستمعات الأحداث لكل بطاقة
+  document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', (event) => {
+          event.preventDefault(); // منع الانتقال الافتراضي للرابط
+          const itemId = card.id;
+          // العثور على العنصر المقابل للبطاقة
+          const item = data.find(i => i.id == itemId);
+          if (item) {
+              // هنا يمكنك عرض جميع البيانات المرتبطة بالعنصر
+              displayItemDetails(item);
+          }
+      });
+  });
+};
 
 // // دالة لعرض البيانات المرتبطة بالعنصر
-// const displayItemDetails = (item) => {
-//   // هنا يمكنك إضافة الكود لعرض التفاصيل
-//   // مثلاً: فتح نافذة جديدة، أو عرض التفاصيل في نافذة منبثقة (modal)
-//   console.log('Displaying details for:', item);
-//   // مثال على عرض البيانات في نافذة منبثقة (modal)
-//   alert(`Name: ${item.name}\nDescription: ${item.description}`);
-// };
+const displayItemDetails = (item) => {
+  // هنا يمكنك إضافة الكود لعرض التفاصيل
+  // مثلاً: فتح نافذة جديدة، أو عرض التفاصيل في نافذة منبثقة (modal)
+  console.log('Displaying details for:', item);
+  // مثال على عرض البيانات في نافذة منبثقة (modal)
+  alert(`Name: ${item.name}\nDescription: ${item.description}`);
+};
 
 // fetchOneCourse(1)
