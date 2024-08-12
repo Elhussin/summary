@@ -53,11 +53,12 @@ class SummaryViewSet(viewsets.ModelViewSet):
 
     
 class CourseViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint  to  viewed, added, edited, or deleted.
-    """
     queryset = Course.objects.all().order_by('created_at')
     serializer_class = CourseSerializer
+
+    def perform_create(self, serializer):
+        # تعيين user_id تلقائيًا بناءً على المستخدم الذي يقوم بإرسال الطلب
+        serializer.save(user=self.request.user)
 
 
 def login_view(request):

@@ -7,6 +7,7 @@ import {
 } from "./api.js";
 const cardsContainer = document.getElementById("cards-container");
 //featc all course end view
+
 const fetchCourses = async () => {
   try {
     const courses = await getCourses();
@@ -35,20 +36,91 @@ const fetchOneCourse = async (id) => {
 
 
 // Add new Course
-const createCourse = async () => {
-  const newCourse = {
-    title: "New Course",
-    description: "This is a new course",
-    // إضافة بيانات الدورة الأخرى هنا
-  };
-
+document.getElementById('course_form').addEventListener('submit', function(event) {
+  event.preventDefault();
+  let newCourse = new FormData(this);
+  let headers= formData.get('csrfmiddlewaretoken');
+  const createCourse = async () => {
   try {
-    const addedCourse = await addCourse(newCourse);
-    console.log("Added Course:", addedCourse);
+    const addedCourse = await addCourse(newCourse,headers);
+    console.log("Added Course:", addedCourse ,headers);
   } catch (error) {
     console.error("Error:", error);
   }
 };
+})
+
+
+//Add new course
+// const API_URLs = 'http://127.0.0.1:8000/api/courses/';
+// const addCourses = async (courseData) => {
+//   try {
+//     const response = await axios.post(API_URLs, courseData,{
+//       headers: {
+//           'X-CSRFToken': csrfToken
+//       }
+//   });
+//     return response.data;
+//   } catch (error) {
+//     console.error('Error adding course:', error);
+//     throw error;
+//   }
+// };
+
+
+// });
+
+// const formData = new FormData(formElement);
+// formData.append('csrfmiddlewaretoken', csrfToken);
+
+// axios.post('/api/courses/', formData, {
+//     headers: {
+//         'X-CSRFToken': csrfToken
+//     }
+// })
+// .then(response => {
+//     console.log('Course added successfully:', response.data);
+// })
+// .catch(error => {
+//     console.error('Error adding course:', error);
+// });
+
+
+
+
+
+// document.getElementById('course_form').addEventListener('submit', function(event) {
+//   event.preventDefault(); // منع الإرسال الافتراضي للنموذج
+
+//   // الحصول على بيانات النموذج باستخدام FormData
+//   let formData = new FormData(this);
+
+//   // للوصول إلى بيانات محددة من النموذج
+//   console.log(formData)
+//   console.log('name:', formData.get('name'));
+//   console.log('Description:', formData.get('description'));
+//   console.log('Image:', formData.get('image'));
+
+//   // يمكنك الآن إرسال البيانات إلى الخادم باستخدام fetch
+//   fetch('http://127.0.0.1:8000/api/courses/', {
+//       method: 'POST',
+//       body: formData,
+//       headers: {
+//           'X-CSRFToken': formData.get('csrfmiddlewaretoken') // إرسال رمز CSRF مع الطلب
+//       }
+//   })
+//   .then(response => response.json())
+//   .then(data => {
+//       console.log('Success:', data);
+//       // معالجة الرد من الخادم هنا
+//   })
+//   .catch((error) => {
+//       console.error('Error:', error);
+//   });
+// });
+
+
+
 
 // Updat Course
 const modifyCourse = async (id) => {
@@ -119,44 +191,14 @@ const displayItemDetails = (item) => {
 
 
 
-const courseForm = document.getElementById("course_form");
+// const courseForm = document.getElementById("course_form");
 
-courseForm.addEventListener("submit",(event)=>{
-  event.preventDefault(); 
-  createCourse()
-
-
-})
+// courseForm.addEventListener("submit",(event)=>{
+//   event.preventDefault(); 
+//   createCourse()
 
 
+// })
 
-document.getElementById('course_form').addEventListener('submit', function(event) {
-  event.preventDefault(); // منع الإرسال الافتراضي للنموذج
 
-  // الحصول على بيانات النموذج باستخدام FormData
-  let formData = new FormData(this);
-
-  // للوصول إلى بيانات محددة من النموذج
-  console.log(formData)
-  console.log('name:', formData.get('name'));
-  console.log('Description:', formData.get('description'));
-  console.log('Image:', formData.get('image'));
-
-  // يمكنك الآن إرسال البيانات إلى الخادم باستخدام fetch
-  fetch('http://127.0.0.1:8000/api/courses/', {
-      method: 'POST',
-      body: formData,
-      headers: {
-          'X-CSRFToken': formData.get('csrfmiddlewaretoken') // إرسال رمز CSRF مع الطلب
-      }
-  })
-  .then(response => response.json())
-  .then(data => {
-      console.log('Success:', data);
-      // معالجة الرد من الخادم هنا
-  })
-  .catch((error) => {
-      console.error('Error:', error);
-  });
-});
 

@@ -32,15 +32,30 @@ const getCourse = async (id) => {
 };
 
 //Add new course
-const addCourse = async (courseData) => {
+// const addCourse = async (courseData,headers) => {
+//   try {
+//     const response = await axios.post(API_URL, courseData,);
+//     return response.data;
+//   } catch (error) {
+//     console.error('Error adding course:', error);
+//     throw error;
+//   }
+// };
+
+const addCourse = async (courseData,csrfToken) => {
   try {
-    const response = await axios.post(API_URL, courseData);
+    const response = await axios.post(API_URL, courseData,{
+      headers: {
+          'X-CSRFToken': csrfToken
+      }
+  });
     return response.data;
   } catch (error) {
     console.error('Error adding course:', error);
     throw error;
   }
 };
+
 
 // Edit iteam
 const updateCourse = async (id, courseData) => {
