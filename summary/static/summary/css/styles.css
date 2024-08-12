@@ -25,6 +25,10 @@
   padding: 0;
 }
 
+.dislay-off {
+  display: none;
+}
+
 .grid-iteam img {
   width: auto;
   height: auto;
@@ -160,13 +164,13 @@ header.dark-mode {
   background-color: #dad7cd;
 }
 
-.main artical {
+.main section {
   flex-grow: 2;
 }
 
 .message-alrt {
-  background-color: #344e41;
-  color: #dad7cd;
+  background-color: #a3b18a;
+  color: white;
   width: 100%;
   padding: 10px;
 }
@@ -200,6 +204,8 @@ header.dark-mode {
   overflow: hidden;
   transition: transform 0.2s;
   position: relative;
+  pointer-events: auto;
+  cursor: pointer;
 }
 .card img {
   width: 100%;
@@ -222,9 +228,12 @@ header.dark-mode {
 .card .card-button {
   position: absolute;
   top: 0;
+  border: 0 solid rgba(255, 0, 0, 0);
   border-radius: 34px;
   padding: 0;
   margin: 0;
+  all: unset;
+  cursor: pointer;
 }
 .card .card-button:hover {
   border-color: white;
