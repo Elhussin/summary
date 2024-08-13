@@ -21,7 +21,7 @@
             <div class="title">
                 <h1 id="title">Summaries</h1>
             </div>
-            <div class="nav-small">
+            <div class="nav-small-screen">
                 <span id="nav-view" class="nav-small-button">
                     <svg fill="#143d80" height="25px" width="25px" version="1.1"
                         id="Layer_1" xmlns="http://www.w3.org/2000/svg"
@@ -116,9 +116,9 @@
                 {% for message in messages %}
                     <p>{{ message }}</p>
                 {% endfor %}
-                {% endif %}
+              
             </div>
-
+            {% endif %}
                     {% block body %}
                     {% endblock %}
  
@@ -278,7 +278,7 @@
         </div>  
     </footer>
 
-    <script src="{% static 'summary/js/design.js' %}"></script>
+    <script  src="{% static 'summary/js/design.js' %}"></script>
     <script type="module"  src="{% static 'summary/js/scripts.js' %}"></script>
 
 

@@ -130,6 +130,10 @@ header.dark-mode {
   background-color:$primary-color;
 }
 
+.nav-small-button {
+  display: none;
+}
+
 /* dark mode button */
 .switch {
   position: relative;
@@ -343,7 +347,7 @@ header.dark-mode {
     }
     }
 
-    .nav-small{
+    .nav-small-screen{
       margin-top: 20px;
       display: flex;
       justify-content: space-between;

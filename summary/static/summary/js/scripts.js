@@ -24,13 +24,11 @@ document.addEventListener("DOMContentLoaded", function() {
         console.error("Error:", error);
     }
     };
-
     const renderCards = (data) => {
-        // cardsContainer.innerHTML = "";
+        console.log('card')
         cardsContainer.innerHTML += data
           .map(
             (item) => `
-      
               <div class="card"  id="${item.id}" >
                         <img src="${item.image}" alt="${item.name}">
                         <div class="card-content">
@@ -42,15 +40,8 @@ document.addEventListener("DOMContentLoaded", function() {
           `
           ).join("");
       }
-
-    document.querySelectorAll(".card").forEach((card) => {
-        card.addEventListener("click", (event) => {
-            const itemId = card.id;
-            console.log(itemId); 
-        });
-    });
-    
 fetchCourses(); 
+
 });
 
 
@@ -58,10 +49,16 @@ fetchCourses();
 
 
 
-
-
-
-
+document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll(".card").forEach((card) => {
+        card.addEventListener("click", (event) => {
+            
+            const itemId = card.id;
+            console.log(itemId); // يجب أن يظهر المعرف في وحدة التحكم عند النقر
+            // fetchOneCourse(itemId); // تأكد من أن هذه الدالة معرفة
+        });
+    });
+});
 
 
 

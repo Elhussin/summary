@@ -10,8 +10,8 @@ import {
 document.addEventListener('DOMContentLoaded', (event) => {
 const cardsContainer = document.getElementById("cards-container");
 
+//  add listner event to view our romve form display 
 const coressAddBtn=document.getElementById("course-add-btn");
-
 coressAddBtn.addEventListener('click',()=>{
     const coressAdd=document.getElementById("coress-add")
     if(coressAdd.style.display=='none'){
@@ -19,8 +19,6 @@ coressAddBtn.addEventListener('click',()=>{
     }else{
         coressAdd.style.display='none'
     }
-    
-    
 })
 //featc all course end view
 
@@ -39,7 +37,7 @@ coressAddBtn.addEventListener('click',()=>{
 //  Add New Course 
 document.getElementById('course_form').addEventListener('submit', function(event) {
     // block out Send form
-    event.preventDefault(); // منع الإرسال الافتراضي للنموذج
+    event.preventDefault(); 
     // get form detiels
     let formData = new FormData(this);
     // Send data by Axios
@@ -50,15 +48,24 @@ document.getElementById('course_form').addEventListener('submit', function(event
         }
     })
     .then(response => {
-        const message= "Course added successfully"
-
-        document.getElementById('message-alrt').innerHTML=`<p>`+message+`</p>`
+        let message= "Course added successfully"
         alert(message)
+        document.getElementById('course_form').reset();
         console.log('Course added successfully:', response.data);
     })
     .catch(error => {
+        message= "Error adding course:"
+        alert(message)
         console.error('Error adding course:', error);
     });
 });
 
 })
+
+// declear alert meesage 
+function alert(message){
+    const messageAlrt=document.getElementById('message-alrt')
+    messageAlrt.style.display='block'
+    messageAlrt.innerHTML=`<p>`+message+`</p>`
+    setInterval(function(){messageAlrt.style.display='none'},10*100);
+}
