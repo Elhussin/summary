@@ -7,12 +7,18 @@
 
 
 {% block left-side %}
+{% if user.is_staffe %}
+print hell
+
+  
+{% endif %}
 
 {% if user.is_superuser %}
 
-    <button class="nav-link btn" id="course-add-btn" ><strong >Add New Course </strong></button>
-    {% endif %}
 
+    <button class="nav-link btn" id="course-add-btn" ><strong >Add New Course </strong></button>
+   <button  class="nav-link btn" id="course-view-btn" ><strong > View Courses</strong></button>
+    {% endif %}
     {% if user.is_authenticated %}
         <div><button  class="nav-link btn" >View Courses</button></div>
         <div><button  class="nav-link btn" >Add Course</button></div> 
@@ -29,7 +35,8 @@
 
 
 <div>
-    <h2><strong > You are Welcome Mr {{ user.username|title  }} </strong></h2>
+    <h2 ><strong > You are Welcome Mr {{ user.username|title  }} </strong></h2>
+    <input type="text" id="user_id" value="{{user.id}}">
 </div>
 <hr>
 <div class="message-alrt dislay-off" id="message-alrt"> </div>
@@ -39,7 +46,6 @@
 </article>
 
 <article  id="coress-add" class="dislay-off" >
-
     <h3>New Course</h3>
         <form enctype="multipart/form-data" method="post" id="course_form" >
         {% csrf_token %}

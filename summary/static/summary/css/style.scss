@@ -11,7 +11,7 @@ $font-color:white;
 %flex-containers {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: top;
 
 }
 %grid{
@@ -206,7 +206,7 @@ header.dark-mode {
     display: flex;
     }
   li{
-    display: inline-block;
+     display: inline-block;
   }
 
   li:hover{
@@ -306,32 +306,6 @@ header.dark-mode {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @media (max-width: 800px) {
   .certfi-grid{
  grid-template-columns: auto;
@@ -366,8 +340,8 @@ header.dark-mode {
   }
   .navigation{
       display: none;
-      ul{
-        flex-direction: column;
+      li{
+        flex-direction: block;
       }
  
   }

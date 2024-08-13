@@ -2,7 +2,7 @@
 .main, .navigation, .header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: top;
 }
 
 .certfi-grid {
@@ -273,7 +273,7 @@ header.dark-mode {
   .navigation {
     display: none;
   }
-  .navigation ul {
+  nav ul {
     flex-direction: column;
   }
 }

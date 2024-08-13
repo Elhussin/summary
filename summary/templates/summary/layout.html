@@ -54,10 +54,11 @@
         </header>
 
         <nav id="navigation" class="navigation">
-              <ul>
-            <div  class="navigation-iteam" >    
+              <ul class="navigation-iteam" >
+        
                 {% if user.is_authenticated %}
                 <li   class="nav-item" id="profile">
+                
                     <a class="nav-link btn nav-list" data-section="Profile"   href="{% url 'profile' %}" ><strong id="username">{{ user.username|title  }} </strong></a>
                 </li>
                 {% if user.is_superuser %}
@@ -81,7 +82,7 @@
             {% endif %}
             </ul>
 
-        </div>
+
         
         <div>
             {% if user.is_authenticated %}

@@ -20,18 +20,49 @@ coressAddBtn.addEventListener('click',()=>{
         coressAdd.style.display='none'
     }
 })
-//featc all course end view
+// featc all course end view
 
-// const fetchCourses = async () => {
-//   try {
-//     const courses = await getCourses();
-//     console.log("courses", courses);
-//     renderCards(courses);
-//   } catch (error) {
-//     console.error("Error:", error);
-//   }
-// };
-// fetchCourses(); 
+const fetchCourses = async () => {
+  try {
+    const courses = await getCourses();
+    return courses
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+fetchCourses(); 
+
+const coressViewBtn=document.getElementById("course-view-btn");
+coressViewBtn.addEventListener('click',()=>{
+    const userId=document.getElementById('user_id').value;
+    const allData=fetchCourses(); 
+    renderCards(allData,userId)
+
+})
+
+
+const renderCards = (data, userId) => {
+    // Filter the data based on the userId
+    console.log(data)
+    const filteredData = data.filter(item => item.userId === userId);
+
+    
+    // Render the filtered cards
+    cardsContainer.innerHTML += filteredData
+      .map(
+        (item) => `
+          <div class="card" id="${item.id}" >
+                    <img src="${item.image}" alt="${item.name}">
+                    <div class="card-content">
+                        <h2 class="card-title">${item.name}</h2>
+                        <p class="card-description">${item.description}</p>
+                    </div>
+          </div>
+      `
+      ).join("");
+}
+
+
 
 
 //  Add New Course 
