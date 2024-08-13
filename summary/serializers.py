@@ -60,7 +60,7 @@ class UserSerializer(serializers.ModelSerializer):
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
-        fields = ['id', 'name', 'description', 'created_at', 'image', 'updated_at']
+        fields = ['id', 'name', 'description', 'created_at', 'image', 'updated_at','user_id']
 
 class ComentsSerializer(serializers.ModelSerializer):
     class Meta:
