@@ -4,25 +4,29 @@ import {
   addCourse,
   updateCourse,
   deleteCourse,
+  renderCardsUser
 } from "./api.js";
 //   boxes
 const coursContainer = document.getElementById("cours-container");
 const coressAdd = document.getElementById("coress-add");
+const addCourseForm=document.getElementById("course_form")
 // buttons
 const coressViewBtn = document.getElementById("course-view-btn");
 const coressAddBtn = document.getElementById("course-add-btn");
 
+
 // document.getElementById("nav-view").onclick = function() {navIteam()};
 document.addEventListener("DOMContentLoaded", (event) => {
-  //  add listner event to view our romve form display
-  // display block our none for add course itream
-coressAddBtn.onclick = ()=> { displayIteam(coressAdd, coursContainer, "block");};
 
+// display block our none for add course itream add listner event to view our romve form display
+coressAddBtn.onclick = ()=> { displayIteam(coressAdd, coursContainer, "block");};
   //  add event for courses view button
   coressViewBtn.addEventListener("click", () => {
     displayIteam(coursContainer, coressAdd, "flex");
     fetchCourses();
   });
+
+
 });
 
 
@@ -42,7 +46,7 @@ const displayIteam = (iteamView, IteamOff, diplayType) => {
 const fetchCourses = async () => {
   try {
     const courses = await getCourses();
-    renderCardsUser(courses);
+    renderCardsUser(courses,coursContainer);
   } catch (error) {
     console.error("Error:", error);
   }
@@ -50,11 +54,8 @@ const fetchCourses = async () => {
 
 
 
-
 //  Add New Course
-
-document.getElementById("course_form")
-  .addEventListener("submit", function (event) {
+addCourseForm.addEventListener("submit", function (event) {
     var message =''
     // block out Send form
     event.preventDefault();
@@ -83,25 +84,6 @@ document.getElementById("course_form")
 
 
 
-//  render course dat to view in course view
-const renderCardsUser = (data) => {
-  const userId = document.getElementById("user_id").value;
-  const filteredData = data.filter((item) => item.user_id == userId);
-  console.log("render", userId, filteredData);
-  coursContainer.innerHTML += filteredData
-    .map(
-      (item) => `
-          <div class="card" id="${item.id}" >
-                    <img src="${item.image}" alt="${item.name}">
-                    <div class="card-content">
-                        <h2 class="card-title">${item.name}</h2>
-                        <p class="card-description">${item.description}</p>
-                    </div>
-          </div>`
-    )
-    .join("");
-};
-
 // declear alert meesage
 function alertMessage(message) {
   const messageAlrt = document.getElementById("message-alrt");
@@ -109,5 +91,7 @@ function alertMessage(message) {
   messageAlrt.innerHTML = `<p>` + message + `</p>`;
   setInterval(function () {
     messageAlrt.style.display = "none";
-  }, 100 * 100);
+  }, 10*1000);
 }
+
+
