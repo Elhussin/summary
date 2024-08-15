@@ -26,9 +26,7 @@ coressAddBtn.onclick = ()=> { displayIteam(coressAdd, coursContainer, "block");}
     fetchCourses();
   });
 
-
 });
-
 
 // function to display our none diplay iteams 
 const displayIteam = (iteamView, IteamOff, diplayType) => {
@@ -51,7 +49,6 @@ const fetchCourses = async () => {
     console.error("Error:", error);
   }
 };
-
 
 
 //  Add New Course
@@ -83,6 +80,7 @@ addCourseForm.addEventListener("submit", function (event) {
   });
 
 
+  
 
 // declear alert meesage
 function alertMessage(message) {
