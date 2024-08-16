@@ -248,10 +248,10 @@ header.dark-mode {
 }
 %Cards-Containers{
   display: flex;
-  flex-wrap: wrap;
   gap: 20px;
   padding: 20px;
   justify-content: center;
+  flex-wrap: wrap;
 }
 %cards{
   background-color: #fff;
@@ -266,14 +266,12 @@ header.dark-mode {
 
 // card view 
 .cards-container {
-  width: 300px;
   @extend %Cards-Containers;
-
 }
 
 .card {
-  @extend %cards;
-  
+  width: 300px;
+  @extend %cards;  
   img {
     width: 100%;
     height: 300px;
@@ -282,11 +280,12 @@ header.dark-mode {
 
 .card-datiles {
   @extend %cards;
-  
-  // img {
-  //   width: 100%;
-  //   height: 300px;
-  // }
+  width: 70%;
+  justify-content: center;
+  img {
+    width: 100%;
+    height: 300px;
+  }
 }
 
 

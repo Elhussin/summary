@@ -83,9 +83,16 @@ class SummaryComentsSerializer(serializers.ModelSerializer):
         fields = ['id', 'user', 'course', 'summary', 'comment', 'created_at']
 
 class SummaryLikeSerializer(serializers.ModelSerializer):
+    likes_count = serializers.SerializerMethodField()
+    unlikes_count = serializers.SerializerMethodField()
     class Meta:
         model = SummaryLike
-        fields = ['id', 'user', 'course', 'summary', 'likes', 'unlikes', 'created_at']
+        fields = ['id', 'user', 'course', 'summary', 'likes', 'unlikes','likes_count', 'unlikes_count', 'created_at']
+    def get_likes_count(self, obj):
+        return obj.likes.count()  # get total like for one summary
+
+    def get_unlikes_count(self, obj):
+        return obj.unlikes.count()  # get total unlike for one summary
 
 class SummaryFovariteSerializer(serializers.ModelSerializer):
     class Meta:
