@@ -1,5 +1,4 @@
 # from rest_framework import serializers
-# from .models import Course, Summary, Coments, Like, Fovarite, SummaryComents, SummaryLike, SummaryFovarite
 # from django.contrib.auth.models import User
 
 # class UserSerializer(serializers.ModelSerializer):
@@ -7,48 +6,11 @@
 #         model = User
 #         fields = ['id', 'email', 'username', 'first_name', 'last_name']
 
-
 # class CourseSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model = Course
 #         fields = '__all__'
 
-# # class SummarySerializer(serializers.ModelSerializer):
-# #     class Meta:
-# #         model = Summary
-# #         fields = '__all__'
-        
-# class FovariteSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Fovarite
-#         fields = '__all__'
-        
-
-# class ComentsSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Coments
-#         fields = '__all__'
-        
-
-# class LikeSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Like
-#         fields = '__all__'
-        
-# class SummaryComentsSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = SummaryComents
-#         fields = '__all__'
-        
-# class SummaryLikeSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = SummaryLike
-#         fields = '__all__'
-
-# class SummaryFovariteSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = SummaryFovarite
-#         fields = '__all__'
 from rest_framework import serializers
 from .models import User, Course, Summary, Coments, Like, Fovarite, SummaryComents, SummaryLike, SummaryFovarite
 
@@ -57,10 +19,10 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'email', 'username', 'first_name', 'last_name']
 
-class CourseSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Course
-        fields = ['id', 'name', 'description', 'created_at', 'image', 'updated_at','user_id']
+# class CourseSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Course
+#         fields = ['id', 'name', 'description', 'created_at', 'image', 'updated_at','user_id']
 
 class ComentsSerializer(serializers.ModelSerializer):
     class Meta:
@@ -98,6 +60,21 @@ class SummaryFovariteSerializer(serializers.ModelSerializer):
     class Meta:
         model = SummaryFovarite
         fields = ['id', 'user', 'course', 'summary', 'followStatus', 'timestamp']   
+
+  
+class CourseSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    course_comments = ComentsSerializer(many=True, read_only=True, source='ComentsSummary')
+    course_likes = LikeSerializer(many=True, read_only=True, source='LikeSummary')
+    course_favorites = FovariteSerializer(many=True, read_only=True, source='FovariteSummary')
+    class Meta:
+        model = Course
+        fields = ['id', 'name', 'description', 'created_at', 'image', 'updated_at','user_id',
+                  'user','course_likes','course_comments','course_favorites'
+                  
+                  ]
+
+
 
 class SummarySerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)

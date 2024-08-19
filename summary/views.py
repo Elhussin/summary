@@ -4,11 +4,13 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.http import JsonResponse
-from django.shortcuts import HttpResponse, HttpResponseRedirect, render
+from django.shortcuts import HttpResponse, HttpResponseRedirect, render ,redirect
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from .models import User, Course, Summary, Coments, Like, Fovarite
 from django.contrib.auth.models import Group, User
+
+
 
 # rest
 from rest_framework import permissions, viewsets
@@ -162,3 +164,8 @@ def usersProfile(request):
 
     else:
         return render(request, "summary/profile.html")
+
+
+
+def pageNotFound(request, exception):
+    return redirect('index')  # 'home' هو اسم الـ URL للصفحة الرئيسية

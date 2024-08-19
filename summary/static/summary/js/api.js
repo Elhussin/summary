@@ -66,6 +66,7 @@ const deleteCourse = async (id) => {
 
 
 const renderCardsUser = (data,coursContainer) => {
+console.log("data",data)
   coursContainer.innerHTML += data
     .map(
       (item) => `
@@ -139,77 +140,74 @@ coursContainer.innerHTML+=
 
 
 export { getCourses, getCourse, addCourse, updateCourse, deleteCourse ,renderCardsUser };
-function viewSummary(summary) {
+
+// function viewSummary(summary) {
   
+//   console.log("Summary ID:", summary.id);
+//   console.log("Title:", summary.title);
+//   console.log("Content:", summary.content);
+//   console.log("Created At:", summary.created_at);
+//   console.log("Updated At:", summary.updated_at);
 
+//   console.log("\nUser Info:");
+//   console.log("User ID:", summary.user.id);
+//   console.log("Email:", summary.user.email);
+//   console.log("Username:", summary.user.username);
 
+//   // console.log("\nCourse Info:");
+//   // console.log("Course ID:", summary.course.id);
+//   // console.log("Course Name:", summary.course.name);
+//   // console.log("Course Description:", summary.course.description);
+//   // console.log("Course Image URL:", summary.course.image);
 
+//   console.log("\nComments:");
+//   summary.summary_comments.forEach(comment => {
+//       console.log("Comment ID:", comment.id);
+//       console.log("User ID:", comment.user);
+//       console.log("Course ID:", comment.course);
+//       console.log("Comment:", comment.comment);
+//       console.log("Created At:", comment.created_at);
+//   });
 
-  console.log("Summary ID:", summary.id);
-  console.log("Title:", summary.title);
-  console.log("Content:", summary.content);
-  console.log("Created At:", summary.created_at);
-  console.log("Updated At:", summary.updated_at);
+//   console.log("\nLikes:", summary.summary_likes.length);
+//   console.log("\nFavorites:", summary.summary_favorites.length);
+// }
 
-  console.log("\nUser Info:");
-  console.log("User ID:", summary.user.id);
-  console.log("Email:", summary.user.email);
-  console.log("Username:", summary.user.username);
+// // Example usage
+// const summaryObject = {
+//   "id": 1,
+//   "title": "elmeanmt",
+//   "content": "elmeant : use to creat gedlinewep page",
+//   "created_at": "2024-08-08T11:37:02.570228Z",
+//   "updated_at": "2024-08-08T11:37:02.570228Z",
+//   "user": {
+//       "id": 1,
+//       "email": "go@mail.com",
+//       "username": "husain",
+//       "first_name": "",
+//       "last_name": ""
+//   },
+//   "course": {
+//       "id": 1,
+//       "name": "Html",
+//       "description": "لغة ترميز للمتصفحات",
+//       "created_at": "2024-08-07T11:48:06.196536Z",
+//       "image": "http://127.0.0.1:8000/media/course_images/contacts-1.jpeg",
+//       "updated_at": "2024-08-07T21:50:46.553131Z",
+//       "user_id": 1
+//   },
+//   "summary_comments": [
+//       {
+//           "id": 1,
+//           "user": 1,
+//           "course": 1,
+//           "summary": 1,
+//           "comment": "good nice-",
+//           "created_at": "2024-08-08T11:37:18.690049Z"
+//       }
+//   ],
+//   "summary_likes": [],
+//   "summary_favorites": []
+// };
 
-  // console.log("\nCourse Info:");
-  // console.log("Course ID:", summary.course.id);
-  // console.log("Course Name:", summary.course.name);
-  // console.log("Course Description:", summary.course.description);
-  // console.log("Course Image URL:", summary.course.image);
-
-  console.log("\nComments:");
-  summary.summary_comments.forEach(comment => {
-      console.log("Comment ID:", comment.id);
-      console.log("User ID:", comment.user);
-      console.log("Course ID:", comment.course);
-      console.log("Comment:", comment.comment);
-      console.log("Created At:", comment.created_at);
-  });
-
-  console.log("\nLikes:", summary.summary_likes.length);
-  console.log("\nFavorites:", summary.summary_favorites.length);
-}
-
-// Example usage
-const summaryObject = {
-  "id": 1,
-  "title": "elmeanmt",
-  "content": "elmeant : use to creat gedlinewep page",
-  "created_at": "2024-08-08T11:37:02.570228Z",
-  "updated_at": "2024-08-08T11:37:02.570228Z",
-  "user": {
-      "id": 1,
-      "email": "go@mail.com",
-      "username": "husain",
-      "first_name": "",
-      "last_name": ""
-  },
-  "course": {
-      "id": 1,
-      "name": "Html",
-      "description": "لغة ترميز للمتصفحات",
-      "created_at": "2024-08-07T11:48:06.196536Z",
-      "image": "http://127.0.0.1:8000/media/course_images/contacts-1.jpeg",
-      "updated_at": "2024-08-07T21:50:46.553131Z",
-      "user_id": 1
-  },
-  "summary_comments": [
-      {
-          "id": 1,
-          "user": 1,
-          "course": 1,
-          "summary": 1,
-          "comment": "good nice-",
-          "created_at": "2024-08-08T11:37:18.690049Z"
-      }
-  ],
-  "summary_likes": [],
-  "summary_favorites": []
-};
-
-viewSummary(summaryObject);
+// viewSummary(summaryObject);

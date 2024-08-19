@@ -51,11 +51,11 @@ const removeCourse = async (id) => {
 
 
 
-// // // دالة لعرض البيانات المرتبطة بالعنصر
-const displayItemDetails = (item,coursContainer) => {
-  console.log("Displaying details for:", item);
-  cardsContainer.innerHTML=`Name: ${item.name}\nDescription: ${item.description}`;
-};
+// // // // دالة لعرض البيانات المرتبطة بالعنصر
+// const displayItemDetails = (item,coursContainer) => {
+//   console.log("Displaying details for:", item);
+//   cardsContainer.innerHTML=`Name: ${item.name}\nDescription: ${item.description}`;
+// };
 
 
 
