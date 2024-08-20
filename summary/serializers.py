@@ -63,16 +63,27 @@ class SummaryFovariteSerializer(serializers.ModelSerializer):
 
   
 class CourseSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
-    course_comments = ComentsSerializer(many=True, read_only=True, source='ComentsSummary')
-    course_likes = LikeSerializer(many=True, read_only=True, source='LikeSummary')
-    course_favorites = FovariteSerializer(many=True, read_only=True, source='FovariteSummary')
+    user = UserSerializer()
+    comments = serializers.SerializerMethodField()
+    likes = serializers.SerializerMethodField()
+    favorites = serializers.SerializerMethodField()
+
     class Meta:
-        model = Course
-        fields = ['id', 'name', 'description', 'created_at', 'image', 'updated_at','user_id',
-                  'user','course_likes','course_comments','course_favorites'
-                  
-                  ]
+        model = Course  # افترض أن Course هو النموذج الأساسي للكورس
+        fields = ['id', 'name', 'description', 'created_at', 'image', 'updated_at', 'user', 'comments', 'likes', 'favorites']
+
+    def get_comments(self, obj):
+        comments = Coments.objects.filter(course=obj)
+        return ComentsSerializer(comments, many=True).data
+
+    def get_likes(self, obj):
+        likes = Like.objects.filter(course=obj)
+        return LikeSerializer(likes, many=True).data
+
+    def get_favorites(self, obj):
+        favorites = Fovarite.objects.filter(course=obj)
+        return FovariteSerializer(favorites, many=True).data
+
 
 
 
