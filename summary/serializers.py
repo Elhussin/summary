@@ -34,6 +34,7 @@ class LikeSerializer(serializers.ModelSerializer):
         model = Like
         fields = ['id', 'user', 'course', 'likes', 'unlikes', 'created_at']
 
+    
 class FovariteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Fovarite
@@ -63,7 +64,7 @@ class SummaryFovariteSerializer(serializers.ModelSerializer):
 
   
 class CourseSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
+    user = UserSerializer(read_only=True)
     comments = serializers.SerializerMethodField()
     likes = serializers.SerializerMethodField()
     favorites = serializers.SerializerMethodField()

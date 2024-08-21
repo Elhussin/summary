@@ -111,103 +111,50 @@ const fetchOneCourses = async (id,coursContainer) => {
   }
 };
 
-const displayItemDetails = (summary,coursContainer) => {
-  console.log("Displaying details for:", summary);
-  console.table(summary)
-  
+const displayItemDetails = (data,coursContainer) => {
+  coursContainer.innerHTML=''
+  console.log("Displaying details for:", data);
+  const informtian= document.getElementById('informtian')
   coursContainer.innerHTML=`
-  <div class='card-datiles' id="${summary.course.id}">
-  <img src="${ summary.course.image}" alt="${ summary.course.name}">
+  <div class='card-datiles' id="${data.course.id}">
+  <img src="${ data.course.image}" alt="${ data.course.name}">
   <div class="card-content">
-      <h2 class="card-title">Course Name: ${summary.course.name}</h2>
-      <p class="card-description">Description:${summary.course.description}</p>
+      <h2 class="card-title">${data.course.name}</h2>
+      <p class="card-description">Description:${data.course.description}</p>
   </div>
+</div>`
+const likesCount = data.course.likes.filter(item => item.likes).length;
+const unlikesCount = data.course.likes.filter(item => item.unlikes).length;
+informtian.innerHTML+= `
   <div>
-  <div class="form-group">
-    <label for="description">Add Comment</label>
-    <textarea class="form-control" name="comments" id="description" cols="20" rows="10"></textarea>
-</div>
-<input type="submit" id="send" class="btn btn-primary float-right m-3" value="Comment"/>
+  <h2 class="card-title">Course Name: ${data.course.name}</h2>
+  <h2 class="card-title">Add BY: ${data.user.username}</h2>
+  <p>Likes:${likesCount}</p>
+   <p>UnLikes:${unlikesCount}</p>
+  <p> Creat At : ${new Date(data.course.created_at)} </p>
+   </div>
+`
+
+
+data.course.comments.forEach(comment =>{
+const createdAtDate = new Date(comment.created_at)
+
+ coursContainer.innerHTML+= `
   <div>
-<div>`
-summary.summary_comments.forEach(comment => {
-coursContainer.innerHTML+=
+  <p id="${comment.user}">Add By ${data.course.user.username}  </p>
+  <p> ${comment.comment} </p> 
+  <p>Created At: ${createdAtDate} </p>
+    <div class="form-group">
+    <label for="comments">Add Comment</label>
+    <textarea class="form-control" name="comments" id="comments" cols="20" rows="5"></textarea>
+    </div>
+<input type="submit" id="add-comments" class="btn btn-primary float-right m-3" value="Comment"/>
+  </div>
+
+
 `
-<p>${comment.id}: ${comment.user} :${comment.course} : ${comment.comment} :"Created At:", ${comment.created_at} </p>
-`
-});
+})
 };
 
 
 export { getCourses, getCourse, addCourse, updateCourse, deleteCourse ,renderCardsUser };
-
-// function viewSummary(summary) {
-  
-//   console.log("Summary ID:", summary.id);
-//   console.log("Title:", summary.title);
-//   console.log("Content:", summary.content);
-//   console.log("Created At:", summary.created_at);
-//   console.log("Updated At:", summary.updated_at);
-
-//   console.log("\nUser Info:");
-//   console.log("User ID:", summary.user.id);
-//   console.log("Email:", summary.user.email);
-//   console.log("Username:", summary.user.username);
-
-//   // console.log("\nCourse Info:");
-//   // console.log("Course ID:", summary.course.id);
-//   // console.log("Course Name:", summary.course.name);
-//   // console.log("Course Description:", summary.course.description);
-//   // console.log("Course Image URL:", summary.course.image);
-
-//   console.log("\nComments:");
-//   summary.summary_comments.forEach(comment => {
-//       console.log("Comment ID:", comment.id);
-//       console.log("User ID:", comment.user);
-//       console.log("Course ID:", comment.course);
-//       console.log("Comment:", comment.comment);
-//       console.log("Created At:", comment.created_at);
-//   });
-
-//   console.log("\nLikes:", summary.summary_likes.length);
-//   console.log("\nFavorites:", summary.summary_favorites.length);
-// }
-
-// // Example usage
-// const summaryObject = {
-//   "id": 1,
-//   "title": "elmeanmt",
-//   "content": "elmeant : use to creat gedlinewep page",
-//   "created_at": "2024-08-08T11:37:02.570228Z",
-//   "updated_at": "2024-08-08T11:37:02.570228Z",
-//   "user": {
-//       "id": 1,
-//       "email": "go@mail.com",
-//       "username": "husain",
-//       "first_name": "",
-//       "last_name": ""
-//   },
-//   "course": {
-//       "id": 1,
-//       "name": "Html",
-//       "description": "لغة ترميز للمتصفحات",
-//       "created_at": "2024-08-07T11:48:06.196536Z",
-//       "image": "http://127.0.0.1:8000/media/course_images/contacts-1.jpeg",
-//       "updated_at": "2024-08-07T21:50:46.553131Z",
-//       "user_id": 1
-//   },
-//   "summary_comments": [
-//       {
-//           "id": 1,
-//           "user": 1,
-//           "course": 1,
-//           "summary": 1,
-//           "comment": "good nice-",
-//           "created_at": "2024-08-08T11:37:18.690049Z"
-//       }
-//   ],
-//   "summary_likes": [],
-//   "summary_favorites": []
-// };
-
-// viewSummary(summaryObject);

@@ -12,11 +12,11 @@ const favorite = `<svg width="40px" height="40px" viewBox="0 0 20.00 20.00" vers
 
 
 document.addEventListener("DOMContentLoaded", function() {
-    const cardsContainer = document.getElementById("cards-container");
+    const coursContainer = document.getElementById("cours-container");
     const fetchCourses = async () => {
     try {
         const courses = await getCourses();
-        renderCardsUser(courses,cardsContainer);
+        renderCardsUser(courses,coursContainer);
     } catch (error) {
         console.error("Error:", error);
     }
