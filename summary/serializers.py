@@ -46,32 +46,43 @@ class SummaryComentsSerializer(serializers.ModelSerializer):
         fields = ['id', 'user', 'course', 'summary', 'comment', 'created_at']
 
 class SummaryLikeSerializer(serializers.ModelSerializer):
-    likes_count = serializers.SerializerMethodField()
-    unlikes_count = serializers.SerializerMethodField()
     class Meta:
         model = SummaryLike
-        fields = ['id', 'user', 'course', 'summary', 'likes', 'unlikes','likes_count', 'unlikes_count', 'created_at']
-    def get_likes_count(self, obj):
-        return obj.likes.count()  # get total like for one summary
-
-    def get_unlikes_count(self, obj):
-        return obj.unlikes.count()  # get total unlike for one summary
+        fields = ['id', 'user', 'course', 'summary', 'likes', 'unlikes','created_at']
 
 class SummaryFovariteSerializer(serializers.ModelSerializer):
     class Meta:
         model = SummaryFovarite
         fields = ['id', 'user', 'course', 'summary', 'followStatus', 'timestamp']   
 
-  
+
+
+
+class SummarySerializer(serializers.ModelSerializer):
+    summary_comments = SummaryComentsSerializer(many=True, read_only=True, source='SummaryComentsSummary')
+    summary_likes = SummaryLikeSerializer(many=True, read_only=True, source='SummarylikeSummary')
+    summary_favorites = SummaryFovariteSerializer(many=True, read_only=True, source='SummaryfovariteSummary')
+#  SummaryComents, SummaryLike, SummaryFovarite
+    class Meta:
+        model = Summary
+        fields = [
+            'id', 'title', 'content', 'created_at', 'updated_at',
+            'user', 'course', 'summary_comments', 'summary_likes', 'summary_favorites'
+        ]
+
+
+
 class CourseSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     comments = serializers.SerializerMethodField()
     likes = serializers.SerializerMethodField()
     favorites = serializers.SerializerMethodField()
+    summary = serializers.SerializerMethodField()
 
     class Meta:
-        model = Course  # افترض أن Course هو النموذج الأساسي للكورس
-        fields = ['id', 'name', 'description', 'created_at', 'image', 'updated_at', 'user', 'comments', 'likes', 'favorites']
+        #MAin moduel for course 
+        model = Course  
+        fields = ['id', 'name', 'description', 'created_at', 'image', 'updated_at', 'user', 'comments', 'likes', 'favorites','summary']
 
     def get_comments(self, obj):
         comments = Coments.objects.filter(course=obj)
@@ -84,20 +95,8 @@ class CourseSerializer(serializers.ModelSerializer):
     def get_favorites(self, obj):
         favorites = Fovarite.objects.filter(course=obj)
         return FovariteSerializer(favorites, many=True).data
+    
+    def get_summary(self, obj):
+        summary = Summary.objects.filter(course=obj)
+        return SummarySerializer(summary, many=True).data
 
-
-
-
-class SummarySerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
-    course = CourseSerializer(read_only=True)
-    summary_comments = SummaryComentsSerializer(many=True, read_only=True, source='SummaryComentsSummary')
-    summary_likes = SummaryLikeSerializer(many=True, read_only=True, source='SummarylikeSummary')
-    summary_favorites = SummaryFovariteSerializer(many=True, read_only=True, source='SummaryfovariteSummary')
-
-    class Meta:
-        model = Summary
-        fields = [
-            'id', 'title', 'content', 'created_at', 'updated_at',
-            'user', 'course', 'summary_comments', 'summary_likes', 'summary_favorites'
-        ]

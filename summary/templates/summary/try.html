@@ -13,75 +13,7 @@
   <p>وصف الدورة: {{course.description}}</p>
 
   <script>
-    let data = {
-      "id": 1,
-      "title": "elmeanmt",
-      "content": "elmeant : use to creat gedlinewep page",
-      "created_at": "2024-08-08T11:37:02.570228Z",
-      "updated_at": "2024-08-08T11:37:02.570228Z",
-      "user": {
-        "id": 1,
-        "email": "go@mail.com",
-        "username": "husain",
-        "first_name": "",
-        "last_name": ""
-      },
-      "course": {
-        "id": 1,
-        "name": "Html",
-        "description": "لغة ترميز للمتصفحات",
-        "created_at": "2024-08-07T11:48:06.196536Z",
-        "image": "http://127.0.0.1:8000/media/course_images/contacts-1.jpeg",
-        "updated_at": "2024-08-07T21:50:46.553131Z",
-        "user": {
-          "id": 1,
-          "email": "go@mail.com",
-          "username": "husain",
-          "first_name": "",
-          "last_name": ""
-        },
-        "comments": [
-          {
-            "id": 2,
-            "user": 1,
-            "course": 1,
-            "comment": "ffffffffffffff",
-            "created_at": "2024-08-16T07:02:33.826774Z"
-          }
-        ],
-        "likes": [
-          {
-            "id": 1,
-            "user": 1,
-            "course": 1,
-            "likes": true,
-            "unlikes": false,
-            "created_at": "2024-08-08T11:37:30.031387Z"
-          }
-        ],
-        "favorites": [
-          {
-            "id": 2,
-            "user": 1,
-            "course": 1,
-            "followStatus": true,
-            "timestamp": "2024-08-08T11:37:49.701728Z"
-          }
-        ]
-      },
-      "summary_comments": [
-        {
-          "id": 1,
-          "user": 1,
-          "course": 1,
-          "summary": 1,
-          "comment": "good nice-",
-          "created_at": "2024-08-08T11:37:18.690049Z"
-        }
-      ],
-      "summary_likes": [],
-      "summary_favorites": []
-    };
+
 
     let title = document.querySelector('h1');
     let content = document.querySelector('p:nth-child(2)');
@@ -93,19 +25,11 @@
     content.textContent = data.content;
     username
 
-
-
-
-    <!DOCTYPE html>
-<html>
-<head>
-  <title>عرض التعليقات</title>
-</head>
-<body>
+<!-- 
   <ul id="comments-list"></ul>
 
   <script>
-    let data = /* ... بياناتك JSON هنا ... */;
+
 
     const commentsList = document.getElementById('comments-list');
 
@@ -131,6 +55,4 @@
         // هنا يمكنك تنفيذ وظيفة الحذف
       }
     });
-  </script>
-</body>
-</html>
+  </script> -->
