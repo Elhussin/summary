@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>عرض بيانات الدورة</title>
+</head>
+<body>
+  <h1>{{title}}</h1>
+  <p>{{content}}</p>
+  <h2>منشئ الدورة:</h2>
+  <p>بواسطة: {{user.username}}</p>
+  <h2>الدورة:</h2>
+  <p>{{course.name}}</p>
+  <p>وصف الدورة: {{course.description}}</p>
+
+  <script>
+    let data = {
+      "id": 1,
+      "title": "elmeanmt",
+      "content": "elmeant : use to creat gedlinewep page",
+      "created_at": "2024-08-08T11:37:02.570228Z",
+      "updated_at": "2024-08-08T11:37:02.570228Z",
+      "user": {
+        "id": 1,
+        "email": "go@mail.com",
+        "username": "husain",
+        "first_name": "",
+        "last_name": ""
+      },
+      "course": {
+        "id": 1,
+        "name": "Html",
+        "description": "لغة ترميز للمتصفحات",
+        "created_at": "2024-08-07T11:48:06.196536Z",
+        "image": "http://127.0.0.1:8000/media/course_images/contacts-1.jpeg",
+        "updated_at": "2024-08-07T21:50:46.553131Z",
+        "user": {
+          "id": 1,
+          "email": "go@mail.com",
+          "username": "husain",
+          "first_name": "",
+          "last_name": ""
+        },
+        "comments": [
+          {
+            "id": 2,
+            "user": 1,
+            "course": 1,
+            "comment": "ffffffffffffff",
+            "created_at": "2024-08-16T07:02:33.826774Z"
+          }
+        ],
+        "likes": [
+          {
+            "id": 1,
+            "user": 1,
+            "course": 1,
+            "likes": true,
+            "unlikes": false,
+            "created_at": "2024-08-08T11:37:30.031387Z"
+          }
+        ],
+        "favorites": [
+          {
+            "id": 2,
+            "user": 1,
+            "course": 1,
+            "followStatus": true,
+            "timestamp": "2024-08-08T11:37:49.701728Z"
+          }
+        ]
+      },
+      "summary_comments": [
+        {
+          "id": 1,
+          "user": 1,
+          "course": 1,
+          "summary": 1,
+          "comment": "good nice-",
+          "created_at": "2024-08-08T11:37:18.690049Z"
+        }
+      ],
+      "summary_likes": [],
+      "summary_favorites": []
+    };
+
+    let title = document.querySelector('h1');
+    let content = document.querySelector('p:nth-child(2)');
+    let username = document.querySelector('p:nth-child(4)');
+    let courseName = document.querySelector('p:nth-child(6)');
+    let courseDescription = document.querySelector('p:nth-child(7)');
+
+    title.textContent = data.title;
+    content.textContent = data.content;
+    username
+
+
+
+
+    <!DOCTYPE html>
+<html>
+<head>
+  <title>عرض التعليقات</title>
+</head>
+<body>
+  <ul id="comments-list"></ul>
+
+  <script>
+    let data = /* ... بياناتك JSON هنا ... */;
+
+    const commentsList = document.getElementById('comments-list');
+
+    data.course.comments.forEach(comment => {
+      const li = document.createElement('li');
+      li.innerHTML = `
+        ${comment.comment}
+        <span>(${comment.likes.length} إعجاب)</span>
+        <button class="edit">تعديل</button>
+        <button class="delete">حذف</button>
+      `;
+
+      commentsList.appendChild(li);
+    });
+
+    // إضافة حدث النقر لأزرار التعديل والحذف (هذا مثال بسيط)
+    document.addEventListener('click', (event) => {
+      if (event.target.classList.contains('edit')) {
+        console.log('تم النقر على زر التعديل');
+        // هنا يمكنك تنفيذ وظيفة التعديل
+      } else if (event.target.classList.contains('delete')) {
+        console.log('تم النقر على زر الحذف');
+        // هنا يمكنك تنفيذ وظيفة الحذف
+      }
+    });
+  </script>
+</body>
+</html>
