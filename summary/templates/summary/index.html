@@ -5,14 +5,13 @@
 
 {% block title %}Home{% endblock %}
 
-{% block script %}
-<!-- <script src="{% static 'summary/js/index.js' %}"></script> -->
-{% endblock %}
+
 
 {% block body %}
-
-{% comment %} {% if requests.user%} {% endcomment %}
-<h1>{{title}}</h1>
+<div id="cours-container" class="cards-container"></div>
+{% endblock %}
+<!-- {% comment %} {% if requests.user%} {% endcomment %} -->
+<!-- <h1>{{title}}</h1>
 <p>{{content}}</p>
 <h2>منشئ الدورة:{{user.username}}</h2>
 <p>بواسطة: {{user.username}}</p>
@@ -20,12 +19,11 @@
 <p>{{course.name}}</p>
 <p>وصف الدورة: {{course.description}}</p>
 
-<h2> Courses  </h2>
-<div id="cours-container" class="cards-container"></div>
-
-<script type="module"  src="{% static 'summary/js/scripts.js' %}"></script>
+<h2> Courses  </h2> -->
 
 
+
+<!-- 
 <script>
     let data = {
         "id": 1,
@@ -110,5 +108,4 @@
     
       title.textContent = data.title;
 
-</script>
-{% endblock %}
+</script> -->

@@ -4,7 +4,6 @@ import {
   addCourse,
   updateCourse,
   deleteCourse,
-  renderCardsUser
 } from "./api.js";
 //   boxes
 const coursContainer = document.getElementById("cours-container");
@@ -15,9 +14,7 @@ const coressViewBtn = document.getElementById("course-view-btn");
 const coressAddBtn = document.getElementById("course-add-btn");
 
 
-// document.getElementById("nav-view").onclick = function() {navIteam()};
 document.addEventListener("DOMContentLoaded", (event) => {
-
 // display block our none for add course itream add listner event to view our romve form display
 coressAddBtn.onclick = ()=> { displayIteam(coressAdd, coursContainer, "block");};
   //  add event for courses view button
@@ -25,7 +22,6 @@ coressAddBtn.onclick = ()=> { displayIteam(coressAdd, coursContainer, "block");}
     displayIteam(coursContainer, coressAdd, "flex");
     fetchCourses();
   });
-
 });
 
 // function to display our none diplay iteams 
@@ -40,15 +36,15 @@ const displayIteam = (iteamView, IteamOff, diplayType) => {
 
 
 
-// featc  courses add by thise user  end view
-const fetchCourses = async () => {
-  try {
-    const courses = await getCourses();
-    renderCardsUser(courses,coursContainer);
-  } catch (error) {
-    console.error("Error:", error);
-  }
-};
+// // featc  courses add by thise user  end view
+// const fetchCourses = async () => {
+//   try {
+//     const courses = await getCourses();
+//     renderCardsUser(courses);
+//   } catch (error) {
+//     console.error("Error:", error);
+//   }
+// };
 
 
 //  Add New Course
