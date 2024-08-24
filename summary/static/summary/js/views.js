@@ -20,7 +20,6 @@ fetchCourses();
 
 });
 
-
 const viewContinear=document.getElementById('cours-container')
 
 const renderCardsUser = (data) => {
@@ -74,20 +73,30 @@ const renderCardsUser = (data) => {
 const displayItemDetails = (data) => {
   console.log(data)
   viewContinear.innerHTML=`
-    <div class='card-datiles' id="${data.id}">
+    <div class='card-datiles'">
     <img src="${ data.image}" alt="${ data.name}">
     <div class="card-content">
         <h2 class="card-title">${data.name}</h2>
         <p class="card-description">Description:${data.description}</p>
     </div>
   </div>`
+  
   const likesCount = data.likes.filter(item => item.likes).length;
   const unlikesCount = data.likes.filter(item => item.unlikes).length;
   const date= new Date(data.created_at);
+  const coursDetieals = document.getElementById('cours-detieals');
+
+  coursDetieals.innerHTML=`
+      <div>
+    <h1 id="course-id" data-courseid="${data.id}"> Title: ${data.name.toUpperCase()}  </h1>
+    <p>Add by  ${data.user.username.toUpperCase()} </p> 
+    <p>Created At: ${new Date(data.created_at)} </p>
+     <button class="btn btn-primary" id="edit-course" >Edit</button>
+     <button class="btn btn-primary" id="delate-course" >Delate</button>
+  `
   
   data.comments.forEach(comment =>{
   const createdAtDate = new Date(comment.created_at)
-  
   viewContinear.innerHTML+= `
     <div>
     <p id="${comment.user}">Add By ${data.user.username}  </p>
@@ -101,4 +110,35 @@ const displayItemDetails = (data) => {
     </div>
   `
   })
-  };
+  const editCourse= document.getElementById('edit-course')
+
+const delateCourse= document.getElementById('delate-course')
+
+
+delateCourse.addEventListener("click", (e)=> {
+
+  e.preventDefault
+  const courseID= document.getElementById('course-id')
+  const id = courseID.dataset.courseid; 
+
+  console.log( id)
+
+})
+
+
+  }
+
+
+
+
+
+
+const removeCourse = async (id) => {
+  try {
+    await deleteCourse(id);
+    console.log(`Course with id ${id} deleted successfully`);
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+;

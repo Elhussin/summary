@@ -36,16 +36,6 @@ const displayIteam = (iteamView, IteamOff, diplayType) => {
 
 
 
-// // featc  courses add by thise user  end view
-// const fetchCourses = async () => {
-//   try {
-//     const courses = await getCourses();
-//     renderCardsUser(courses);
-//   } catch (error) {
-//     console.error("Error:", error);
-//   }
-// };
-
 
 //  Add New Course
 addCourseForm.addEventListener("submit", function (event) {
@@ -54,9 +44,9 @@ addCourseForm.addEventListener("submit", function (event) {
     event.preventDefault();
     // get form detiels
     let formData = new FormData(this);
+
     // Send data by Axios
-    axios
-      .post("/api/courses/", formData, {
+    axios .post("/api/courses/", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           "X-CSRFToken": formData.get("csrfmiddlewaretoken"), // get from form  CSRF Token
@@ -75,8 +65,7 @@ addCourseForm.addEventListener("submit", function (event) {
       });
   });
 
-
-  
+    
 
 // declear alert meesage
 function alertMessage(message) {
