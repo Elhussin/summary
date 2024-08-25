@@ -52,7 +52,7 @@ const updateCourse = async (id, courseData) => {
 // Delate iteam
 const deleteCourse = async (id) => {
   try {
-    await axios.delete(`${API_URL}${id}/`);
+    await axios.delete(`${API_URL}courses/${id}/`);
   } catch (error) {
     console.error(`Error deleting course with id ${id}:`, error);
     throw error;

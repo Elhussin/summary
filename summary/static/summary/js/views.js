@@ -114,19 +114,24 @@ const displayItemDetails = (data) => {
 
 const delateCourse= document.getElementById('delate-course')
 
-
+//  to delat course
 delateCourse.addEventListener("click", (e)=> {
 
   e.preventDefault
   const courseID= document.getElementById('course-id')
   const id = courseID.dataset.courseid; 
-
+  removeCourse(id)
   console.log( id)
 
 })
 
 
+//  to editt course 
+
+
   }
+
+  // 
 
 
 
@@ -142,3 +147,48 @@ const removeCourse = async (id) => {
   }
 };
 ;
+
+
+// // Updat Course
+// const modifyCourse = async (id) => {
+//   const updatedData = {
+//     title: "Html 5",
+//     // إضافة بيانات الدورة المحدثة هنا
+//   };
+
+//   try {
+//     const updatedCourse = await updateCourse(id, updatedData);
+//     console.log("Updated Course:", updatedCourse);
+//   } catch (error) {
+//     console.error("Error:", error);
+//   }
+// };
+
+
+// //  Add New Course
+// addCourseForm.addEventListener("submit", function (event) {
+//   var message =''
+//   // block out Send form
+//   event.preventDefault();
+//   // get form detiels
+//   let formData = new FormData(this);
+
+//   // Send data by Axios
+//   axios .post("/api/courses/", formData, {
+//       headers: {
+//         "Content-Type": "multipart/form-data",
+//         "X-CSRFToken": formData.get("csrfmiddlewaretoken"), // get from form  CSRF Token
+//       },
+//     })
+//     .then((response) => {
+//       message = "Course added successfully";
+//       alertMessage(message);
+//       document.getElementById("course_form").reset();
+//       console.log("Course added successfully:", response.data);
+//     })
+//     .catch((error) => {
+//       message = "Error adding course";
+//       alertMessage(message );
+//       console.error("Error adding course:", error);
+//     });
+// });

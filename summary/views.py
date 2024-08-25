@@ -9,7 +9,7 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from .models import User, Course, Summary, Coments, Like, Fovarite
 from django.contrib.auth.models import Group, User
-
+from django.views.decorators.csrf import csrf_exempt
 
 
 # rest
@@ -53,7 +53,7 @@ class SummaryViewSet(viewsets.ModelViewSet):
     serializer_class = SummarySerializer
 
 
-    
+# @csrf_exempt
 class CourseViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all().order_by('created_at')
     serializer_class = CourseSerializer
