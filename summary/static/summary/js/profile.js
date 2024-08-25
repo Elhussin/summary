@@ -4,6 +4,8 @@ import {
   addCourse,
   updateCourse,
   deleteCourse,
+  alertMessage,
+  displayIteam,
 } from "./api.js";
 //   boxes
 const coursContainer = document.getElementById("cours-container");
@@ -20,19 +22,12 @@ coressAddBtn.onclick = ()=> { displayIteam(coressAdd, coursContainer, "block");}
   //  add event for courses view button
   coressViewBtn.addEventListener("click", () => {
     displayIteam(coursContainer, coressAdd, "flex");
-    fetchCourses();
+    // fetchCourses();
   });
 });
 
 // function to display our none diplay iteams 
-const displayIteam = (iteamView, IteamOff, diplayType) => {
-  if (iteamView.style.display == "none") {
-    iteamView.style.display = diplayType;
-    IteamOff.style.display = "none";
-  } else {
-    iteamView.style.display = "none";
-  }
-};
+
 
 
 
@@ -66,15 +61,21 @@ addCourseForm.addEventListener("submit", function (event) {
   });
 
     
+//   document.getElementById('image').addEventListener('change', function(event) {
+//     const file = event.target.files[0]; 
 
-// declear alert meesage
-function alertMessage(message) {
-  const messageAlrt = document.getElementById("message-alrt");
-  messageAlrt.style.display = "block";
-  messageAlrt.innerHTML = `<p>` + message + `</p>`;
-  setInterval(function () {
-    messageAlrt.style.display = "none";
-  }, 10*1000);
-}
+//     if (file) {
+//         const reader = new FileReader();
 
+//         reader.onload = function(e) {
+//             document.getElementById('imagePreview').src = e.target.result; // Set image preview source
+//         };
 
+//         reader.readAsDataURL(file); 
+//     }
+// });
+
+// document.getElementById('setDefaultImage').addEventListener('click', function() {
+//   const defaultImageUrl = '/static/summary/img/logo.PNG'; // URL of the default image
+//   document.getElementById('imagePreview').src = defaultImageUrl;
+// });

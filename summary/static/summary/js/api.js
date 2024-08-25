@@ -61,8 +61,27 @@ const deleteCourse = async (id) => {
 
 
 
+const alertMessage =(message)=>{
+  const messageAlrt = document.getElementById("message-alrt");
+  messageAlrt.style.display = "block";
+  messageAlrt.innerHTML = `<p>` + message + `</p>`;
+  setInterval(function () {
+    messageAlrt.style.display = "none";
+  }, 10*1000);
+};
+
+
+const displayIteam = (iteamView, IteamOff, diplayType) => {
+  if (iteamView.style.display == "none") {
+    iteamView.style.display = diplayType;
+    IteamOff.style.display = "none";
+  } else {
+    iteamView.style.display = "none";
+  }
+};
 
 
 
 
-export { getCourses, getCourse, addCourse, updateCourse, deleteCourse };
+
+export { getCourses, getCourse, addCourse, updateCourse, deleteCourse ,alertMessage ,displayIteam };

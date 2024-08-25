@@ -113,7 +113,7 @@
 
             <!-- madiel box -->
              <section>
-        
+                <div class="message-alrt dislay-off" id="message-alrt"> </div>
                 {% if messages %}
             <div class="message-alrt" >
                 {% for message in messages %}
@@ -125,6 +125,31 @@
 
                     {% block body %}
                     {% endblock %}
+                    <article  id="coress-add" class="dislay-off" >
+                        <h3>New Course</h3>
+                        <form enctype="multipart/form-data" method="post" id="course_form" >
+                            {% csrf_token %}
+                        <div class="form-group">
+                            <label for="user_id">Title</label>
+                            <input class="form-control" type="text" name="name" id="name" value="">
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea class="form-control" name="description" id="description" cols="30" rows="10" value=""></textarea>
+                        </div>
+                        <div class="mb-3"> 
+                            <label for="id_image" class="form-label">Image:</label>
+                            <input class="form-control" type="file" name="image" id="id_image" value=""  accept="image/*">
+                        </div>
+                        <input type="submit" id="send" class="btn btn-primary float-right m-3" value="Add Course"/>
+                    </form>
+                    <div class="form-group">
+                        <label for="imagePreview" class="form-label">Preview</label>
+                        <img id="imagePreview" src="" alt="Image Preview" style="max-width: 100%; height: auto;">
+
+                    </div>
+                    <button type="button" id="setDefaultImage">Set Default Image</button>
+                    </article>
  
              </section>
             
