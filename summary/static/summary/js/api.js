@@ -41,7 +41,7 @@ const addCourse = async (courseData) => {
 // Edit iteam
 const updateCourse = async (id, courseData) => {
   try {
-    const response = await axios.put(`${API_URL}${id}/`, courseData);
+    const response = await axios.put(`${API_URL}courses/${id}/`, courseData);
     return response.data;
   } catch (error) {
     console.error(`Error updating course with id ${id}:`, error);
@@ -81,7 +81,25 @@ const displayIteam = (iteamView, IteamOff, diplayType) => {
 };
 
 
+const viewUploudImage =()=>{
+  document.getElementById('id_image').addEventListener('change', function(event) {
+    const file = event.target.files[0]; 
+  
+    if (file) {
+        const reader = new FileReader();
+  
+        reader.onload = function(e) {
+            document.getElementById('imagePreview').src = e.target.result; // Set image preview source
+        };
+  
+        reader.readAsDataURL(file); 
+    }
+  });
+
+    
+}
 
 
 
-export { getCourses, getCourse, addCourse, updateCourse, deleteCourse ,alertMessage ,displayIteam };
+
+export { getCourses, getCourse, addCourse, updateCourse, deleteCourse ,alertMessage ,displayIteam ,viewUploudImage };

@@ -6,8 +6,10 @@ import {
   deleteCourse,
   alertMessage,
   displayIteam,
+  viewUploudImage,
 } from "./api.js";
 //   boxes
+
 const coursContainer = document.getElementById("cours-container");
 const coressAdd = document.getElementById("coress-add");
 const addCourseForm=document.getElementById("course_form")
@@ -18,10 +20,13 @@ const coressAddBtn = document.getElementById("course-add-btn");
 
 document.addEventListener("DOMContentLoaded", (event) => {
 // display block our none for add course itream add listner event to view our romve form display
-coressAddBtn.onclick = ()=> { displayIteam(coressAdd, coursContainer, "block");};
+coressAddBtn.onclick = ()=> {
+     displayIteam(coressAdd, coursContainer, "block")  
+    viewUploudImage()};
   //  add event for courses view button
   coressViewBtn.addEventListener("click", () => {
     displayIteam(coursContainer, coressAdd, "flex");
+ 
     // fetchCourses();
   });
 });
