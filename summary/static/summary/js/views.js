@@ -1,7 +1,6 @@
 import {
   getCourses,
   getCourse,
-  addCourse,
   updateCourse,
   deleteCourse,
   alertMessage,

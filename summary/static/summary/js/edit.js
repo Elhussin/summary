@@ -1,7 +1,7 @@
 import {
     getCourses,
     getCourse,
-    addCourse,
+
     updateCourse,
     deleteCourse,
     alertMessage,
@@ -27,9 +27,12 @@ import { displayItemDetails, viewCourses } from "./displayItem.js";
       viewCourses(courses);
     } catch (error) {
       console.error("Error:", error);
+      message = "Error adding course";
+      alertMessage(message );
     }
   };
   
+
 
   
 //  removeCourse

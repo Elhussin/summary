@@ -25,16 +25,25 @@ const getCourse = async (id) => {
   }
 };
 
-//Add new course
-const addCourse = async (courseData) => {
-  try {
-    const response = await axios.post(`${API_URL}courses/`, courseData,);
-    return response.data;
-  } catch (error) {
-    console.error('Error adding course:', error);
-    throw error;
-  }
-};
+
+const addCourseData = async (formData) => {
+ 
+      // Send data by Axios
+      try {
+        const response = await axios.post(`${API_URL}courses/`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            "X-CSRFToken": formData.get("csrfmiddlewaretoken"), // get from form  CSRF Token
+          },
+        });
+        return response.data;
+      }catch(error){
+        console.error('Error adding course:', error);
+        throw error;
+      
+      }
+}
+
 
 
 
@@ -58,7 +67,6 @@ const deleteCourse = async (id) => {
     throw error;
   }
 };
-
 
 
 const alertMessage =(message)=>{
@@ -91,7 +99,6 @@ const viewUploudImage =()=>{
         reader.onload = function(e) {
             document.getElementById('imagePreview').src = e.target.result; // Set image preview source
         };
-  
         reader.readAsDataURL(file); 
     }
   });
@@ -101,5 +108,4 @@ const viewUploudImage =()=>{
 
 
 
-
-export { getCourses, getCourse, addCourse, updateCourse, deleteCourse ,alertMessage ,displayIteam ,viewUploudImage };
+export { getCourses, getCourse, addCourseData, updateCourse, deleteCourse ,alertMessage ,displayIteam ,viewUploudImage };

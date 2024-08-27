@@ -1,26 +1,4 @@
-const translations = {
-    en: {
-
-        title: "Summaries",
-        "link-home": "Home",
-        "link-about": "About",
-        "link-contact": "Contact",
-        "link-project": "Project",
-        "about-title": "About Me",
-        
-        "about-description": "I am a web developer with a passion for creating beautiful and functional websites To help my community and make our life more easier."
-    },
-    ar: {
-        title:"الملخص",
-        "link-home": "الصفحة الرئيسية",
-        "link-about": "حول",
-        "link-contact": "اتصل",
-        "link-project": "المشاريع",
-        "about-title": "عنّي",
-        "about-description": "أنا مطور ويب شغوف بإنشاء مواقع جميلة وعملية."
-    }
-};
-
+import { translations } from './translations.js';
 
 document.addEventListener('DOMContentLoaded', (event) => {
     document.getElementById("nav-view").onclick = function() {navIteam()};

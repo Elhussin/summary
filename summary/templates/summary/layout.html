@@ -59,25 +59,25 @@
                 {% if user.is_authenticated %}
                 <li   class="nav-item" id="profile">
                 
-                    <a class="nav-link btn nav-list" data-section="Profile"   href="{% url 'profile' %}" ><strong id="username">{{ user.username|title  }} </strong></a>
+                    <a class="nav-link btn nav-list" data-section="Profile"  href="{% url 'profile' %}" ><strong id="username">{{ user.username|title  }} </strong></a>
                 </li>
                 {% if user.is_superuser %}
                 <li   class="nav-item" id="profile">
-                    <a class="nav-link btn" href="/admin" ><strong id="username">Admin </strong></a>
+                    <a class="nav-link btn" href="/admin" ><strong id="userAdmin">Admin </strong></a>
                 </li>
                     {% endif %}
 
                 <li class="nav-item" id="Courses">
-                    <a href="{% url 'index' %}"  class="nav-link btn"   data-section="Courses" >Courses</a> 
+                    <a href="{% url 'index' %}"  class="nav-link btn" id="home"  data-section="Courses" >Courses</a> 
                 </li>
                 <li class="nav-item" id="following" datas-section="Fovarite">
-                    <a class="nav-link btn" data-section="Fovarite"  >Fovarite</a>
+                    <a class="nav-link btn" data-section="Fovarite" id="fovarite" >Fovarite</a>
                 </li>
 
 
                 {% else %}
                 <li class="nav-item" id="Courses">
-                    <a href="{% url 'index' %}" class="nav-link btn"  data-section="Courses" >Courses</a> 
+                    <a href="{% url 'index' %}" class="nav-link btn" id="home"  data-section="Courses" >Courses</a> 
                 </li>  
             {% endif %}
             </ul>
@@ -88,14 +88,14 @@
             {% if user.is_authenticated %}
             <ul>
                 <li class="nav-item ">
-                    <a class="nav-link btn btn-danger" href="{% url 'logout' %}">Log Out</a>
+                    <a class="nav-link btn btn-danger" id="log-out" href="{% url 'logout' %}">Log Out</a>
                 </li>
 
                 {%else%}
                 <li class="nav-item" >
-                    <a class="nav-link btn" href="{% url 'login' %}">Log In</a>
+                    <a class="nav-link btn"  id="log-in" href="{% url 'login' %}">Log In</a>
                 </li>
-                <li> <a class="nav-link btn " href="{% url 'register' %}">Register</a></li>
+                <li> <a class="nav-link btn "  id="register" href="{% url 'register' %}">Register</a></li>
             </ul>
         {% endif %}
         </div>
@@ -310,7 +310,7 @@
         </div>  
     </footer>
 
-    <script  src="{% static 'summary/js/design.js' %}"></script>
+    <script type="module"  src="{% static 'summary/js/design.js' %}"></script>
     <script  type="module" src="{% static 'summary/js/views.js' %}"></script>
 
 

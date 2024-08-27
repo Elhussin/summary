@@ -1,12 +1,12 @@
 import {
   getCourses,
   getCourse,
-  addCourse,
   updateCourse,
   deleteCourse,
   alertMessage,
   displayIteam,
   viewUploudImage,
+  addCourseData,
 } from "./api.js";
 //   boxes
 
@@ -31,57 +31,30 @@ coressAddBtn.onclick = ()=> {
   });
 });
 
-// function to display our none diplay iteams 
-
-
+const addCourse = async () => {
+   var message =''
+  try {
+    const data = await addCourseData();
+    message = "Course added successfully";
+    alertMessage(message);
+    document.getElementById("course_form").reset();
+    document.getElementById("imagePreview").src='';
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
 
 
 
 //  Add New Course
 addCourseForm.addEventListener("submit", function (event) {
-    var message =''
+  
     // block out Send form
     event.preventDefault();
     // get form detiels
     let formData = new FormData(this);
 
-    // Send data by Axios
-    axios .post("/api/courses/", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          "X-CSRFToken": formData.get("csrfmiddlewaretoken"), // get from form  CSRF Token
-        },
-      })
-      .then((response) => {
-        message = "Course added successfully";
-        alertMessage(message);
-        document.getElementById("course_form").reset();
-        document.getElementById("imagePreview").src='';
-        console.log("Course added successfully:", response.data);
-      })
-      .catch((error) => {
-        message = "Error adding course";
-        alertMessage(message );
-        console.error("Error adding course:", error);
-      });
+    addCourseData(formData);
   });
 
     
-//   document.getElementById('image').addEventListener('change', function(event) {
-//     const file = event.target.files[0]; 
-
-//     if (file) {
-//         const reader = new FileReader();
-
-//         reader.onload = function(e) {
-//             document.getElementById('imagePreview').src = e.target.result; // Set image preview source
-//         };
-
-//         reader.readAsDataURL(file); 
-//     }
-// });
-
-// document.getElementById('setDefaultImage').addEventListener('click', function() {
-//   const defaultImageUrl = '/static/summary/img/logo.PNG'; // URL of the default image
-//   document.getElementById('imagePreview').src = defaultImageUrl;
-// });
