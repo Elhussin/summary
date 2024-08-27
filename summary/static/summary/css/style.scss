@@ -1,6 +1,7 @@
 $font-stack: Arial, sans-serif;
 $transition: background-color 0.5s, color, 01s;
 $primary-color: #344e41;
+
 $secand-color: #3a5a40;
 $therd-color: #5c7650;
 $forth-color: #a3b18a;
@@ -229,9 +230,10 @@ header.dark-mode {
   @extend %ul ;
   background-color: $forth-color;
   color: $font-color ;
-  width: 100%;
+  margin: 10px;
   padding: 10px;
- 
+  text-align: center  ;
+  width: calc(100% - 20px);
 }
 
 .footer {
@@ -292,12 +294,14 @@ header.dark-mode {
 .card-title {
   font-size: 1.5em;
   margin: 0;
+  color: $primary-color;
 }
 .card-content {
   padding: 15px;
 }
 .card-description {
-  color: #555;
+  // color: #555;
+  color:$primary-color;
   margin: 10px 0 0;
 }
 .card:hover {

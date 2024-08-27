@@ -19,7 +19,7 @@
                 <a href="{% url 'index' %}" title="Home"> <img  class="img-header"  src="{% static 'summary/img/logo.PNG' %}" alt="icon"></a>
             </div>
             <div class="title">
-                <h1 id="title">Summaries</h1>
+        <h1 id="title">Summaries </h1>
             </div>
             <div class="nav-small-screen">
                 <span id="nav-view" class="nav-small-button">
@@ -77,7 +77,7 @@
 
                 {% else %}
                 <li class="nav-item" id="Courses">
-                    <a class="nav-link btn"  data-section="Courses" >Courses</a> 
+                    <a href="{% url 'index' %}" class="nav-link btn"  data-section="Courses" >Courses</a> 
                 </li>  
             {% endif %}
             </ul>

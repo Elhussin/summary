@@ -56,6 +56,7 @@ addCourseForm.addEventListener("submit", function (event) {
         message = "Course added successfully";
         alertMessage(message);
         document.getElementById("course_form").reset();
+        document.getElementById("imagePreview").src='';
         console.log("Course added successfully:", response.data);
       })
       .catch((error) => {

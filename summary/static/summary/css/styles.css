@@ -175,8 +175,10 @@ header.dark-mode {
 .message-alrt {
   background-color: #a3b18a;
   color: white;
-  width: 100%;
+  margin: 10px;
   padding: 10px;
+  text-align: center;
+  width: calc(100% - 20px);
 }
 
 .footer {
@@ -231,6 +233,7 @@ header.dark-mode {
 .card-title {
   font-size: 1.5em;
   margin: 0;
+  color: #344e41;
 }
 
 .card-content {
@@ -238,7 +241,7 @@ header.dark-mode {
 }
 
 .card-description {
-  color: #555;
+  color: #344e41;
   margin: 10px 0 0;
 }
 
