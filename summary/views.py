@@ -52,8 +52,6 @@ class SummaryViewSet(viewsets.ModelViewSet):
     queryset = Summary.objects.all().order_by("course")
     serializer_class = SummarySerializer
 
-
-# @csrf_exempt
 class CourseViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all().order_by('created_at')
     serializer_class = CourseSerializer
