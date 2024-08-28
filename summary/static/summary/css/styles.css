@@ -222,7 +222,6 @@ header.dark-mode {
 }
 
 .card-datiles {
-  width: 70%;
   justify-content: center;
 }
 .card-datiles img {
@@ -270,6 +269,22 @@ header.dark-mode {
   padding: 10px;
   margin: 10px;
   background-color: #a3b18a;
+  cursor: pointer;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cmment-box {
+  border: 1px solid #dad7cd;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+  background-color: #5c7650;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #dad7cd;
 }
 
 @media (max-width: 800px) {

@@ -61,6 +61,56 @@ class CourseViewSet(viewsets.ModelViewSet):
         serializer.save(user=self.request.user)
 
 
+class LikeViewSet(viewsets.ModelViewSet):
+    queryset = Like.objects.all().order_by('created_at')
+    serializer_class = LikeSerializer
+
+    def perform_create(self, serializer):
+        # تعيين user_id تلقائيًا بناءً على المستخدم الذي يقوم بإرسال الطلب
+        serializer.save(user=self.request.user)
+
+class ComentsViewSet(viewsets.ModelViewSet):
+    queryset = Coments.objects.all().order_by('created_at')
+    serializer_class = ComentsSerializer
+
+    def perform_create(self, serializer):
+        # تعيين user_id تلقائيًا بناءً على المستخدم الذي يقوم بإرسال الطلب
+        serializer.save(user=self.request.user)
+
+class FovariteViewSet(viewsets.ModelViewSet):
+    queryset = Fovarite.objects.all().order_by('timestamp')
+    serializer_class = FovariteSerializer
+
+    def perform_create(self, serializer):
+        # تعيين user_id تلقائيًا بناءً على المستخدم الذي يقوم بإرسال الطلب
+        serializer.save(user=self.request.user)
+
+class SummaryFovariteViewSet(viewsets.ModelViewSet):
+    queryset = Fovarite.objects.all().order_by('timestamp')
+    serializer_class = SummaryFovariteSerializer
+
+    def perform_create(self, serializer):
+        # تعيين user_id تلقائيًا بناءً على المستخدم الذي يقوم بإرسال الطلب
+        serializer.save(user=self.request.user)
+
+class SummaryLikeViewSet(viewsets.ModelViewSet):
+    queryset = Like.objects.all().order_by('created_at')
+    serializer_class = SummaryLikeSerializer
+
+    def perform_create(self, serializer):
+        # تعيين user_id تلقائيًا بناءً على المستخدم الذي يقوم بإرسال الطلب
+        serializer.save(user=self.request.user)
+
+class SummaryComentsViewSet(viewsets.ModelViewSet):
+    queryset = Coments.objects.all().order_by('created_at')
+    serializer_class = SummaryComentsSerializer
+
+    def perform_create(self, serializer):
+        # تعيين user_id تلقائيًا بناءً على المستخدم الذي يقوم بإرسال الطلب
+        serializer.save(user=self.request.user)
+
+
+
 def login_view(request):
     if request.method == "POST":
         # Attempt to sign user in

@@ -63,6 +63,7 @@ const updateCourseForm = () => {
         modifyCourse(courseID, formData);
         alertMessage(message);
         document.getElementById("coress-add").style.display = "none";
+        document.getElementById("cours-container").style.display = "block";
         fetchOneCourses(courseID);
       });
 

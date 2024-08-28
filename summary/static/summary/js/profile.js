@@ -1,19 +1,8 @@
-import {
-  getCourses,
-  getCourse,
-  updateCourse,
-  deleteCourse,
-  alertMessage,
-  displayIteam,
-  viewUploudImage,
-  addCourseData,
-} from "./api.js";
-//   boxes
+import { alertMessage, displayIteam, viewUploudImage, addCourseData,} from "./api.js";
 
 const coursContainer = document.getElementById("cours-container");
 const coressAdd = document.getElementById("coress-add");
 const addCourseForm=document.getElementById("course_form")
-// buttons
 const coressViewBtn = document.getElementById("course-view-btn");
 const coressAddBtn = document.getElementById("course-add-btn");
 
@@ -21,40 +10,46 @@ const coressAddBtn = document.getElementById("course-add-btn");
 document.addEventListener("DOMContentLoaded", (event) => {
 // display block our none for add course itream add listner event to view our romve form display
 coressAddBtn.onclick = ()=> {
-     displayIteam(coressAdd, coursContainer, "block")  
-    viewUploudImage()};
-  //  add event for courses view button
-  coressViewBtn.addEventListener("click", () => {
-    displayIteam(coursContainer, coressAdd, "flex");
- 
-    // fetchCourses();
-  });
+      displayIteam(coressAdd, coursContainer, "block")  
+      viewUploudImage()};
+      coressViewBtn.addEventListener("click", () => {
+      displayIteam(coursContainer, coressAdd, "flex");
+    });
+
 });
 
-const addCourse = async () => {
-   var message =''
-  try {
-    const data = await addCourseData();
-    message = "Course added successfully";
-    alertMessage(message);
-    document.getElementById("course_form").reset();
-    document.getElementById("imagePreview").src='';
-  } catch (error) {
-    console.error("Error:", error);
-  }
-};
+// // const addCourse = async () => {
+//    var message =''
+//   try {
+//     const data = await addCourseData();
+//     message = "Course added successfully";
+//     alertMessage(message);
+//     document.getElementById("course_form").reset();
+//     document.getElementById("imagePreview").src='';
+//   } catch (error) {
+//     console.error("Error:", error);
+//   }
+// // };
 
 
 
 //  Add New Course
 addCourseForm.addEventListener("submit", function (event) {
-  
     // block out Send form
     event.preventDefault();
     // get form detiels
     let formData = new FormData(this);
-
-    addCourseData(formData);
+    var message =''
+    try {
+      const data =  addCourseData(formData);
+      message = "Course added successfully";
+      alertMessage(message);
+      document.getElementById("course_form").reset();
+      document.getElementById("imagePreview").src='';
+    } catch (error) {
+      message = "Error adding course : ${error}";
+      alertMessage(message);
+    }
   });
 
     

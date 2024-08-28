@@ -282,7 +282,7 @@ header.dark-mode {
 
 .card-datiles {
   @extend %cards;
-  width: 70%;
+  // width: 70%;
   justify-content: center;
   img {
     width: 100%;
@@ -328,7 +328,24 @@ border-radius: 10px;
 padding: 10px;
 margin: 10px;
 background-color: $forth-color;
+cursor: pointer;
+justify-content: space-between;
+align-items: center;
 }
+
+.cmment-box{
+  border: 1px solid $color;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+  background-color: $therd-color;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: $color;
+}
+
 
 @media (max-width: 800px) {
   .certfi-grid{

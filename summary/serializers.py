@@ -27,33 +27,39 @@ class UserSerializer(serializers.ModelSerializer):
 class ComentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Coments
-        fields = ['id', 'user', 'course', 'comment', 'created_at']
+        fields = '__all__'
+        # fields = ['id', 'user', 'course', 'comment', 'created_at']
 
 class LikeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Like
-        fields = ['id', 'user', 'course', 'likes', 'unlikes', 'created_at']
+        fields = '__all__'
+        # fields = ['id', 'user', 'course', 'likes', 'unlikes', 'created_at']
 
     
 class FovariteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Fovarite
-        fields = ['id', 'user', 'course', 'followStatus', 'timestamp']
+        fields = '__all__'
+        # fields = ['id', 'user', 'course', 'followStatus', 'timestamp']
 
 class SummaryComentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = SummaryComents
-        fields = ['id', 'user', 'course', 'summary', 'comment', 'created_at']
+        fields = '__all__'
+        # fields = ['id', 'user', 'course', 'summary', 'comment', 'created_at']
 
 class SummaryLikeSerializer(serializers.ModelSerializer):
     class Meta:
         model = SummaryLike
-        fields = ['id', 'user', 'course', 'summary', 'likes', 'unlikes','created_at']
+        fields = '__all__'
+        # fields = ['id', 'user', 'course', 'summary', 'likes', 'unlikes','created_at']
 
 class SummaryFovariteSerializer(serializers.ModelSerializer):
     class Meta:
         model = SummaryFovarite
-        fields = ['id', 'user', 'course', 'summary', 'followStatus', 'timestamp']   
+        fields = '__all__'
+        # fields = ['id', 'user', 'course', 'summary', 'followStatus', 'timestamp']   
 
 
 

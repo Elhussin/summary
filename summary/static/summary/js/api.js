@@ -38,11 +38,13 @@ const addCourseData = async (formData) => {
         });
         return response.data;
       }catch(error){
-        console.error('Error adding course:', error);
-        throw error;
+        return error;
+        // console.error('Error adding course:', error);
+        // throw error;
       
       }
 }
+
 
 
 

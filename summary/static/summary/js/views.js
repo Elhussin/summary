@@ -1,18 +1,7 @@
-import {
-  getCourses,
-  getCourse,
-  updateCourse,
-  deleteCourse,
-  alertMessage,
-  displayIteam,
-  viewUploudImage,
-} from "./api.js";
+
 //   boxes
-import { removeCourse, modifyCourse,fetchCourses,fetchOneCourses,updateCourseForm} from "./edit.js";
-import {displayItemDetails,viewCourses} from "./displayItem.js";
-
+import {fetchCourses} from "./edit.js";
 document.addEventListener("DOMContentLoaded", function () {
-
   fetchCourses();
 });
 

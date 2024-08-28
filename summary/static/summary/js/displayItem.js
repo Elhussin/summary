@@ -59,7 +59,7 @@ const cardViewEventListeners = () => {
       // change page title
       document.title = `${itemTitle}`;
       //  re set url
-      const newUrl = `/course/${itemId}`;
+      const newUrl = `course/${itemTitle}/${itemId}`;
       history.pushState({ path: newUrl }, "", newUrl);
       fetchOneCourses(itemId);
     });
@@ -67,19 +67,22 @@ const cardViewEventListeners = () => {
 }
 
 
-// Display Item Details
-export const displayItemDetails = (data) => {
 
+// Display Item Details
+const viewDatilesBox= document.getElementById("cours-detieals")
+export const displayItemDetails = (data) => {
+ 
+  viewDatilesBox.innerHTML = '';
   console.log(data);
 
   // view main data for course
   viewContinear.innerHTML = '';
-  viewContinear.appendChild(mainCourseData(data)) 
+  viewDatilesBox.appendChild(mainCourseData(data)) 
   
   viewSummary(data);
   //  view course details
-  const viewDatilesBox= document.getElementById("cours-detieals")
-  viewDatilesBox.innerHTML = '';
+
+
   viewDatilesBox.appendChild(viewDatiles(data));
   viewDatilesBox.appendChild (createCommaneElmeant()) 
   // add like and unlike event listener
@@ -98,20 +101,6 @@ export const displayItemDetails = (data) => {
     console.log("favorite");
   });
 
-  document.querySelectorAll(".summary-box").forEach((card) => {
-    card.addEventListener("click", (event) => {
-      event.preventDefault();
-      const itemId = card.id;
-      // get elemant title
-      const itemTitle = card.querySelector(".card-title").textContent;
-      // change page title
-      document.title = `${itemTitle}`;
-      //  re set url
-      const newUrl = `/course/${itemId}`;
-      history.pushState({ path: newUrl }, "", newUrl);
-      fetchOneCourses(itemId);  
-  });
-  });
   
 
   // add commant box 
@@ -127,7 +116,7 @@ document.getElementById("add-comments").addEventListener("click", (e) => {
 
 
   // view course comments
-  viewDatilesBox.appendChild(viewCommants(data))
+  viewDatilesBox.appendChild(viewCommants(data.comments));
   
   const courseID = document.getElementById("course-id");
   const id = courseID.dataset.courseid;
@@ -136,7 +125,8 @@ document.getElementById("add-comments").addEventListener("click", (e) => {
     e.preventDefault;
     removeCourse(id);
   });
-
+  // view summary deatiles 
+  summaryViewEventListeners(data)
 
 
   // Edit Course
@@ -155,9 +145,9 @@ const viewSummary = (data) => {
   `;
     data.summary.forEach((iteam) => {
       newDiv.innerHTML += `
-        <div class="summary-box">
+        <div id="${iteam.id}" class="summary-box">
         <p id="${iteam.user}">Add By ${iteam.user.username}  </p>
-        <h3> ${iteam.title} </h3> 
+        <h3 class="card-title"> ${iteam.title} </h3> 
         <p> ${iteam.content} </p>
         <p>Created At: ${ new Date(iteam.created_at)} </p>
       `;
@@ -166,8 +156,73 @@ const viewSummary = (data) => {
 };
 
 
+// get summary view event listeners
+const summaryViewEventListeners = (data) => {
+
+document.querySelectorAll(".summary-box").forEach((card) => {
+  card.addEventListener("click", (event) => {
+    event.preventDefault();
+    const itemId = card.id;
+    // get elemant title
+    const itemTitle = card.querySelector(".card-title").textContent;
+    // change page title
+    document.title = `${itemTitle}`;
+    //  re set url
+    const newUrl = `/${data.name}/summary/${itemId}`;
+    history.pushState({ path: newUrl }, "", newUrl);
+  
+    const filteredSummary =   filterSummaryById(data,itemId);
+    fetchOneSummary(filteredSummary)
+});
+});
+}
+// fetch one summary
+function filterSummaryById(courseData, summaryId) {
+  return courseData.summary.find(summary => summary.id == summaryId);
+}
+
+const  fetchOneSummary = (data) => {
+  // const data= Alldata.summary.filter((item) => item.id == id);
+  const likesCount = data.summary_likes.filter((item) => item.likes).length;
+  const unlikesCount = data.summary_likes.filter((item) => item.unlikes).length;
+  console.log(likesCount, unlikesCount);
+  console.log(data);
+  viewContinear.innerHTML = '';
+  const newDiv = document.createElement("div");
+  newDiv.innerHTML = `
+  <h2>Summary : ${data.title}</h2>
+  <hr>
+  <div id="${data.id}" class="">
+  <p id="${data.user}">Add By ${data.user}  </p>
+  <h3 class="card-title"> ${data.title} </h3>
+  <p> ${data.content} </p>
+  <p>Created At: ${ new Date(data.created_at)} </p>
 
 
+  </div>
+  <hr>
+  `;
+  viewContinear.appendChild(newDiv);
+
+  viewDatilesBox.innerHTML = '';
+  viewDatilesBox.innerHTML = `
+  <p> Likes: ${likesCount} </p>
+  <p> Unlikes: ${unlikesCount} </p>
+  <button class="btn" id='favorite' type="button">${favorite}</button>
+  <button class="btn" id="like-course" >${like}</button>
+  <button class="btn " id="unlike-course" >${unlike}</button>
+  <hr>
+  <button class="btn btn-primary" id="edit-course" >Edit</button>
+  <button class="btn btn-primary" id="delate-course" >Delate</button>
+  
+  `;
+
+  // viewCommants(data.summary_likes);
+
+  viewDatilesBox.appendChild(createCommaneElmeant());
+  const summary_coman= viewCommants(data.summary_comments)
+  viewContinear.appendChild(summary_coman);
+}
 
 
 // view main data for course
@@ -197,6 +252,8 @@ const addDateToForm = (data) => {
   document.getElementById("send").value = "Update";
   displayIteam(coressAdd, coursContainer, "block");
   viewUploudImage();
+
+
 
 };
 
@@ -228,13 +285,17 @@ const viewDatiles = (data) => {
 
 // view  iteams Comments
 const  viewCommants =(data) => {
+  console.log(data);
  const commentContinear = document.createElement("div");
-  data.comments.forEach((comment) => {
+  commentContinear.innerHTML = `<h2>Comments</h2>
+  <hr>
+  `;
+  data.forEach((comment) => {
 
     const createdAtDate = new Date(comment.created_at);
     commentContinear.innerHTML += `
-      <div>
-      <p id="${comment.user}">Add By ${data.user.username}  </p>
+      <div class="cmment-box">
+      <p id="${comment.user}">Add By ${comment.user}  </p>
       <p> ${comment.comment} </p> 
       <p>Created At: ${createdAtDate} </p>
     `;
