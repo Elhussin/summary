@@ -19,16 +19,6 @@
 {% endblock %}
 
 
-<article>
-    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-    {% if user.is_authenticated %}
-    <artical>
-        <button onclick="getCourses()">View Courses</button>
-        <button onclick="formDisplay()">Add Course</button>
-        <button onclick="updateCourse(1)">Update Course</button>
-        <button onclick="deleteCourse(1)">Delete Course</button>
-    </artical>
-    {% endif %}
 
 </article>
 <article  id="coress-add-box" class="display-non">

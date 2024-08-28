@@ -1,13 +1,5 @@
-import {
-    getCourses,
-    getCourse,
+import { getCourses, getCourse, updateCourse,deleteCourse, alertMessage, } from "./api.js";
 
-    updateCourse,
-    deleteCourse,
-    alertMessage,
-    displayIteam,
-    viewUploudImage,
-  } from "./api.js";
 import { displayItemDetails, viewCourses } from "./displayItem.js";
 //  to fetch one course
 

@@ -11,11 +11,11 @@
 {% if user.is_superuser %}
     <button class="nav-link btn" id="course-add-btn" ><strong >Add New Course </strong></button>
     <button  class="nav-link btn" id="course-view-btn" ><strong > View Courses</strong></button>
+    
     {% endif %}
     <article id="informtian">
 
-    </article>
-    
+    </article>  
 {% endblock %}
 
 {% block body %}
@@ -25,13 +25,8 @@
 </div>
 <hr>
 
-<article>
-    <div id="cours-container" class="cards-container"></div>
-</article>
-
-
-<script type="module"  src="{% static 'summary/js/profile.js' %}"></script>
 {% endblock %}
+
 {% block rightside %}
 
 {% endblock %}

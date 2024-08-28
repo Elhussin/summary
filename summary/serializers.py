@@ -19,10 +19,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'email', 'username', 'first_name', 'last_name']
 
-# class CourseSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Course
-#         fields = ['id', 'name', 'description', 'created_at', 'image', 'updated_at','user_id']
+
 
 class ComentsSerializer(serializers.ModelSerializer):
     class Meta:

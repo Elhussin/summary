@@ -63,6 +63,8 @@ window.addEventListener('load', () => {
 
 
 
+
+
 //  nav for small screen view and display button 
 function navIteam(){
     const navigation=document.getElementById('navigation');
