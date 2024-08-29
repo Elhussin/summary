@@ -5,14 +5,29 @@
 
 {% block title %}Home{% endblock %}
 
-{% block body %}
+{% block left-side %}
+<article id="informtian">
+</article>
 
+{% endblock %}
+
+{% block body %}
+<article>
+    <div id="cours-container" class="cards-container"></div>
+</article>
+
+<article  id="coress-add" class="dislay-off" >
+    {% include 'summary/layout/form.html' %}
+</article>
+
+
+<script  type="module" src="{% static 'summary/js/index.js' %}"></script>
 {% endblock %}
 
 
                 
 {% block rightside %}
-
+<div id="cours-detieals" ></div>
 {% endblock %}
 
 

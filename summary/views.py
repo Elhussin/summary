@@ -129,7 +129,7 @@ def login_view(request):
                 {"message": "Invalid email and/or password."},
             )
     else:
-        return render(request, "summary/login.html")
+        return render(request, "summary/auth/login.html")
 
 
 def logout_view(request):
@@ -148,61 +148,8 @@ def register(request):
             return redirect("login")
     else:
         form = UserRegistraForm()
-    return render(request, "summary/register.html", {"form": form})
+    return render(request, "summary/auth/register.html", {"form": form})
 
-
-# class SummarySerializer(viewsets.ModelViewSet):
-#     """
-#     API endpoint that allows Summary to be viewed or edited.
-#     """
-#     queryset = Summary.objects.all().order_by('course')
-#     serializer_class = SummarySerializer
-
-
-# class SummaryViewSet(viewsets.ModelViewSet):
-#     """
-#     API endpoint that allows Summary to be viewed or edited.
-#     """
-#     serializer_class = SummarySerializer
-
-#     def get_queryset(self):
-#         queryset = Summary.objects.all().order_by('course')
-#         course_id = self.kwargs.get('course_id', None)
-#         if course_id is not None:
-#             queryset = queryset.filter(course_id=course_id)
-#         return queryset
-
-
-# @login_required(login_url='/login')
-# def create_listing(request):
-#     # get form
-#     if request.method == "POST":
-#         form = addform.creatlist(request.POST)
-#         user = request.user.id
-#         if form.is_valid():
-#             title = form.cleaned_data["title"]
-#             description = form.cleaned_data["description"]
-#             amount = form.cleaned_data["amount"]
-#             url = request.POST["url"]
-#             category = request.POST["category"]
-
-#         #  add default value to null url or category
-#         if not url :
-#             url ='null'
-#         if category == 'null':
-#             category='No Category Listed'
-#         # sav data in database
-#         try:
-#             list = Listing.objects.create(title=title,description=description,amount=amount,url=url,category=category,user_id=user,endAmont=amount)
-#             list.save()
-#             # return render(request, 'auctions/add.html', {'form': form})
-#             return render(request, "auctions/creatList.html",{"meesage":"Creat Sucess" ,'form': form})
-#         # error massege
-#         except :
-#                return render(request, "auctions/creatList.html",{"error":"failed to create this listing",'form': form})
-#     else:
-#          form = addform.creatlist()
-#          return render(request, "auctions/creatList.html",{'form': form})
 
 @login_required(login_url='/login')
 def usersProfile(request):

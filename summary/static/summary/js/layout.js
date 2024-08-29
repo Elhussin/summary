@@ -30,8 +30,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 
 
-
+// Language switcher functionality
 const languageSwitcher = document.getElementById('languageSwitcher');
+
 // Function to apply translations
 function applyTranslations(language) {
     const elementsToTranslate = document.querySelectorAll('[id]');

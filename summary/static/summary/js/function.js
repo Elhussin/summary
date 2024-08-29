@@ -7,7 +7,6 @@ const alertMessage = (message) => {
     }, 10 * 1000);
 };
 
-
 const displayIteam = (iteamView, IteamOff, diplayType) => {
     if (iteamView.style.display == "none") {
         iteamView.style.display = diplayType;
@@ -17,19 +16,54 @@ const displayIteam = (iteamView, IteamOff, diplayType) => {
     }
 };
 
-
 const viewUploudImage = () => {
-    document.getElementById('id_image').addEventListener('change', function (event) {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                // Set image preview source
-                document.getElementById('imagePreview').src = e.target.result; 
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-}
+    document
+        .getElementById("id_image")
+        .addEventListener("change", function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    // Set image preview source
+                    document.getElementById("imagePreview").src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+};
 
-export { alertMessage, displayIteam, viewUploudImage };
+// create Commane Elmeant
+const createCommaneElmeant = () => {
+    const newDiv = document.createElement("div");
+    newDiv.innerHTML = `
+    <h2>Add Comment</h2>
+    <hr>
+    <label for="comments">Add Comment</label>
+    <textarea class="form-control" name="comments" id="comments"  rows="5"></textarea>
+    <input type="submit" id="add-comments" class="btn btn-primary float-right m-3" value="Comment"/>
+    `;
+    return newDiv;
+};
+
+// view   Comments
+const viewCommants = (data) => {
+    const newDiv = document.createElement("div");
+    newDiv.innerHTML = `<h2>Comments</h2>
+    <hr>
+    `;
+    data.forEach((iteam) => {
+        newDiv.innerHTML += `
+        <div class="cmment-box">
+        <p id="${iteam.user}">Add By ${iteam.user}  </p>
+        <p> ${iteam.comment} </p> 
+        <p>Created At: ${new Date(iteam.created_at)} </p>
+        </div>
+        `;  
+    });
+
+    return newDiv;
+};
+
+export {
+    alertMessage, displayIteam, viewUploudImage, createCommaneElmeant, viewCommants,
+};

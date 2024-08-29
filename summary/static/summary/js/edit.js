@@ -1,21 +1,25 @@
-import { getCourses, getCourse, updateCourse,deleteCourse, alertMessage, } from "./api.js";
+import {    alertMessage, displayIteam, viewUploudImage, createCommaneElmeant, viewCommants,} from "./function.js";
+import {getCourses, getCourse, addCourseData, updateCourse, deleteCourse  } from "./api.js";
 
-import { displayItemDetails, viewCourses } from "./displayItem.js";
+
+
 //  to fetch one course
 
 //  Updat Course
  const modifyCourse = async (id, formData) => {
   try {
     const updatedCourse = await updateCourse(id, formData);
-    console.log("Updated Course:", updatedCourse);
+    // console.log("Updated Course:", updatedCourse);
     fetchOneCourses(id);
   } catch (error) {
     console.error("Error:", error);
   }
 };
- const fetchCourses = async () => {
+
+const fetchCourses = async () => {
     try {
-      const courses = await getCourses();
+      const data = await getCourses();
+
       viewCourses(courses);
     } catch (error) {
       console.error("Error:", error);
@@ -60,6 +64,7 @@ const updateCourseForm = () => {
       });
 
 }
+// fetch one Ity
 const fetchOneCourses = async (id) => {
     try {
       const courses = await getCourse(id);
