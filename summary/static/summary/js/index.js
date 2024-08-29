@@ -17,7 +17,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
   });
   
   viewUploudImage();
-
   coressViewBtn.addEventListener("click", () => {
     displayIteam(coursContainer, coressAdd, "flex");
     fetchCourses();

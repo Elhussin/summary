@@ -19,7 +19,6 @@ import {getCourses, getCourse, addCourseData, updateCourse, deleteCourse  } from
 const fetchCourses = async () => {
     try {
       const data = await getCourses();
-
       viewCourses(courses);
     } catch (error) {
       console.error("Error:", error);
