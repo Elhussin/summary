@@ -1,6 +1,38 @@
 import {    alertMessage, displayIteam, viewUploudImage, createCommaneElmeant, viewCommants,} from "./function.js";
 import {getCourses, getCourse, addCourseData, updateCourse, deleteCourse  } from "./api.js";
 
+import { viewCourses, displayItemDetails, summaryViewEventListeners, cardViewEventListeners,  fetchOneSummary, addDateToForm } from "./dat_view_html.js";
+// 
+
+//  fetch Courses 
+// يتم استدعاء الداله من ملف index
+// الداله تستدعي الداله getCourses من ملف api.js
+// وتقوم بعرض البيانات بعد استلامها من الداله getCourses
+// من خلال استدعاء الداله viewCourses
+// والتي تقوم بعرض البيانات بعد تحويلها الى عناصر html
+
+const fetchCourses = async () => {
+  try {
+    const data = await getCourses();
+    // will retern data in htmel eleamnt
+    viewCourses(data);
+    
+  } catch (error) {
+    console.error("Error:", error);
+    message = "Error adding course";
+    alertMessage(message );
+  }
+};
+
+// fetch one Ity
+const fetchOneCourses = async (id) => {
+  try {
+    const data = await getCourse(data);
+    displayItemDetails(courses);
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
 
 
 //  to fetch one course
@@ -16,16 +48,7 @@ import {getCourses, getCourse, addCourseData, updateCourse, deleteCourse  } from
   }
 };
 
-const fetchCourses = async () => {
-    try {
-      const data = await getCourses();
-      viewCourses(courses);
-    } catch (error) {
-      console.error("Error:", error);
-      message = "Error adding course";
-      alertMessage(message );
-    }
-  };
+
   
 
 
@@ -63,15 +86,7 @@ const updateCourseForm = () => {
       });
 
 }
-// fetch one Ity
-const fetchOneCourses = async (id) => {
-    try {
-      const courses = await getCourse(id);
-      displayItemDetails(courses);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
+
   
 export { removeCourse, modifyCourse,fetchCourses,fetchOneCourses, updateCourseForm};
 

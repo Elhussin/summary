@@ -78,9 +78,3 @@ const addButtonGroup = (data) => {
     return newDiv;
 }
 
-const updatpageurl = (data,title,itemId) => {
-          // change page title
-          document.title = `${title}`;
-          const newUrl = `/${data.name}/summary/${itemId}`;
-          history.pushState({ path: newUrl }, "", newUrl);
-};

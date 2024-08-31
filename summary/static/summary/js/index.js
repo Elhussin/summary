@@ -11,16 +11,18 @@ const coressViewBtn = document.getElementById("course-view-btn");
 const coressAddBtn = document.getElementById("course-add-btn");
 
 document.addEventListener("DOMContentLoaded", (event) => {
+
   fetchCourses();
-  coressAddBtn.addEventListener("click", () => {
-    displayIteam(coressAdd, coursContainer, "block");
-  });
+  
+  // coressAddBtn.addEventListener("click", () => {
+  //   displayIteam(coressAdd, coursContainer, "block");
+  // });
   
   viewUploudImage();
-  coressViewBtn.addEventListener("click", () => {
-    displayIteam(coursContainer, coressAdd, "flex");
-    fetchCourses();
-  });
+  // coressViewBtn.addEventListener("click", () => {
+  //   displayIteam(coursContainer, coressAdd, "flex");
+  //   fetchCourses();
+  // });
 });
 
 //  Add New Course
