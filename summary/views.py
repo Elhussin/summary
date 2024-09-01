@@ -163,4 +163,5 @@ def usersProfile(request):
 
 
 def pageNotFound(request, exception):
-    return redirect('index')  # 'home' هو اسم الـ URL للصفحة الرئيسية
+    # redirect to homepage
+    return redirect('index')  

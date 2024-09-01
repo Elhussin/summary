@@ -1,4 +1,4 @@
-import {  removeCourse, modifyCourse,fetchCourses,fetchOneCourses, updateCourseForm } from "./edit.js";
+import {  removeCourse, modifyCourse,fetchCourses,fetchOneCourses, updateCourseForm } from "./api_connect.js";
 import {    alertMessage, displayIteam, viewUploudImage, createCommaneElmeant, viewCommants,} from "./function.js";
 import {getCourses, getCourse, addCourseData, updateCourse, deleteCourse  } from "./api.js";
 
@@ -11,7 +11,7 @@ const coressViewBtn = document.getElementById("course-view-btn");
 const coressAddBtn = document.getElementById("course-add-btn");
 
 document.addEventListener("DOMContentLoaded", (event) => {
-
+//  fetch all courses from api_connect
   fetchCourses();
   
   // coressAddBtn.addEventListener("click", () => {

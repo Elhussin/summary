@@ -1,10 +1,9 @@
 from .views import( CourseSerializer ,SummarySerializer, SummaryViewSet,index,login_view,logout_view,register,CourseViewSet, usersProfile , pageNotFound,
 
 LikeViewSet,ComentsViewSet,FovariteViewSet,SummaryLikeViewSet,SummaryComentsViewSet,SummaryFovariteViewSet)
-
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from django.conf.urls import handler404
+
 
 
 
@@ -18,12 +17,8 @@ router.register(r'fovarties', FovariteViewSet,basename='fovarties')
 router.register(r'summarylikes', SummaryLikeViewSet,basename='summarylikes')
 router.register(r'summarycoments', SummaryComentsViewSet,basename='summarycoments')
 router.register(r'summaryfovarties', SummaryFovariteViewSet,basename='summaryfovarties')
-# router.register(r'summary', CourseViewSet,basename='summary')
 
 
-# router.register(r'corseedit',MyModelList,basename='corseedit' )
-handler404 = 'summary.views.pageNotFound'
-    
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.

@@ -1,12 +1,12 @@
+import {like , likeActive, unlike, unlikeActive, favorite, favoriteActive}  from "./svg_icons.js";
+
 // view main data for course
-const mainCourseData = (data) => {
+const AddCourseDataToHTml = (data) => {
     const newDiv = document.createElement("div");
     newDiv.className = "card-datiles";
     newDiv.innerHTML = `
         <img src="${data.image}" alt="${data.name}">
         <div class="card-content">
-            <h2 class="card-title">${data.name}</h2>
-            <p class="card-description">Description:${data.description}</p>
         </div>
     `;
     return newDiv;
@@ -15,13 +15,18 @@ const mainCourseData = (data) => {
 
 // view  iteams Datiles
 const viewCourseDatiles = (data) => {
-
+    const likesCount = data.likes.filter((item) => item.likes).length;
+    const unlikesCount = data.likes.filter((item) => item.unlikes).length;
     const newDiv = document.createElement("div");
     newDiv.innerHTML = `
         <h1 id="course-id" data-courseid="${data.id}">
         <h1>Title: ${data.name.toUpperCase()}  </h1>
+        <p> Description: ${data.description} </p>
         <p>Add by  ${data.user.username.toUpperCase()} </p> 
         <p> Created At: ${new Date(data.created_at)} </p>
+
+        <p> Likes: ${likesCount} </p>
+        <p> Unlikes: ${unlikesCount} </p>
     `;
     return newDiv
   };
@@ -45,6 +50,11 @@ const viewCourseDatiles = (data) => {
 
 
 const viewOneSummary = (data) => {
+
+    // likesCount='0';
+    // unlikesCount='0';
+    // <p> Likes: ${likesCount} </p>
+    // <p> Unlikes: ${unlikesCount} </p>
     const newDiv = document.createElement("div");
     newDiv.innerHTML = `
     <h2>Summary : ${data.title}</h2>
@@ -63,11 +73,7 @@ const viewOneSummary = (data) => {
 
 const addButtonGroup = (data) => {
     const newDiv = document.createElement("div");
-    const likesCount = data.summary_likes.filter((item) => item.likes).length;
-    const unlikesCount = data.summary_likes.filter((item) => item.unlikes).length;
-    `
-    <p> Likes: ${likesCount} </p>
-    <p> Unlikes: ${unlikesCount} </p>
+    newDiv.innerHTML =`
     <button class="btn" id='favorite' type="button">${favorite}</button>
     <button class="btn" id="like-course" >${like}</button>
     <button class="btn " id="unlike-course" >${unlike}</button>
@@ -78,3 +84,6 @@ const addButtonGroup = (data) => {
     return newDiv;
 }
 
+
+
+export { AddCourseDataToHTml, viewCourseDatiles, viewSummary, viewOneSummary, addButtonGroup };

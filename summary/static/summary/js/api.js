@@ -66,5 +66,48 @@ const deleteCourse = async (id) => {
   }
 };
 
+// إعداد قاعدة URL لطلبات API
+const api = axios.create({
+  baseURL: 'http://localhost:8000/api/likes/', // قم بتعديل URL إذا كان الخادم يعمل على نطاق مختلف
+  headers: {
+    'Content-Type': 'application/json',
+    // إضافة توكن المصادقة إذا كان مطلوباً، مثل: Authorization: `Bearer ${token}`
+  },
+});
+
+async function addLike(data) {
+  try {
+    const response = await api.post('', data);
+    console.log('Like added successfully:', response.data);
+  } catch (error) {
+    console.error('Error adding like:', error.response ? error.response.data : error.message);
+  }
+}
+
+// دالة لتعديل Like
+async function updateLike(likeId, data) {
+  try {
+    const response = await api.put(`${likeId}/`, data);
+    console.log('Like updated successfully:', response.data);
+  } catch (error) {
+    console.error('Error updating like:', error.response ? error.response.data : error.message);
+  }
+
+}
+
+
+const newLikeData = {
+  // أضف البيانات المطلوبة مثل post_id أو أي حقل آخر حسب النموذج في LikeSerializer
+};
+
+addLike(newLikeData);
+
+// مثال على استدعاء دالة تعديل Like
+const updatedLikeData = {
+  // أضف البيانات المراد تعديلها
+};
+
+// استخدام ID للـ Like الذي ترغب في تعديله
+updateLike(1, updatedLikeData); // استبدل 1 بالمعرف الفعلي للـ Like
 
 export { getCourses, getCourse, addCourseData, updateCourse, deleteCourse};

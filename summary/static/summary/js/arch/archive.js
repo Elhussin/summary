@@ -195,3 +195,30 @@ window.onpopstate = function(event) {
             console.error('Error deleting course:', error);
         }
     }
+
+
+
+    
+const savedLink = localStorage.getItem('index_url');
+
+// إذا كان الرابط محفوظًا، قم بتحديث الرابط في شريط العنوان
+if (savedLink) {
+    window.history.replaceState(null, '', savedLink);
+}
+
+document.getElementById('fake-link').addEventListener('click', function (event) {
+    // منع السلوك الافتراضي للنقرة
+    event.preventDefault();
+
+    // الرابط الحقيقي الذي تريد التوجيه إليه
+    const index_url = 'http://127.0.0.1:8000/';
+
+    // استبدال الرابط الوهمي بالرابط الحقيقي
+    window.history.pushState(null, '', index_url);
+
+    // حفظ الرابط الحقيقي في Local Storage
+    localStorage.setItem('index_url', index_url);
+
+    // تنفيذ أي عملية إضافية، مثل جلب البيانات أو عرض محتوى جديد
+    alert('تم استبدال الرابط الوهمي برابط حقيقي دون إعادة تحميل الصفحة!');
+});

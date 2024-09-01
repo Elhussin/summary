@@ -27,8 +27,10 @@ const fetchCourses = async () => {
 // fetch one Ity
 const fetchOneCourses = async (id) => {
   try {
-    const data = await getCourse(data);
-    displayItemDetails(courses);
+    // get one course from api
+    const data = await getCourse(id);
+    // will retern data in htmel eleamnt
+    displayItemDetails(data);
   } catch (error) {
     console.error("Error:", error);
   }

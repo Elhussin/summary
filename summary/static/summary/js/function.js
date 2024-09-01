@@ -65,6 +65,7 @@ const viewCommants = (data) => {
 };
 
 const updatpageurl = (data,title,itemId) => {
+    console.log("url",data);
     // change page title
     document.title = `${title}`;
     const newUrl = `/${data.name}/summary/${itemId}`;
