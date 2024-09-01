@@ -48,6 +48,7 @@
 
             {% if user.is_authenticated %}
             <li class="nav-item" id="profile">
+                <input type="number" hidden  id="userId" data-userId="{{user.id}}">
 
                 <a class="nav-link btn nav-list" data-section="Profile" href="{% url 'profile' %}">Profile :<strong
                         id="username">{{ user.username|title }} </strong></a>
