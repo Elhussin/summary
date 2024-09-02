@@ -3,6 +3,7 @@ from pathlib import Path
 import os
 # import the config function from python-decouple
 from decouple import config 
+from datetime import timedelta
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -37,7 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'summary',
     'rest_framework',
+    'rest_framework_simplejwt',
 ]
+
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -71,18 +76,6 @@ WSGI_APPLICATION = 'summayies_app.wsgi.application'
 
 
 
-
-# # Mysql Database
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'cs50_summary',
-#         'USER': 'root',
-#         'PASSWORD': '',
-#         'HOST': 'localhost',
-#         'PORT': '3306',
-#     }
-# }
 
 DATABASES = {
     'default': {
@@ -119,7 +112,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'summary/media')
 
 
 # Default primary key field type
@@ -129,8 +122,9 @@ AUTH_USER_MODEL = 'summary.User'
 # IsAuthenticated 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
@@ -149,9 +143,21 @@ REST_FRAMEWORK = {
 }
 
 
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),  # مدة صلاحية رمز الوصول (يمكن تعديلها حسب الحاجة)
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),     # مدة صلاحية رمز التحديث
+    'ROTATE_REFRESH_TOKENS': True,                  # لتدوير رموز التحديث عند الاستخدام
+    'BLACKLIST_AFTER_ROTATION': True,               # إبطال الرموز القديمة بعد التدوير
+    'ALGORITHM': 'HS256',                           # الخوارزمية المستخدمة للتشفير
+    'SIGNING_KEY': SECRET_KEY,                      # مفتاح التوقيع (يستخدم مفتاح السر الخاص بالمشروع)
+    'AUTH_HEADER_TYPES': ('Bearer',),               # نوع التوثيق في رؤوس الطلبات
+}
+
+
 # Security Headers
 SECURE_HSTS_SECONDS = 31536000
-SECURE_SSL_REDIRECT = True
+# to include subdomains
+SECURE_SSL_REDIRECT = False  #True
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SESSION_COOKIE_SECURE = True

@@ -5,6 +5,8 @@ from django.http import JsonResponse
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
+from django.contrib.auth import get_user_model
+from django.db import IntegrityError
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from .models import Summary, Course, Like, Coments, Fovarite
@@ -14,8 +16,6 @@ from .serializers import (
     SummaryLikeSerializer, SummaryComentsSerializer
 )
 from summary.forms import UserRegistraForm
-from django.contrib.auth import get_user_model
-from django.db import IntegrityError
 
 # Create your views here.
 User = get_user_model()

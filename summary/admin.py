@@ -9,10 +9,10 @@ admin.site.register(User)
 #     list_display = ("__str__", "name")
 
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ("__str__", "name")
+    list_display = ("__str__", "title")
 
 class SummaryAdmin(admin.ModelAdmin):
-    list_display = ("__str__", "content")
+    list_display = ("__str__", "description")
 
 # class UserAdmin(admin.ModelAdmin):
 #     list_display = ("__str__", "email")
