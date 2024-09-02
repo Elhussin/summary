@@ -40,15 +40,14 @@ const fetchOneCourses = async (id) => {
 //  to fetch one course
 
 //  Updat Course
- const modifyCourse = async (id, formData) => {
-  try {
-    const updatedCourse = await updateCourse(id, formData);
-    // console.log("Updated Course:", updatedCourse);
-    fetchOneCourses(id);
-  } catch (error) {
-    console.error("Error:", error);
-  }
-};
+//  const modifyCourse = async (id, formData) => {
+//   try {
+//     const updatedCourse = await updateCourse(id, formData);
+//     fetchOneCourses(id);
+//   } catch (error) {
+//     console.error("Error:", error);
+//   }
+// };
 
 
   
@@ -75,20 +74,35 @@ const fetchOneCourses = async (id) => {
   //  Supmit View Course After  Edit
 const updateCourseForm = () => {
     const addCourseForm =document.getElementById("course_form")
-    addCourseForm.addEventListener("submit", function (event) {
+    addCourseForm.addEventListener("submit", async (event)=> {
         const courseID = document.getElementById("course-id").dataset.courseid;
-        var message = "Course updated successfully";
         event.preventDefault();
         let formData = new FormData(this);
-        modifyCourse(courseID, formData);
-        alertMessage(message);
-        document.getElementById("coress-add").style.display = "none";
-        document.getElementById("cours-container").style.display = "block";
-        fetchOneCourses(courseID);
+       
+        try {
+          console.log("form data", formData);
+          const updatedCourse = await updateCourse(courseID, formData);
+          console.log("updated course", updatedCourse);
+          console.log(updatedCourse);
+          const message = "Course updated successfully";
+
+          alertMessage(message);
+          fetchOneCourses(courseID);
+          document.getElementById("coress-add").style.display = "none";
+          document.getElementById("cours-container").style.display = "block";
+        } catch (error) {
+          // console.error("Error:", error);
+          const message = `Error: ${error}`;
+          alertMessage(message);
+        }
+
+        
+
+        
       });
 
 }
 
   
-export { removeCourse, modifyCourse,fetchCourses,fetchOneCourses, updateCourseForm};
+export { removeCourse,fetchCourses,fetchOneCourses, updateCourseForm};
 

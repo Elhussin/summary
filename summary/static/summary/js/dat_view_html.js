@@ -1,6 +1,5 @@
 import {
   removeCourse,
-  modifyCourse,
   fetchCourses,
   fetchOneCourses,
   updateCourseForm,
@@ -13,13 +12,13 @@ import {
   viewCommants,
   updatpageurl,
 } from "./function.js";
-import {
-  getCourses,
-  getCourse,
-  addCourseData,
-  updateCourse,
-  deleteCourse,
-} from "./api.js";
+// import {
+//   getCourses,
+//   getCourse,
+//   addCourseData,
+//   updateCourse,
+//   deleteCourse,
+// } from "./api.js";
 
 import {
   AddCourseDataToHTml,
@@ -176,9 +175,16 @@ const displayItemDetails = (data) => {
   summaryViewEventListeners(data);
 
   // Edit Course
+  // when click on edit course it will add the course data to the form to update it
   document.getElementById("edit-course").addEventListener("click", (e) => {
+    // stop the default action
     e.preventDefault;
+    
+    // add course data to the form to update it 
+    // addDateToForm function from dat_view_html.js 
     addDateToForm(data);
+    // call updateCourseForm function from api_connect.js
+    // updateCourseForm will 
     updateCourseForm();
   });
 };
@@ -215,14 +221,13 @@ const fetchOneSummary = (data) => {
 
 // Add data To  form to update it
 const addDateToForm = (data) => {
-  const coursContainer = document.getElementById("cours-container");
   const coressAdd = document.getElementById("coress-add");
   document.getElementById("page-title").innerHTML = "Edit Course";
   document.getElementById("name").value = data.name;
   document.getElementById("description").value = data.description;
   document.getElementById("imagePreview").src = data.image;
   document.getElementById("send").value = "Update";
-  displayIteam(coressAdd, coursContainer, "block");
+  displayIteam(coressAdd, viewContinear, "block");
   viewUploudImage();
 };
 

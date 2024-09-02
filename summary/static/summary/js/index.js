@@ -1,4 +1,4 @@
-import {  removeCourse, modifyCourse,fetchCourses,fetchOneCourses, updateCourseForm } from "./api_connect.js";
+import {  removeCourse,fetchCourses,fetchOneCourses, updateCourseForm } from "./api_connect.js";
 import {    alertMessage, displayIteam, viewUploudImage, createCommaneElmeant, viewCommants,} from "./function.js";
 import {getCourses, getCourse, addCourseData, updateCourse, deleteCourse  } from "./api.js";
 
@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
   // const user = JSON.parse(localStorage.getItem("user"));
   try {
     const user=document.getElementById("userId").dataset.user
-  //   console.log(user)
+    console.log(user)
   //   if (user) {
   //     user.dataset.user = JSON.stringify(user);
   //   }

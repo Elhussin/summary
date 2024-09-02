@@ -1,6 +1,5 @@
-from .views import( CourseSerializer ,SummarySerializer, SummaryViewSet,index,login_view,logout_view,register,CourseViewSet, usersProfile , pageNotFound,
-
-LikeViewSet,ComentsViewSet,FovariteViewSet,SummaryLikeViewSet,SummaryComentsViewSet,SummaryFovariteViewSet)
+from .views import( CourseSerializer ,SummarySerializer, SummaryViewSet,index,login_view,logout_view,register,CourseViewSet, usersProfile,
+                   LikeViewSet,ComentsViewSet,FovariteViewSet,SummaryLikeViewSet,SummaryComentsViewSet,SummaryFovariteViewSet)
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
