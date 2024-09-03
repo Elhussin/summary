@@ -4,7 +4,7 @@ from .views import (
     index, login_view, logout_view, register, usersProfile,
     CourseViewSet, SummaryViewSet, LikeViewSet, ComentsViewSet,
     FovariteViewSet, SummaryLikeViewSet, SummaryComentsViewSet,
-    SummaryFovariteViewSet
+    SummaryFovariteViewSet,user_profile_view
 )
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
@@ -20,16 +20,23 @@ router.register(r'summary_comments', SummaryComentsViewSet, basename='summaryCom
 router.register(r'summary_favorites', SummaryFovariteViewSet, basename='summaryCavorites')
 
 #
+# urlpatterns = [
+#     path('', index, name='index'),
+#     path('view/', include(router.urls)), 
+#     path("login/", login_view, name="login"),
+#     path("logout/", logout_view, name="logout"),
+#     path("register/", register, name="register"),
+#     path("profile/", usersProfile, name="profile"),
+# ]
 urlpatterns = [
+    path('view/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),  # لتسجيل الدخول والحصول على رمز
+    path('view/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),  # لتحديث رمز الوصول عند انتهاء صلاحيته
+    # path('api/', include(router.urls)),  # Include your API endpoints
+    path('view/user-profile/', user_profile_view, name='user_profile'),
     path('', index, name='index'),
     path('view/', include(router.urls)), 
     path("login/", login_view, name="login"),
     path("logout/", logout_view, name="logout"),
     path("register/", register, name="register"),
     path("profile/", usersProfile, name="profile"),
-]
-urlpatterns = [
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),  # لتسجيل الدخول والحصول على رمز
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),  # لتحديث رمز الوصول عند انتهاء صلاحيته
-    path('api/', include(router.urls)),  # Include your API endpoints
 ]

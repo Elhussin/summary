@@ -1,6 +1,119 @@
 
 const API_URL = 'http://127.0.0.1:8000/view/';
+const url = 'http://127.0.0.1:8000';
 
+// Set up Axios with CSRF token
+const api = axios.create({
+  baseURL: '/view/',
+});
+
+// دالة تسجيل الدخول
+async function login(username, password) {
+  try {
+    const response = await api.post('token/', {
+      username,
+      password,
+    });
+
+    // تخزين الرموز في Local Storage
+    localStorage.setItem('accessToken', response.data.access);
+    localStorage.setItem('refreshToken', response.data.refresh);
+        // الحصول على معلمة `next` من URL
+    const urlParams = new URLSearchParams(window.location.search);
+    console.log('urlParams',urlParams);
+    const nextPage = urlParams.get('next') || `${url}`; // إعادة التوجيه إلى الصفحة المطلوبة أو إلى /profile/
+console.log('nextPage',nextPage);
+        // إعادة توجيه المستخدم إلى الصفحة التالية
+    window.location.href = nextPage;
+  } catch (error) {
+    console.error('Login failed:', error.response ? error.response.data : error.message);
+  }
+}
+
+
+
+// إعداد اعتراض لطلبات Axios لتضمين الرمز
+api.interceptors.request.use(
+  (config) => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// تحديث Access Token باستخدام Refresh Token
+async function refreshToken() {
+  const refreshToken = localStorage.getItem('refreshToken');
+
+  try {
+    const response = await api.post('token/refresh/', {
+      refresh: refreshToken,
+    });
+
+    // تخزين الرمز الجديد
+    localStorage.setItem('accessToken', response.data.access);
+    console.log('Token refreshed successfully:', response.data);
+
+    return response.data.access;
+  } catch (error) {
+    console.error('Error refreshing token:', error.response ? error.response.data : error.message);
+    logout(); // تسجيل الخروج إذا فشل التحديث
+  }
+}
+
+// إعداد اعتراض لاستجابة Axios لتحديث الرمز عند انتهاء الصلاحية
+api.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+    if (error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true; // منع إعادة المحاولة أكثر من مرة
+      const newAccessToken = await refreshToken();
+      if (newAccessToken) {
+        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+        return api(originalRequest); // إعادة إرسال الطلب بعد تحديث الرمز
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
+// مثال لاستخدام API
+async function getCourses1() {
+  try {
+    const response = await api.get('/courses/');
+    console.log('Courses:', response.data);
+  } catch (error) {
+    console.error('Error fetching courses:', error);
+  }
+}
+
+// تسجيل الخروج وحذف الرموز
+function logout() {
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('refreshToken');
+  console.log('Logged out successfully');
+}
+// دالة لاستخدام API بعد تسجيل الدخول
+async function getProtectedData() {
+  try {
+    const response = await api.get('courses/'); // على سبيل المثال: جلب جميع الكورسات
+    console.log('Protected data:', response.data);
+  } catch (error) {
+    console.error('Error fetching protected data:', error.response ? error.response.data : error.message);
+  }
+}
+// استدعاء الدالة بعد تسجيل الدخول
+// login('hussin', '12345').then(() => getProtectedData());
+
+
+
+getCourses1();
 // Get all Courses
 const getCourses = async () => {
   try {
@@ -126,4 +239,4 @@ const deleteCourse = async (id) => {
 // استخدام ID للـ Like الذي ترغب في تعديله
 // updateLike(1, updatedLikeData); // استبدل 1 بالمعرف الفعلي للـ Like
 
-export { getCourses, getCourse, addCourseData, updateCourse, deleteCourse};
+export { getCourses, getCourse, addCourseData, updateCourse, deleteCourse ,login,};

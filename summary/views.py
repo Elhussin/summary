@@ -9,13 +9,16 @@ from django.contrib.auth import get_user_model
 from django.db import IntegrityError
 from rest_framework import viewsets, status
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import api_view, permission_classes
 from .models import Summary, Course, Like, Coments, Fovarite
 from .serializers import (
     SummarySerializer, CourseSerializer, LikeSerializer,
     ComentsSerializer, FovariteSerializer, SummaryFovariteSerializer,
-    SummaryLikeSerializer, SummaryComentsSerializer
+    SummaryLikeSerializer, SummaryComentsSerializer,UserSerializer
 )
 from summary.forms import UserRegistraForm
+
 
 # Create your views here.
 User = get_user_model()
@@ -104,21 +107,29 @@ class SummaryComentsViewSet(viewsets.ModelViewSet):
         except IntegrityError:
             return Response({"error": "Error saving commented summary."}, status=status.HTTP_400_BAD_REQUEST)
 
-def login_view(request):
-    if request.method == "POST":
-        email = request.POST["email"]
-        password = request.POST["password"]
-        user = authenticate(request, username=email, password=password)
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                return HttpResponseRedirect(reverse("index"))
-            else:
-                messages.error(request, "Account is inactive.")
-        else:
-            messages.error(request, "Invalid email and/or password.")
-    return render(request, "summary/auth/login.html")
+# def login_view(request):
+#     if request.method == "POST":
+#         email = request.POST["email"]
+#         password = request.POST["password"]
+#         user = authenticate(request, username=email, password=password)
+#         if user is not None:
+#             if user.is_active:
+#                 login(request, user)
+#                 return HttpResponseRedirect(reverse("index"))
+#             else:
+#                 messages.error(request, "Account is inactive.")
+#         else:
+#             messages.error(request, "Invalid email and/or password.")
+#     return render(request, "summary/auth/login.html")
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])  # التأكد من أن المستخدم مسجل الدخول
+def user_profile_view(request):
+    user = request.user
+    serializer = UserSerializer(user)
+    return Response(serializer.data)
 
+def login_view(request):
+    return render(request, 'summary/auth/login.html')  # تقديم القالب لتسجيل الدخول
 
 def logout_view(request):
     logout(request)

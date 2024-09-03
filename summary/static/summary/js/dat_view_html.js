@@ -40,9 +40,9 @@ const viewCourses = (data) => {
     .map(
       (item) => `
             <div class="card" id="${item.id}" >
-              <img src="${item.image}" alt="${item.name}">
+              <img src="${item.image}" alt="${item.title}">
               <div class="card-content">
-                  <h2 class="card-title">${item.name}</h2>
+                  <h2 class="card-title">${item.title}</h2>
                   <p class="card-description">${item.description}</p>
               </div>
             </div>
@@ -223,7 +223,7 @@ const fetchOneSummary = (data) => {
 const addDateToForm = (data) => {
   const coressAdd = document.getElementById("coress-add");
   document.getElementById("page-title").innerHTML = "Edit Course";
-  document.getElementById("name").value = data.name;
+  document.getElementById("title").value = data.name;
   document.getElementById("description").value = data.description;
   document.getElementById("imagePreview").src = data.image;
   document.getElementById("send").value = "Update";

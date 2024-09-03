@@ -5,7 +5,7 @@ const AddCourseDataToHTml = (data) => {
     const newDiv = document.createElement("div");
     newDiv.className = "card-datiles";
     newDiv.innerHTML = `
-        <img src="${data.image}" alt="${data.name}">
+        <img src="${data.image}" alt="${data.title}">
         <div class="card-content">
         </div>
     `;
@@ -20,7 +20,7 @@ const viewCourseDatiles = (data) => {
     const newDiv = document.createElement("div");
     newDiv.innerHTML = `
         <h1 id="course-id" data-courseid="${data.id}">
-        <h1>Title: ${data.name.toUpperCase()}  </h1>
+        <h1>Title: ${data.title.toUpperCase()}  </h1>
         <p> Description: ${data.description} </p>
         <p>Add by  ${data.user.username.toUpperCase()} </p> 
         <p> Created At: ${new Date(data.created_at)} </p>
@@ -41,7 +41,7 @@ const viewCourseDatiles = (data) => {
         <div id="${iteam.id}" class="summary-box">
         <p id="${iteam.user}">Add By ${iteam.user.username}  </p>
         <h3 class="card-title"> ${iteam.title} </h3> 
-        <p> ${iteam.content} </p>
+        <p> ${iteam.description} </p>
         <p>Created At: ${new Date(iteam.created_at)} </p>
         `;
     });
@@ -62,7 +62,7 @@ const viewOneSummary = (data) => {
     <div id="${data.id}" class="">
     <p id="${data.user}">Add By ${data.user}  </p>
     <h3 class="card-title"> ${data.title} </h3>
-    <p> ${data.content} </p>
+    <p> ${data.description} </p>
     <p>Created At: ${new Date(data.created_at)} </p>
     </div>
     <hr>
