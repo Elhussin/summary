@@ -72,6 +72,52 @@ const updatpageurl = (data,title,itemId) => {
     history.pushState({ path: newUrl }, "", newUrl);
 };
 
+
+function setTheme(mode, body, header) {
+    if (mode === "dark") {
+      body.classList.add("dark-mode");
+      body.classList.remove("light-mode");
+      header.classList.add("dark-mode");
+      header.classList.remove("light-mode");
+    } else {
+      body.classList.add("light-mode");
+      body.classList.remove("dark-mode");
+      header.classList.add("light-mode");
+      header.classList.remove("dark-mode");
+    }
+  }
+
+
+// apply translations to the page
+function applyTranslations(language) {
+    const elementsToTranslate = document.querySelectorAll("[id]");
+    elementsToTranslate.forEach((element) => {
+      const translationKey = element.id;
+      if (translations[language] && translations[language][translationKey]) {
+        element.textContent = translations[language][translationKey];
+      }
+    });
+  
+    // Update the direction of the page based on the selected language
+    document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
+  }
+
+function initializeLanguageSwitcher() {
+    const languageSwitcher = document.getElementById("languageSwitcher");
+    const savedLanguage = localStorage.getItem("selectedLanguage") || "en";
+  
+    // apply the saved language
+    languageSwitcher.value = savedLanguage;
+    applyTranslations(savedLanguage);
+  
+    // lesen for language change
+    languageSwitcher.addEventListener("change", function () {
+      const selectedLanguage = this.value;
+      localStorage.setItem("selectedLanguage", selectedLanguage);
+      applyTranslations(selectedLanguage);
+    });
+  }
+
 export {
-    alertMessage, displayIteam, viewUploudImage, createCommaneElmeant, viewCommants,updatpageurl
+    alertMessage, displayIteam, viewUploudImage, createCommaneElmeant, viewCommants,updatpageurl ,setTheme ,applyTranslations ,initializeLanguageSwitcher
 };

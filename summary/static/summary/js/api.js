@@ -9,6 +9,7 @@ const api = axios.create({
 
 // دالة تسجيل الدخول
 async function login(username, password) {
+  console.log('login');
   try {
     const response = await api.post('token/', {
       username,
@@ -21,7 +22,7 @@ async function login(username, password) {
         // الحصول على معلمة `next` من URL
     const urlParams = new URLSearchParams(window.location.search);
     console.log('urlParams',urlParams);
-    const nextPage = urlParams.get('next') || `${url}`; // إعادة التوجيه إلى الصفحة المطلوبة أو إلى /profile/
+    const nextPage = urlParams.get('next') || `/profile/`; // إعادة التوجيه إلى الصفحة المطلوبة أو إلى /profile/
 console.log('nextPage',nextPage);
         // إعادة توجيه المستخدم إلى الصفحة التالية
     window.location.href = nextPage;
@@ -97,7 +98,8 @@ async function getCourses1() {
 function logout() {
   localStorage.removeItem('accessToken');
   localStorage.removeItem('refreshToken');
-  console.log('Logged out successfully');
+  // window.location.href = "/login/";
+  window.location.href = "/login/?next=/profile/";
 }
 // دالة لاستخدام API بعد تسجيل الدخول
 async function getProtectedData() {
@@ -239,4 +241,4 @@ const deleteCourse = async (id) => {
 // استخدام ID للـ Like الذي ترغب في تعديله
 // updateLike(1, updatedLikeData); // استبدل 1 بالمعرف الفعلي للـ Like
 
-export { getCourses, getCourse, addCourseData, updateCourse, deleteCourse ,login,};
+export { getCourses, getCourse, addCourseData, updateCourse, deleteCourse ,login, logout};

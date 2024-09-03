@@ -7,11 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{% block title %}Summaries{% endblock %}</title>
-    <link rel="shortcut icon" href="{% static 'summary/img/logo.PNG' %}" type="image/x-icon">
+    <link rel="shortcut icon" href=" {% static '/summary/img/logo.PNG' %}" type="image/x-icon">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'summary/css/styles.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
 </head>
 
 <body>
@@ -42,56 +44,95 @@
     </header>
 
     <nav id="navigation" class="navigation">
-        <ul class="navigation-iteam" id="nav-items">
+        <ul class="navigation-iteam">
+
+            {% if user.is_authenticated %}
+            <li class="nav-item" id="profile">
+                <input type="number" hidden  id="userId" data-userId="{{user.id}}">
+
+                <a class="nav-link btn nav-list" data-section="Profile" href="{% url 'profile' %}">Profile :<strong
+                        id="username">{{ user.username|title }} </strong></a>
+            </li>
+            {% if user.is_superuser %}
+            <li class="nav-item" id="profile">
+                <a class="nav-link btn" href="/admin"><strong id="userAdmin">Admin </strong></a>
+            </li>
+            {% endif %}
+
             <li class="nav-item" id="Courses">
                 <a href="{% url 'index' %}" class="nav-link btn" id="home" data-section="Courses">Courses</a>
             </li>
-            <!-- User but   -->
-            <li class="nav-item" id="profile-item" style="display: none;">
-                <a class="nav-link btn nav-list" href="{% url 'profile' %}">Profile: <strong id="username"></strong></a>
+            <li class="nav-item" id="following" datas-section="Fovarite">
+                <a class="nav-link btn" data-section="Fovarite" id="fovarite">Fovarite</a>
             </li>
-            <li class="nav-item" id="admin-item" style="display: none;">
-                <a class="nav-link btn" href="/admin"><strong>Admin</strong></a>
+
+
+            {% else %}
+            <li class="nav-item" id="Courses">
+                <a href="{% url 'index' %}" class="nav-link btn" id="home" data-section="Courses">Courses</a>
             </li>
-            <li class="nav-item" id="favourites-item" style="display: none;">
-                <a class="nav-link btn" id="favourites">Favourites</a>
-            </li>
-            <!-- Login and registear but-->
-            <li class="nav-item" id="login-item">
-                <a class="nav-link btn" id="log-in" href="{% url 'login' %}">Log In</a>
-            </li>
-            <li class="nav-item" id="register-item">
-                <a class="nav-link btn" id="register" href="{% url 'register' %}">Register</a>
-            </li>
-            <li class="nav-item" id="logout-item" style="display: none;">
-                <a class="nav-link btn btn-danger" id="log-out">Log Out</a>
-            </li>
+            {% endif %}
         </ul>
+
+
+
+        <div>
+            {% if user.is_authenticated %}
+            <ul>
+                <li class="nav-item ">
+                    <a class="nav-link btn btn-danger" id="log-out" href="{% url 'logout' %}">Log Out</a>
+                </li>
+
+                {%else%}
+                <li class="nav-item">
+                    <a class="nav-link btn" id="log-in" href="{% url 'login' %}">Log In</a>
+                </li>
+                <li> <a class="nav-link btn " id="register" href="{% url 'register' %}">Register</a></li>
+            </ul>
+            {% endif %}
+        </div>
     </nav>
 
     <main class="main">
+        <!-- left side -->
         <aside>
             {% block left-side %}
             {% endblock left-side %}
         </aside>
+
+        <!-- madiel box -->
         <section>
-            <div class="message-alrt dislay-off" id="message-alrt"></div>
+            <div class="message-alrt dislay-off" id="message-alrt"> </div>
+
+            {% if messages %}
+            <div class="message-alrt">
+                {% for message in messages %}
+                <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+
             {% block body %}
             {% endblock %}
+
         </section>
+
+
         <aside id="rightside">
             {% block rightside %}
             {% endblock %}
         </aside>
     </main>
 
+
     <footer class="footer">
         {% include 'summary/layout/folwme.html' %}
     </footer>
-
     <script type="module" src="{% static 'summary/js/layout.js' %}"></script>
+    {% block scripts %}
+    {% endblock %}
 
-    
+
 </body>
 
 </html>
