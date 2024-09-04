@@ -1,3 +1,4 @@
+import { translations } from "./translations.js";
 const alertMessage = (message) => {
     const messageAlrt = document.getElementById("message-alrt");
     messageAlrt.style.display = "block";
@@ -64,11 +65,11 @@ const viewCommants = (data) => {
     return newDiv;
 };
 
-const updatpageurl = (data,title,itemId) => {
-    console.log("url",data);
+const updatpageurl = (name,title,itemId) => {
+    console.log("url",name);
     // change page title
     document.title = `${title}`;
-    const newUrl = `/${data.name}/summary/${itemId}`;
+    const newUrl = `/view/${name}/${itemId}`;
     history.pushState({ path: newUrl }, "", newUrl);
 };
 
@@ -118,6 +119,15 @@ function initializeLanguageSwitcher() {
     });
   }
 
+
+  //view nav items for mobile view
+  function toggleNavItems() {
+    const navigation = document.getElementById("navigation");
+    navigation.style.display = navigation.style.display === "none" ? "block" : "none";
+  }
+
+
 export {
-    alertMessage, displayIteam, viewUploudImage, createCommaneElmeant, viewCommants,updatpageurl ,setTheme ,applyTranslations ,initializeLanguageSwitcher
+    alertMessage, displayIteam, viewUploudImage, createCommaneElmeant, viewCommants,updatpageurl ,
+    setTheme ,applyTranslations ,initializeLanguageSwitcher,toggleNavItems,
 };

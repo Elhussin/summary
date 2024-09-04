@@ -128,6 +128,15 @@ def user_profile_view(request):
     serializer = UserSerializer(user)
     return Response(serializer.data)
 
+
+@csrf_exempt  # تعطيل التحقق من CSRF لهذه الـ View
+@api_view(['POST'])
+def custom_login_view(request):
+    # إعداد دالة تسجيل الدخول هنا
+    return Response({"message": "Login successful!"})
+
+
+@csrf_exempt
 def login_view(request):
     return render(request, 'summary/auth/login.html')  # تقديم القالب لتسجيل الدخول
 

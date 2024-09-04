@@ -7,29 +7,48 @@ const api = axios.create({
   baseURL: '/view/',
 });
 
-// دالة تسجيل الدخول
-async function login(username, password) {
-  console.log('login');
-  try {
-    const response = await api.post('token/', {
-      username,
-      password,
-    });
+// // دالة تسجيل الدخول
+// async function login(username, password) {
+//   console.log('login');
+//   try {
+//     const response = await api.post('token/', {
+//       username,
+//       password,
 
-    // تخزين الرموز في Local Storage
+
+      
+//     });
+
+
+
+//     // تخزين الرموز في Local Storage
+//     localStorage.setItem('accessToken', response.data.access);
+//     localStorage.setItem('refreshToken', response.data.refresh);
+//     // redirect to the next page after login  or to /profile/
+//     const urlParams = new URLSearchParams(window.location.search);
+//     console.log('urlParams',urlParams);
+//     const nextPage = urlParams.get('next') || `/profile/`; // إعادة التوجيه إلى الصفحة المطلوبة أو إلى /profile/
+//     console.log('nextPage',nextPage);
+//         // إعادة توجيه المستخدم إلى الصفحة التالية
+//     window.location.href = nextPage;
+//   } catch (error) {
+//     console.error('Login failed:', error.response ? error.response.data : error.message);
+//   }
+// }
+
+// مثال على دالة تسجيل الدخول باستخدام Axios
+async function login(username, password) {
+  const response = await axios.post('/api/token/', { username, password });
+  if (response.status === 200) {
     localStorage.setItem('accessToken', response.data.access);
     localStorage.setItem('refreshToken', response.data.refresh);
-        // الحصول على معلمة `next` من URL
-    const urlParams = new URLSearchParams(window.location.search);
-    console.log('urlParams',urlParams);
-    const nextPage = urlParams.get('next') || `/profile/`; // إعادة التوجيه إلى الصفحة المطلوبة أو إلى /profile/
-console.log('nextPage',nextPage);
-        // إعادة توجيه المستخدم إلى الصفحة التالية
-    window.location.href = nextPage;
-  } catch (error) {
-    console.error('Login failed:', error.response ? error.response.data : error.message);
+    console.log('Login successful:', response.data);
+  } else {
+    throw new Error('Login failed');
   }
 }
+
+
 
 
 
@@ -115,7 +134,8 @@ async function getProtectedData() {
 
 
 
-getCourses1();
+// getCourses1();
+
 // Get all Courses
 const getCourses = async () => {
   try {
