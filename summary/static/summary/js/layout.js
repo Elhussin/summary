@@ -1,5 +1,3 @@
-
-import { logout } from "./api.js";
 import { alertMessage, setTheme ,initializeLanguageSwitcher,toggleNavItems } from "./function.js";
 
 // تحميل الصفحة والتحقق من الإعدادات الحالية

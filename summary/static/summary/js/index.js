@@ -14,31 +14,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 //  fetch all courses from api_connect
   fetchCourses();
   
-  // coressAddBtn.addEventListener("click", () => {
-  //   displayIteam(coressAdd, coursContainer, "block");
-  // });
-  
   viewUploudImage();
-  // coressViewBtn.addEventListener("click", () => {
-  //   displayIteam(coursContainer, coressAdd, "flex");
-  //   fetchCourses();
-  // });
-
-  // save user data to local storage
-  // const user = JSON.parse(localStorage.getItem("user"));
-  try {
-    const user=document.getElementById("userId").dataset.user
-    console.log(user)
-  //   if (user) {
-  //     user.dataset.user = JSON.stringify(user);
-  //   }
-  //   // const user = JSON.parse(localStorage.getItem("user"));
-  //   if (user) {
-  //     document.getElementById("user").innerHTML = user.username;
-  //   }
-  } catch (error) {
-    console.log(error);
-  }
 
 });
 
