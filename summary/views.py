@@ -157,7 +157,7 @@ def register(request):
         form = UserRegistraForm()
     return render(request, "summary/auth/register.html", {"form": form})
 
-@login_required(login_url='/login')
+
 def usersProfile(request):
     return render(request, "summary/profile.html")
 

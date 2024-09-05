@@ -51,7 +51,7 @@
                 <a class="nav-link btn nav-list" href="{% url 'profile' %}">Profile: <strong id="username"></strong></a>
             </li>
             <li class="nav-item" id="admin-item" style="display: none;">
-                <a class="nav-link btn" href="/admin"><strong>Admin</strong></a>
+                <a class="nav-link btn" href="/admin"><strong id="userAdmin">Admin</strong></a>
             </li>
             <li class="nav-item" id="favourites-item" style="display: none;">
                 <a class="nav-link btn" id="favourites">Favourites</a>
@@ -90,7 +90,7 @@
     </footer>
 
     <script type="module" src="{% static 'summary/js/layout.js' %}"></script>
-
+    <script  type="module" src="{% static 'summary/js/login.js' %}"></script>
     
 </body>
 

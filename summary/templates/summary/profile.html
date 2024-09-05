@@ -3,35 +3,21 @@
 
 {% block title %}Profile{% endblock %}
 
-
-
-
 {% block left-side %}
-
-{% if user.is_superuser %}
-    <button class="nav-link btn" id="course-add-btn" ><strong >Add New Course </strong></button>
-    <button  class="nav-link btn" id="course-view-btn" ><strong > View Courses</strong></button>
-    
-    {% endif %}
-    <article id="informtian">
-
-    </article>  
+    <button class="nav-link btn" id="course-add-btn" style="display: none;"><strong>Add New Course</strong></button>
+    <button class="nav-link btn" id="course-view-btn" style="display: none;"><strong>View Courses</strong></button>
+    <article id="information"></article>
 {% endblock %}
 
 {% block body %}
-
 <div>
-    <h2 ><strong > You are Welcome Mr {{ user.username|title  }} </strong></h2>
-    <input type="text" id="user_id" value="{{user.id}}" hidden>
+    <h2><strong>Welcome, <span id="user-name"> </span></strong></h2>
+    <input type="text" id="user_id" hidden>
 </div>
 <hr>
-
 {% endblock %}
 
 {% block rightside %}
-
-{% endblock %}
-{% block scripts %}
-<script type="module" src="{% static 'summary/js/profile.js' %}"></script>
+<!-- Add any right side content if needed -->
 {% endblock %}
 

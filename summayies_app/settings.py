@@ -155,11 +155,11 @@ SIMPLE_JWT = {
 
 
 # Security Headers
-SECURE_HSTS_SECONDS = 31536000
-# to include subdomains
-SECURE_SSL_REDIRECT = False  #True
-SECURE_BROWSER_XSS_FILTER = True
-SECURE_CONTENT_TYPE_NOSNIFF = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = False
-X_FRAME_OPTIONS = 'DENY'
+SECURE_HSTS_SECONDS = 31536000  # 1 year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # to include subdomains
+SECURE_SSL_REDIRECT = False  #True # to redirect http to https
+SECURE_BROWSER_XSS_FILTER = True # to enable XSS protection
+SECURE_CONTENT_TYPE_NOSNIFF = True # to prevent MIME type sniffing
+SESSION_COOKIE_SECURE = True # to prevent session cookie from being sent over HTTP
+CSRF_COOKIE_SECURE = False # to prevent CSRF cookie from being sent over HTTP
+X_FRAME_OPTIONS = 'DENY' # to prevent clickjacking
