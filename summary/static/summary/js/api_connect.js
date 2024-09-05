@@ -19,8 +19,7 @@ const fetchCourses = async () => {
     
   } catch (error) {
     console.error("Error:", error);
-    message = "Error adding course";
-    alertMessage(message );
+    alertMessage('Error Fetching  course' );
   }
 };
 

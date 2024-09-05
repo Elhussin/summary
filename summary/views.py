@@ -11,6 +11,8 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.exceptions import ValidationError
+from rest_framework.permissions import IsAuthenticated, BasePermission
 from .models import Summary, Course, Like, Coments, Fovarite
 from .serializers import (
     SummarySerializer, CourseSerializer, LikeSerializer,
@@ -23,6 +25,20 @@ from summary.forms import UserRegistraForm
 # Create your views here.
 User = get_user_model()
 
+# إنشاء إذن مخصص يسمح بعمليات GET بدون توثيق
+class AllowGetWithoutAuthentication(BasePermission):
+    """
+    السماح بعمليات GET بدون توثيق وطلب التوثيق للعمليات الأخرى.
+    """
+    def has_permission(self, request, view):
+        # السماح بعمليات GET بدون توثيق
+        if request.method == 'GET':
+            return True
+        # طلب التوثيق للعمليات الأخرى
+        return request.user and request.user.is_authenticated
+
+
+
 
 def index(request):
     return render(request, "summary/index.html")
@@ -34,13 +50,21 @@ class SummaryViewSet(viewsets.ModelViewSet):
 class CourseViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all().order_by('created_at')
     serializer_class = CourseSerializer
-
+    # config permission
+    permission_classes = [AllowGetWithoutAuthentication]  
     def perform_create(self, serializer):
         try:
+            # حفظ الدورة وضبط المستخدم من التوكن
             serializer.save(user=self.request.user)
-        except IntegrityError:
-            return Response({"error": "Error saving course."}, status=status.HTTP_400_BAD_REQUEST)
-
+        except IntegrityError as e:
+            # معالجة خطأ سلامة البيانات
+            raise ValidationError({"error": "Error saving course. Please ensure data integrity."})
+        except ValidationError as e:
+            # معالجة الأخطاء المتعلقة بالتحقق من البيانات
+            raise ValidationError({"error": e.detail})
+        except Exception as e:
+            # معالجة الأخطاء العامة وإظهار رسالة الخطأ
+            raise ValidationError({"error": str(e)})
 
 
 class LikeViewSet(viewsets.ModelViewSet):

@@ -4,20 +4,36 @@
 {% block title %}Profile{% endblock %}
 
 {% block left-side %}
-    <button class="nav-link btn" id="course-add-btn" style="display: none;"><strong>Add New Course</strong></button>
-    <button class="nav-link btn" id="course-view-btn" style="display: none;"><strong>View Courses</strong></button>
+    <button class="nav-link btn dislay-off" id="course-add-box" ><strong>Add New Course</strong></button>
+    <button class="nav-link btn dislay-off" id="course-view-box"><strong>View Courses</strong></button>
     <article id="information"></article>
 {% endblock %}
 
 {% block body %}
+<article  id="view-box" class="dislay-off" >
+    <div id="form-box" class="dislay-off">
+    {% include 'summary/layout/form.html' %}
+    </div>
+</article>
+
 <div>
-    <h2><strong>Welcome, <span id="user-name"> </span></strong></h2>
-    <input type="text" id="user_id" hidden>
+
+
 </div>
 <hr>
+
+<script></script>
+
+<script  type="module" src="{% static 'summary/js/profile.js' %}"></script>
 {% endblock %}
 
 {% block rightside %}
+<div id="user-profile" class="display-off">
+    <h2><strong>Welcome, <span id="user-username"> </span></strong></h2>
+    <p><strong>Email: </strong><span id="user-email"></span></p>
+    <p><strong>Role: </strong><span id="user-role"></span></p>
+
+</div>
 <!-- Add any right side content if needed -->
 {% endblock %}
 

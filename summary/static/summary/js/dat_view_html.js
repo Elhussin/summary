@@ -4,13 +4,16 @@ import {
   fetchOneCourses,
   updateCourseForm,
 } from "./api_connect.js";
+import { getActiveUsre } from "./api.js";
 import {
+  checkAccessToken,
   alertMessage,
   displayIteam,
   viewUploudImage,
   createCommaneElmeant,
   viewCommants,
   updatpageurl,
+
 } from "./function.js";
 // import {
 //   getCourses,
@@ -115,7 +118,11 @@ const displayItemDetails = (data) => {
   // add button group
   // addButtonGroup function from viewElmeantFunctian.js
   // addButtonGroup will return the course buttons in html elements
-  viewDatilesBox.appendChild(addButtonGroup(data));
+  const token =checkAccessToken();
+  if (token){
+    viewDatilesBox.appendChild(addButtonGroup(data));
+  }
+
 
   //  view course details
   // viewCourseDatiles function from viewElmeantFunctian.js
@@ -125,6 +132,7 @@ const displayItemDetails = (data) => {
   // add commant box
   // createCommaneElmeant function from function.js
   // createCommaneElmeant will return the course comments in html elements
+  
   viewDatilesBox.appendChild(createCommaneElmeant());
 
 

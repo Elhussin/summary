@@ -127,7 +127,34 @@ function initializeLanguageSwitcher() {
   }
 
 
+//  display on and off
+const   toggleVisibility = (element)=> {
+
+  if (element) {
+    // التبديل بين الإخفاء والإظهار
+    if (element.style.display === 'none') {
+      element.style.display = 'block'; // إظهار العنصر
+    } else {
+      element.style.display = 'none'; // إخفاء العنصر
+    }
+  } else {
+    console.log('Element not found');
+  }
+}
+
+const checkAccessToken = () => {
+  const accessToken = localStorage.getItem("accessToken");
+  if (!accessToken) {
+
+    console.log("NO accessToken");
+  } else {
+    return accessToken;
+  }
+}
+
+
 export {
     alertMessage, displayIteam, viewUploudImage, createCommaneElmeant, viewCommants,updatpageurl ,
     setTheme ,applyTranslations ,initializeLanguageSwitcher,toggleNavItems,
+    toggleVisibility,checkAccessToken
 };

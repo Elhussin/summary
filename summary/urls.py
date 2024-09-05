@@ -12,7 +12,7 @@ from .views import (
 # 
 router = DefaultRouter()
 router.register(r'summaries', SummaryViewSet, basename='summary')
-router.register(r'courses', CourseViewSet, basename='course')
+router.register(r'courses', CourseViewSet, basename='courses')
 router.register(r'comments', ComentsViewSet, basename='comments')
 router.register(r'likes', LikeViewSet, basename='likes')
 router.register(r'favorites', FovariteViewSet, basename='favorites')

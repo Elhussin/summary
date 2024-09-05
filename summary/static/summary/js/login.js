@@ -1,24 +1,21 @@
 import { alertMessage } from "./function.js";
-// Set up Axios with CSRF token
-const api = axios.create({
-  baseURL: "/view/",
-});
+import {api} from './api.js';  
 
 // Function to handle login form submission
 document.addEventListener("DOMContentLoaded", () => {
+  if (document.getElementById("login-form")){
   document.getElementById("login-form").addEventListener("submit", async function (e) {
       e.preventDefault();
-      console.log("Login form submitted");
+
       const username = document.getElementById("user-name").value;
       const password = document.getElementById("password").value;
-      console.log("username", username);
-      console.log("password", password);
       try {
         login(username, password);
       } catch (error) {
         console.error("Login failed:", error);
       }
     });
+  }
 });
 
 
@@ -41,9 +38,10 @@ async function login(username, password) {
     const urlParams = new URLSearchParams(window.location.search);
     // read the next page from the URL query string or use the default page
     const nextPage = urlParams.get("next") || `/profile/`; 
-    console.log("nextPage", nextPage);
-    window.location.href = nextPage;
+
     alertMessage("Login successful!"); 
+    setInterval(() => { window.location.href = nextPage;}, 3000);
+    
   } catch (error) {
 
     console.error( "Login failed:",error.response ? error.response.data : error.message);
@@ -56,6 +54,7 @@ async function login(username, password) {
 
 // Function to check login status
 function checkLoginStatus() {
+
     const accessToken = localStorage.getItem("accessToken");
     console.log("accessToken", accessToken);
     if (accessToken) {
@@ -66,6 +65,7 @@ function checkLoginStatus() {
 
       // fetch user profile
       fetchUserProfile(accessToken);
+
     } else {
       document.getElementById("login-item").style.display = "block";
       document.getElementById("register-item").style.display = "block";
@@ -86,6 +86,7 @@ function checkLoginStatus() {
           Authorization: `Bearer ${token}`,
         },
       });
+
       const userData = response.data;
       console.log(userData);
       document.getElementById("username").innerText = userData.username;
@@ -103,14 +104,15 @@ function checkLoginStatus() {
     }
   }
 
-  // log out
-  document.getElementById("log-out").addEventListener("click", () => {
 
-    alertMessage("Logged out successfully");
+  // log out
+  if (document.getElementById("log-out")){
+  document.getElementById("log-out").addEventListener("click", () => {
     // remove tokens from local storage
     logout();
 
   });
+}
 
   // Function to check if the user is logged in
 
@@ -134,7 +136,6 @@ function checkLoginStatus() {
   // تحديث Access Token باستخدام Refresh Token
   async function refreshToken() {
     const refreshToken = localStorage.getItem('refreshToken');
-
     try {
       const response = await api.post('token/refresh/', {
         refresh: refreshToken,
@@ -142,8 +143,6 @@ function checkLoginStatus() {
 
       // تخزين الرمز الجديد
       localStorage.setItem('accessToken', response.data.access);
-      console.log('Token refreshed successfully:', response.data);
-
       return response.data.access;
     } catch (error) {
       console.error('Error refreshing token:', error.response ? error.response.data : error.message);
@@ -174,49 +173,11 @@ function checkLoginStatus() {
   function logout() {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
-    window.location.href = "/login/";
+    alertMessage("Logged out successfully");
+    setTimeout(() => { window.location.href = "/login/"; }, 3000);
   }
 
 
-    // function to display user profile data
-  function displayUserProfile(data) {
-    document.getElementById('user-profile').style.display = 'block';
-    document.getElementById('username').innerText = data.username;
-    document.getElementById('user_id').innerText = data.id;
-    document.getElementById('email').innerText = data.email;
+export { logout };
 
-    // عرض الأزرار إذا كان المستخدم مشرفًا
-    if (data.is_superuser) {
-        document.getElementById('course-add-btn').style.display = 'block';
-        document.getElementById('course-view-btn').style.display = 'block';
-    }
-
-  }
-document.addEventListener("DOMContentLoaded", checkLoginStatus , checkUserLoggedIn);
-
-
-
-//   // دالة لاستخدام API بعد تسجيل الدخول
-//   async function getProtectedData() {
-//     try {
-//       const response = await api.get('courses/'); // على سبيل المثال: جلب جميع الكورسات
-//       console.log('Protected data:', response.data);
-//     } catch (error) {
-//       console.error('Error fetching protected data:', error.response ? error.response.data : error.message);
-//     }
-//   }
-//   // استدعاء الدالة بعد تسجيل الدخول
-//   // login('hussin', '12345').then(() => getProtectedData());
-
-//   // getCourses1();
-
-
-//   // مثال لاستخدام API
-//   async function getCourses1() {
-//     try {
-//       const response = await api.get('/courses/');
-//       console.log('Courses:', response.data);
-//     } catch (error) {
-//       console.error('Error fetching courses:', error);
-//     }
-//   }
+document.addEventListener("DOMContentLoaded", checkLoginStatus);

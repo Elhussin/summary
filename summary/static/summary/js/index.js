@@ -13,32 +13,6 @@ const coressAddBtn = document.getElementById("course-add-btn");
 document.addEventListener("DOMContentLoaded", (event) => {
 //  fetch all courses from api_connect
   fetchCourses();
-  
-  viewUploudImage();
 
 });
 
-//  Add New Course
-
-addCourseForm.addEventListener("submit", function (event) {
-  // block out Send form
-  event.preventDefault();
-  // get form detiels
-  let formData = new FormData(this);
-  var message = "";
-  try {
-    const data = addCourseData(formData);
-    if (data) {
-      message = "Course added successfully";
-      alertMessage(message);
-      document.getElementById("course_form").reset();
-      document.getElementById("imagePreview").src = "";
-    } else {
-      message = "Error adding course : ${data.error}";
-      alertMessage(message);
-    }
-  } catch (error) {
-    message = "Error adding course : ${error}";
-    alertMessage(message);
-  }
-});
