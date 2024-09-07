@@ -20,7 +20,10 @@ class ComentsSerializer(serializers.ModelSerializer):
 class LikeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Like
-        fields = ['id', 'user', 'course', 'likes', 'unlikes', 'created_at']
+        fields = '__all__'
+        
+        
+        # fields = ['id', 'user', 'course', 'likes' 'created_at']
 
 
 class FovariteSerializer(serializers.ModelSerializer):
@@ -38,7 +41,7 @@ class SummaryComentsSerializer(serializers.ModelSerializer):
 class SummaryLikeSerializer(serializers.ModelSerializer):
     class Meta:
         model = SummaryLike
-        fields = ['id', 'user', 'course', 'summary', 'likes', 'unlikes', 'created_at']
+        fields = ['id', 'user', 'course', 'summary', 'likes', 'created_at']
 
 
 class SummaryFovariteSerializer(serializers.ModelSerializer):

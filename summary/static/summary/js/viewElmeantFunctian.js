@@ -1,4 +1,6 @@
 import {like , likeActive, unlike, unlikeActive, favorite, favoriteActive}  from "./svg_icons.js";
+import {checkAccessToken} from "./function.js";
+import {getActiveUsre} from "./api.js";
 
 // view main data for course
 const AddCourseDataToHTml = (data) => {
@@ -16,7 +18,9 @@ const AddCourseDataToHTml = (data) => {
 // view  iteams Datiles
 const viewCourseDatiles = (data) => {
     const likesCount = data.likes.filter((item) => item.likes).length;
-    const unlikesCount = data.likes.filter((item) => item.unlikes).length;
+    const unlikesCount = data.likes.filter((item) => !item.likes).length;
+    // const likesCount = data.likes.length;
+
     const newDiv = document.createElement("div");
     newDiv.innerHTML = `
         <h1 id="course-id" data-courseid="${data.id}">Course Id : ${data.id} </h1>
@@ -24,9 +28,10 @@ const viewCourseDatiles = (data) => {
         <p> Description: ${data.description} </p>
         <p>Add by  ${data.user.username.toUpperCase()} </p> 
         <p> Created At: ${new Date(data.created_at)} </p>
-
         <p> Likes: ${likesCount} </p>
         <p> Unlikes: ${unlikesCount} </p>
+
+   
     `;
     return newDiv
   };
@@ -50,11 +55,6 @@ const viewCourseDatiles = (data) => {
 
 
 const viewOneSummary = (data) => {
-
-    // likesCount='0';
-    // unlikesCount='0';
-    // <p> Likes: ${likesCount} </p>
-    // <p> Unlikes: ${unlikesCount} </p>
     const newDiv = document.createElement("div");
     newDiv.innerHTML = `
     <h2>Summary : ${data.title}</h2>
@@ -71,8 +71,25 @@ const viewOneSummary = (data) => {
 }
 
 
-const favoriteLikeButtonGroup = (data) => {
+const favoriteLikeButtonGroup = async (data) => {
+    console.log("like un like",data);
     const newDiv = document.createElement("div");
+
+    const token =checkAccessToken()
+    if (token){
+        const user=await getActiveUsre(token);
+        // console.log("user",user);
+
+        // // const likeStatus = data.likes.filter((item) => item.likes && item.user == token).length;
+        // newDiv.innerHTML =`
+        // <button class="btn" id='favorite' type="button">${favorite}</button>
+        // <button class="btn" id="like-course" >${like}</button>
+        // <button class="btn " id="unlike-course" >${unlike}</button>
+        // <hr>
+        // `;
+    }
+    
+
     newDiv.innerHTML =`
     <button class="btn" id='favorite' type="button">${favorite}</button>
     <button class="btn" id="like-course" >${like}</button>
@@ -81,6 +98,7 @@ const favoriteLikeButtonGroup = (data) => {
     `;
     return newDiv;
 }
+
 const delateEditButtonGroup = (data) => {
     const newDiv = document.createElement("div");
     newDiv.innerHTML =`

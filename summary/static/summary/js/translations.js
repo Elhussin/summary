@@ -1,7 +1,7 @@
 export const translations = {
     en: {
 
-        title: "Summaries",
+        mainTitle: "Summaries",
         "favourites": "Fovarite",
         "userAdmin": "Admin",
         "home": "Home",
@@ -10,7 +10,7 @@ export const translations = {
         "register": "Register"
     },
     ar: {
-        title:"الملخص",
+        mainTitle:"الملخص",
         "favourites": "المفضلة",
         "userAdmin": "مدير",
         "home": "الرئيسية",

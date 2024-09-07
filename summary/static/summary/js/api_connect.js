@@ -69,23 +69,10 @@ const fetchOneCourses = async (id) => {
   
 
   //  Supmit View Course After  Edit
-const updateCourseForm = () => {
-    const addCourseForm =document.getElementById("course_form")
-    addCourseForm.addEventListener("submit", async (event)=> {
-
-        const courseID = document.getElementById("course-id").dataset.courseid;
-        
-        event.preventDefault();
-        let formData = new FormData(this);
-       
+const updateCourseForm =async (courseID, formData) => {
         try {
-          console.log("form data", formData);
-          const updatedCourse = await updateCourse(courseID, formData);
-          console.log("updated course", updatedCourse);
-          console.log(updatedCourse);
-          const message = "Course updated successfully";
-
-          alertMessage(message);
+          await updateCourse(courseID, formData);
+          alertMessage("Course updated successfully");
           fetchOneCourses(courseID);
           document.getElementById("coress-add").style.display = "none";
           document.getElementById("cours-container").style.display = "block";
@@ -98,9 +85,7 @@ const updateCourseForm = () => {
         
 
         
-      });
-
-}
+      };
 
   
 export { removeCourse,fetchCourses,fetchOneCourses, updateCourseForm};

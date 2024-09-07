@@ -87,7 +87,7 @@ const updateCourse = async (id, formData) => {
     console.error('Access token is missing or invalid.');
     throw new Error('Access token is missing or invalid.');
   }
-  // Send data by Axios
+  // Send data by Axio
   try {
     const response = await api.put(`courses/${id}/`, formData, {
       headers: {
