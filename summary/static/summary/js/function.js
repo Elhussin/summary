@@ -66,10 +66,8 @@ const viewCommants = (data) => {
 };
 
 const updatpageurl = (data,title,itemId) => {
-    console.log("url",data);
-    // change page title
     document.title = `${title}`;
-    const newUrl = `/view/${data.title}/${itemId}`;
+    const newUrl = `/view/courses/${itemId}`;
     history.pushState({ path: newUrl }, "", newUrl);
 };
 

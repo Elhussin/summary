@@ -4,7 +4,7 @@ import {
   fetchOneCourses,
   updateCourseForm,
 } from "./api_connect.js";
-import { getActiveUsre } from "./api.js";
+import { getActiveUsre, addLike } from "./api.js";
 import {
   checkAccessToken, alertMessage, displayIteam,
   viewUploudImage,
@@ -112,15 +112,17 @@ const displayItemDetails = async (data) => {
 
   const token = checkAccessToken();
   if (token) {
+    
+    // add delate and edit button group for the user who add the course
+    const userDatiles = await getActiveUsre(token);
 
     // add button group
     // favoriteLikeButtonGroup function from viewElmeantFunctian.js
     // favoriteLikeButtonGroup will return the course buttons in html elements
-    // viewDatilesBox.appendChild(favoriteLikeButtonGroup(data));
+    // favoriteLikeButtonGroup(data)
+    viewDatilesBox.appendChild(favoriteLikeButtonGroup(data,userDatiles));
 
 
-    // add delate and edit button group for the user who add the course
-    const userDatiles = await getActiveUsre(token);
     if (userDatiles.id == data.user.id) {
       viewDatilesBox.appendChild(delateEditButtonGroup(data));
       document.getElementById("delate-course").addEventListener("click", (e) => {
@@ -152,6 +154,8 @@ const displayItemDetails = async (data) => {
     else {
       viewDatilesBox.appendChild(loginMassage());
     }
+
+    // update course form
     if( document.getElementById("course_form"))
     {
       document.getElementById("course_form").addEventListener("submit", async (e) => {

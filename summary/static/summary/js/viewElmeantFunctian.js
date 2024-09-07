@@ -70,34 +70,91 @@ const viewOneSummary = (data) => {
     return newDiv;
 }
 
-
-const favoriteLikeButtonGroup = async (data) => {
-    console.log("like un like",data);
+// like , likeActive, unlike, unlikeActive, favorite, favoriteActive
+const favoriteLikeButtonGroup =  (data,userDatiles) => {
+    console.log("like un like",data,userDatiles);
     const newDiv = document.createElement("div");
-
-    const token =checkAccessToken()
-    if (token){
-        const user=await getActiveUsre(token);
-        // console.log("user",user);
-
-        // // const likeStatus = data.likes.filter((item) => item.likes && item.user == token).length;
-        // newDiv.innerHTML =`
-        // <button class="btn" id='favorite' type="button">${favorite}</button>
-        // <button class="btn" id="like-course" >${like}</button>
-        // <button class="btn " id="unlike-course" >${unlike}</button>
-        // <hr>
-        // `;
+    const userLike = data.likes.find((like) => like.user === userDatiles.id);
+    const userFavorite = data.favorites.find((favorite) => favorite.user === userDatiles.id);    
+    // add favorite and like button
+    newDiv.innerHTML =`<hr>`;   
+    // confirm user is follow or not
+    if (userFavorite) {
+        if (userFavorite.followStatus) {
+            newDiv.innerHTML +=`
+            <button class="btn" id='favorite' type="button">${favoriteActive}</button>
+            `;
+        } else {
+            newDiv.innerHTML +=`
+            <button class="btn" id='favorite' type="button">${favorite}</button>
+            `;
+        }
+    } else {
+        newDiv.innerHTML +=`
+        <button class="btn" id='favorite' type="button">${favorite}</button>
+        `;
     }
-    
+    // confirm user is like or not
+    if (userLike) {
+        if (userLike.likes) {
+        newDiv.innerHTML +=`
+            <button class="btn" id="like-course"  >${likeActive}</button>
+            <button class="btn" id="unlike-course"  >${unlike}</button>
+        `;
+        } else {
+        newDiv.innerHTML +=`
+            <button class="btn" id="like-course"  >${like}</button>
+            <button class="btn" id="unlike-course" >${unlikeActive}</button>`;
+        }
+    } else {
+        newDiv.innerHTML +=`
+        <button class="btn" id="like-course" >${like}</button>
+        <button class="btn " id="unlike-course" >${unlike}</button>
+        `;
+    }
+     newDiv.innerHTML +=`<hr>`;
 
-    newDiv.innerHTML =`
-    <button class="btn" id='favorite' type="button">${favorite}</button>
-    <button class="btn" id="like-course" >${like}</button>
-    <button class="btn " id="unlike-course" >${unlike}</button>
-    <hr>
-    `;
     return newDiv;
 }
+// const favoriteLikeButtonGroup = (data, userDatiles) => {
+
+//     const newDiv = document.createElement("div");
+//     newDiv.innerHTML = `<hr>`;
+
+//     // دالة لإنشاء زر
+//     const createButton = (id, text, isActive = false) => {
+//         const button = document.createElement("button");
+//         button.className = 'btn';
+//         button.id = id;
+//         button.type = 'button';
+//         button.innerHTML = isActive ? `${text} (Active)` : text; // مثال لتفعيل الحالة
+//         return button;
+//     };
+
+//     // التحقق من حالة المتابعة
+//     const userFavorite = data.favorites.find(favorite => favorite.user === userDatiles.id);
+//     const favoriteButton = createButton('favorite', userFavorite?.followStatus ? favoriteActive : favorite);
+//     newDiv.appendChild(favoriteButton);
+
+//     // التحقق من حالة الإعجاب
+//     const userLike = data.likes.find(like => like.user === userDatiles.id);
+//     const likeButton = createButton('like-course', userLike?.likes ? likeActive : like, userLike?.likes);
+//     const unlikeButton = createButton('unlike-course', userLike?.likes ? unlike : unlikeActive, !userLike?.likes);
+//     newDiv.appendChild(likeButton);
+//     newDiv.appendChild(unlikeButton);
+
+//     // عرض رسالة في الـ console لحالة الإعجاب
+//     if (userLike) {
+//         console.log(userLike.likes ? 'المستخدم قام بتسجيل إعجاب (True).' : 'المستخدم قام بتسجيل عدم إعجاب (False).');
+//     } else {
+//         console.log('المستخدم لم يسجل إعجاب أو عدم إعجاب.');
+//     }
+
+//     newDiv.innerHTML += `<hr>`;
+//     return newDiv;
+// };
+
+
 
 const delateEditButtonGroup = (data) => {
     const newDiv = document.createElement("div");

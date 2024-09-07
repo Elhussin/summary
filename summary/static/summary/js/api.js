@@ -133,14 +133,14 @@ const deleteCourse = async (id) => {
 //   },
 // });
 
-// async function addLike(data) {
-//   try {
-//     const response = await api.post('', data);
-//     console.log('Like added successfully:', response.data);
-//   } catch (error) {
-//     console.error('Error adding like:', error.response ? error.response.data : error.message);
-//   }
-// }
+async function addLike(data) {
+  try {
+    const response = await api.post('likes', data);
+    console.log('Like added successfully:', response.data);
+  } catch (error) {
+    console.error('Error adding like:', error.response ? error.response.data : error.message);
+  }
+}
 
 // // دالة لتعديل Like
 // async function updateLike(likeId, data) {
