@@ -57,14 +57,12 @@ const fetchOneCourses = async (id) => {
  const removeCourse = async (id) => {
     try {
       await deleteCourse(id);
-      const message = `Course with id ${id} deleted successfully`;
-      alertMessage(message);
+      alertMessage(`Course with id ${id} deleted successfully`);
       document.getElementById("cours-detieals").style.display = "none";
       document.getElementById("coress-add").style.display = "none";
       fetchCourses();
     } catch (error) {
-      const message = `Error: ${error}`;
-      alertMessage(message);
+      alertMessage(`Error: ${error}`);
       console.error("Error:", error);
     }
   };
@@ -74,7 +72,9 @@ const fetchOneCourses = async (id) => {
 const updateCourseForm = () => {
     const addCourseForm =document.getElementById("course_form")
     addCourseForm.addEventListener("submit", async (event)=> {
+
         const courseID = document.getElementById("course-id").dataset.courseid;
+        
         event.preventDefault();
         let formData = new FormData(this);
        

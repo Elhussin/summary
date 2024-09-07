@@ -47,23 +47,6 @@ const getCourse = async (id) => {
   }
 };
 
-
-// const addCourseData = async (formData) => {
-//       // Send data by Axios
-//       try {
-//         const response = await axios.post(`${API_URL}courses/`, formData, {
-//           headers: {
-//             "Content-Type": "multipart/form-data",
-//             "X-CSRFToken": formData.get("csrfmiddlewaretoken"), // get from form  CSRF Token
-//           },
-//         });
-//         return response.data;
-//       }catch(error){
-//         console.error('Error adding course:', error);
-//         throw error;
-//       }
-// }
-
 const addCourseData = async (formData) => {
 
   const token = checkAccessToken();
@@ -72,11 +55,8 @@ const addCourseData = async (formData) => {
     console.error('Access token is missing or invalid.');
     throw new Error('Access token is missing or invalid.');
   }
-
-
   
   try {
-
     const response = await api.post('courses/', formData, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -102,12 +82,16 @@ const addCourseData = async (formData) => {
 };
 }
 const updateCourse = async (id, formData) => {
+  const accessToken = checkAccessToken();
+  if (!accessToken) {
+    console.error('Access token is missing or invalid.');
+    throw new Error('Access token is missing or invalid.');
+  }
   // Send data by Axios
   try {
-    const response = await axios.put(`${API_URL}courses/${id}/`, formData, {
+    const response = await api.put(`courses/${id}/`, formData, {
       headers: {
-        "Content-Type": "multipart/form-data",
-        "X-CSRFToken": formData.get("csrfmiddlewaretoken"), // get from form  CSRF Token
+        Authorization: `Bearer ${accessToken}`,
       },
     });
     return response.data;
@@ -119,26 +103,26 @@ const updateCourse = async (id, formData) => {
 
 
 
-// // Edit iteam
-// const updateCourse = async (id, courseData) => {
-//   try {
-//     const response = await axios.put(`${API_URL}courses/${id}/`, courseData);
-//     return response.data;
-//   } catch (error) {
-//     console.error(`Error updating course with id ${id}:`, error);
-//     throw error;
-//   }
-// };
 
-// Delate iteam
+// Delete a course
 const deleteCourse = async (id) => {
+  const accessToken = checkAccessToken();
+  if (!accessToken) {
+    console.error('Access token is missing or invalid.');
+    throw new Error('Access token is missing or invalid.');
+  }
   try {
-    await axios.delete(`${API_URL}courses/${id}/`);
+    await api.delete(`courses/${id}/`,{
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
   } catch (error) {
     console.error(`Error deleting course with id ${id}:`, error);
     throw error;
   }
 };
+
 
 // // إعداد قاعدة URL لطلبات API
 // const api = axios.create({

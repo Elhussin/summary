@@ -19,7 +19,7 @@ const viewCourseDatiles = (data) => {
     const unlikesCount = data.likes.filter((item) => item.unlikes).length;
     const newDiv = document.createElement("div");
     newDiv.innerHTML = `
-        <h1 id="course-id" data-courseid="${data.id}">
+        <h1 id="course-id" data-courseid="${data.id}">Course Id : ${data.id} </h1>
         <h1>Title: ${data.title.toUpperCase()}  </h1>
         <p> Description: ${data.description} </p>
         <p>Add by  ${data.user.username.toUpperCase()} </p> 
@@ -71,19 +71,33 @@ const viewOneSummary = (data) => {
 }
 
 
-const addButtonGroup = (data) => {
+const favoriteLikeButtonGroup = (data) => {
     const newDiv = document.createElement("div");
     newDiv.innerHTML =`
     <button class="btn" id='favorite' type="button">${favorite}</button>
     <button class="btn" id="like-course" >${like}</button>
     <button class="btn " id="unlike-course" >${unlike}</button>
     <hr>
+    `;
+    return newDiv;
+}
+const delateEditButtonGroup = (data) => {
+    const newDiv = document.createElement("div");
+    newDiv.innerHTML =`
     <button class="btn btn-primary" id="edit-course" >Edit</button>
     <button class="btn btn-primary" id="delate-course" >Delate</button> 
     `;
     return newDiv;
 }
 
+const loginMassage = () => {   
+    const newDiv = document.createElement("div");
+    newDiv.innerHTML =`
+    <p class="alert alert-warning"> Please Login to like or favorite and add Comments</p>
+    `;
+    return newDiv;
+}
 
 
-export { AddCourseDataToHTml, viewCourseDatiles, viewSummary, viewOneSummary, addButtonGroup };
+export { AddCourseDataToHTml, viewCourseDatiles, viewSummary, viewOneSummary,
+    favoriteLikeButtonGroup,delateEditButtonGroup,loginMassage };

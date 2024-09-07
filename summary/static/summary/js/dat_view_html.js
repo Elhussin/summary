@@ -6,29 +6,20 @@ import {
 } from "./api_connect.js";
 import { getActiveUsre } from "./api.js";
 import {
-  checkAccessToken,
-  alertMessage,
-  displayIteam,
+  checkAccessToken,alertMessage,displayIteam,
   viewUploudImage,
   createCommaneElmeant,
   viewCommants,
   updatpageurl,
 
 } from "./function.js";
-// import {
-//   getCourses,
-//   getCourse,
-//   addCourseData,
-//   updateCourse,
-//   deleteCourse,
-// } from "./api.js";
-
 import {
   AddCourseDataToHTml,
   viewCourseDatiles,
   viewSummary,
   viewOneSummary,
-  addButtonGroup,
+  favoriteLikeButtonGroup,
+  delateEditButtonGroup,loginMassage
 } from "./viewElmeantFunctian.js";
 // main continer in body to view courses
 const viewContinear = document.getElementById("cours-container");
@@ -100,7 +91,7 @@ const cardViewEventListeners = (data) => {
 
 // Display Item Details
 
-const displayItemDetails = (data) => {
+const displayItemDetails = async (data) => {
   //  clear the view
   viewDatilesBox.innerHTML = "";
   viewContinear.innerHTML = "";
@@ -116,24 +107,56 @@ const displayItemDetails = (data) => {
   viewContinear.appendChild(viewSummary(data));
 
   // add button group
-  // addButtonGroup function from viewElmeantFunctian.js
-  // addButtonGroup will return the course buttons in html elements
+  // favoriteLikeButtonGroup function from viewElmeantFunctian.js
+  // favoriteLikeButtonGroup will return the course buttons in html elements
   const token =checkAccessToken();
   if (token){
-    viewDatilesBox.appendChild(addButtonGroup(data));
-  }
+    viewDatilesBox.appendChild(favoriteLikeButtonGroup(data));
 
+    // add delate and edit button group
+    const userDatiles = await getActiveUsre(token);
+    console.log("userDatiles",userDatiles);
+    console.log("data",data.user.id);
+    if(userDatiles.id == data.user.id){
+      viewDatilesBox.appendChild(delateEditButtonGroup(data));
+        
+      document.getElementById("delate-course").addEventListener("click", (e) => {
+      e.preventDefault;
+      // remove course
+      //  removeCourse function from api_connect.js
+      // removeCourse will remove the course from api.js
+      removeCourse(id);
+  });
+
+    // Edit Course
+  // when click on edit course it will add the course data to the form to update it
+  document.getElementById("edit-course").addEventListener("click", (e) => {
+    // stop the default action
+    e.preventDefault;
+    
+    // add course data to the form to update it 
+    // addDateToForm function from dat_view_html.js 
+    addDateToForm(data);
+    // call updateCourseForm function from api_connect.js
+    // updateCourseForm will 
+    updateCourseForm();
+  });
+
+    }
+  }
+  else{viewDatilesBox.appendChild(loginMassage());}
+  
 
   //  view course details
   // viewCourseDatiles function from viewElmeantFunctian.js
   // viewCourseDatiles will return the course details in html elements
+  
   viewDatilesBox.appendChild(viewCourseDatiles(data));
 
   // add commant box
   // createCommaneElmeant function from function.js
   // createCommaneElmeant will return the course comments in html elements
-  
-  viewDatilesBox.appendChild(createCommaneElmeant());
+  if(token){  viewDatilesBox.appendChild(createCommaneElmeant());}
 
 
   // vieew comments for course 
@@ -171,30 +194,10 @@ const displayItemDetails = (data) => {
 
   // Delate Course 
 
-  document.getElementById("delate-course").addEventListener("click", (e) => {
-    e.preventDefault;
-    // remove course
-    //  removeCourse function from api_connect.js
-    // removeCourse will remove the course from api.js
-    removeCourse(id);
-  });
-
   // view summary deatiles
   summaryViewEventListeners(data);
 
-  // Edit Course
-  // when click on edit course it will add the course data to the form to update it
-  document.getElementById("edit-course").addEventListener("click", (e) => {
-    // stop the default action
-    e.preventDefault;
-    
-    // add course data to the form to update it 
-    // addDateToForm function from dat_view_html.js 
-    addDateToForm(data);
-    // call updateCourseForm function from api_connect.js
-    // updateCourseForm will 
-    updateCourseForm();
-  });
+
 };
 // end of displayItemDetails
 
@@ -221,17 +224,18 @@ const fetchOneSummary = (data) => {
   viewDatilesBox.innerHTML = "";
   viewContinear.innerHTML = "";
   viewDatilesBox.appendChild(viewOneSummary(data));
-  viewDatilesBox.appendChild(addButtonGroup(data));
+  viewDatilesBox.appendChild(favoriteLikeButtonGroup(data));
   viewDatilesBox.appendChild(createCommaneElmeant());
   const summary_coman = viewCommants(data.summary_comments);
   viewContinear.appendChild(summary_coman);
 };
 
 // Add data To  form to update it
-const addDateToForm = (data) => {
+const addDateToForm = async (data) => {
+  console.log("data", data);
   const coressAdd = document.getElementById("coress-add");
   document.getElementById("page-title").innerHTML = "Edit Course";
-  document.getElementById("title").value = data.name;
+  document.getElementById("title").value = data.title;
   document.getElementById("description").value = data.description;
   document.getElementById("imagePreview").src = data.image;
   document.getElementById("send").value = "Update";

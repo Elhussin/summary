@@ -65,11 +65,11 @@ const viewCommants = (data) => {
     return newDiv;
 };
 
-const updatpageurl = (name,title,itemId) => {
-    console.log("url",name);
+const updatpageurl = (data,title,itemId) => {
+    console.log("url",data);
     // change page title
     document.title = `${title}`;
-    const newUrl = `/view/${name}/${itemId}`;
+    const newUrl = `/view/${data.title}/${itemId}`;
     history.pushState({ path: newUrl }, "", newUrl);
 };
 
