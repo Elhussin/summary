@@ -19,6 +19,7 @@ import {
   viewCourseDatiles,
   viewSummary,
   viewOneSummary,
+  AddNewSummary,
   favoriteLikeButtonGroup,
   delateEditButtonGroup, loginMassage
 ,confiarmUserLike,confiarmUserFavorite,
@@ -107,6 +108,8 @@ const displayItemDetails = async (data) => {
   // view all course Summary
   // viewSummary function from viewElmeantFunctian.js
   // viewSummary will return the course summary in html elements
+  
+
   viewContinear.appendChild(viewSummary(data));
 
 
@@ -196,6 +199,7 @@ const displayItemDetails = async (data) => {
 
     // add like and unlike event listener
     if (token) {
+      
     document.getElementById("like-course").addEventListener("click", (e) => {
       e.preventDefault();      
       confiarmUserLike(data,userDatiles);

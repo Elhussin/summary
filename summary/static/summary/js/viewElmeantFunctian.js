@@ -44,7 +44,12 @@ const viewCourseDatiles = (data) => {
     const newDiv = document.createElement("div");
     newDiv.innerHTML = `<h2>Summary</h2>
     <hr>`;
-    newDiv.appendChild(AddNewSummary());
+    const token = checkAccessToken();
+    if (token) {
+
+        newDiv.appendChild(AddNewSummary());
+    }
+
     data.summary.forEach((iteam) => {
     newDiv.innerHTML += `
         <div id="${iteam.id}" class="summary-box">
@@ -59,6 +64,7 @@ const viewCourseDatiles = (data) => {
 
 const AddNewSummary = () => {
     const newDiv = document.createElement("div");
+    
     newDiv.innerHTML = `
     <h2>Add New Summary</h2>
     <hr>
@@ -223,4 +229,4 @@ const confiarmUserUnLike = (data,userDatiles ) => {
 // }
 
 export { AddCourseDataToHTml, viewCourseDatiles, viewSummary, viewOneSummary,
-    favoriteLikeButtonGroup, delateEditButtonGroup, loginMassage, confiarmUserLike,confiarmUserFavorite,confiarmUserUnLike };
+    favoriteLikeButtonGroup, delateEditButtonGroup, loginMassage, confiarmUserLike,confiarmUserFavorite,confiarmUserUnLike,AddNewSummary };

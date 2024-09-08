@@ -340,12 +340,11 @@ align-items: center;
   margin: 10px;
   background-color: $therd-color;
   cursor: pointer;
-  display: flex;
+  // display: flex;
   justify-content: space-between;
   align-items: center;
   color: $color;
 }
-
 
 @media (max-width: 800px) {
   .certfi-grid{

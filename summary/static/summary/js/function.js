@@ -1,3 +1,4 @@
+import { getActiveUsre } from "./api.js";
 import { translations } from "./translations.js";
 const alertMessage = (message) => {
     const messageAlrt = document.getElementById("message-alrt");
@@ -35,13 +36,14 @@ const viewUploudImage = () => {
 
 // create Commane Elmeant
 const createCommaneElmeant = () => {
+
     const newDiv = document.createElement("div");
     newDiv.innerHTML = `
     <h2>Add Comment</h2>
     <hr>
     <form id="comment-form" method="post">
     <label for="comments"> Comment</label>
-    <textarea class="form-control" name="comments" id="comments"  rows="5"></textarea>
+    <textarea class="form-control" name="comment" id="comment"  rows="5"></textarea>
     <input type="submit" id="add-comments" class="btn btn-primary float-right m-3" value="Comment"/>
     </form>
     `;
@@ -50,6 +52,7 @@ const createCommaneElmeant = () => {
 
 // view   Comments
 const viewCommants = (data) => {
+
     const newDiv = document.createElement("div");
     newDiv.innerHTML = `<h2>Comments</h2>
     <hr>
@@ -57,9 +60,13 @@ const viewCommants = (data) => {
     data.forEach((iteam) => {
         newDiv.innerHTML += `
         <div class="cmment-box">
-        <p id="${iteam.user}">Add By ${iteam.user}  </p>
+        <p id="${iteam.user}">Add By :  ${iteam.user}</p>
+              <hr>
         <p> ${iteam.comment} </p> 
+              <hr>
+        <div>
         <p>Created At: ${new Date(iteam.created_at)} </p>
+        </div>
         </div>
         `;  
     });

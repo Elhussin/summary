@@ -281,7 +281,6 @@ header.dark-mode {
   margin: 10px;
   background-color: #5c7650;
   cursor: pointer;
-  display: flex;
   justify-content: space-between;
   align-items: center;
   color: #dad7cd;
