@@ -39,9 +39,11 @@ const createCommaneElmeant = () => {
     newDiv.innerHTML = `
     <h2>Add Comment</h2>
     <hr>
-    <label for="comments">Add Comment</label>
+    <form id="comment-form" method="post">
+    <label for="comments"> Comment</label>
     <textarea class="form-control" name="comments" id="comments"  rows="5"></textarea>
     <input type="submit" id="add-comments" class="btn btn-primary float-right m-3" value="Comment"/>
+    </form>
     `;
     return newDiv;
 };

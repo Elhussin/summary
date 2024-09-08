@@ -81,11 +81,8 @@ const updateCourseForm =async (courseID, formData) => {
           const message = `Error: ${error}`;
           alertMessage(message);
         }
-
-        
-
-        
       };
+
 
   
 export { removeCourse,fetchCourses,fetchOneCourses, updateCourseForm};

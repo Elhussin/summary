@@ -1,6 +1,8 @@
 
 const API_URL = 'http://127.0.0.1:8000/view/';
 import {alertMessage, checkAccessToken} from "./function.js";
+
+import{fetchOneCourses} from "./api_connect.js";
 // Set up Axios with CSRF token
 const api = axios.create({
   baseURL: "/view/",
@@ -132,40 +134,147 @@ const deleteCourse = async (id) => {
 //     // إضافة توكن المصادقة إذا كان مطلوباً، مثل: Authorization: `Bearer ${token}`
 //   },
 // });
-
-async function addLike(data) {
+const addlike = async (data) => {
   try {
-    const response = await api.post('likes', data);
+    if (!data) {
+      console.error('Data is required.');
+      return;
+    }
+
+
+    const token = checkAccessToken();
+    if (!token) {
+      console.error('Access token is missing or invalid.');
+      return;
+    }
+    // add token to the header
+
+    const response = await api.post(`likes/`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    // const response = await api.post('likes', data);
     console.log('Like added successfully:', response.data);
+
+      fetchOneCourses(data.course);
+    // return response.data;
+
+
   } catch (error) {
     console.error('Error adding like:', error.response ? error.response.data : error.message);
   }
 }
 
-// // دالة لتعديل Like
-// async function updateLike(likeId, data) {
-//   try {
-//     const response = await api.put(`${likeId}/`, data);
-//     console.log('Like updated successfully:', response.data);
-//   } catch (error) {
-//     console.error('Error updating like:', error.response ? error.response.data : error.message);
-//   }
+// دالة لتعديل Like
+async function updateLike(likeId, data) {
+  const token = checkAccessToken();
+  if (!token) {
+    console.error('Access token is missing or invalid.');
+    return;
+  }
+  try {
+    const response = await api.put(`likes/${likeId}/`, data,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
 
-// }
+      }
+    );
+    fetchOneCourses(data.course);
+    console.log('Like updated successfully:', response.data);
+  } catch (error) {
+    console.error('Error updating like:', error.response ? error.response.data : error.message);
+  }
+
+}
+
+const delateLike = async (likeId,courseId) => {
+  const token = checkAccessToken();
+  if (!token) {
+    console.error('Access token is missing or invalid.');
+    return;
+  }
+  try {
+    const response = await api.delete(`likes/${likeId}/`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log('Like deleted successfully:', response.data);
+    fetchOneCourses(courseId);
+
+  } catch (error) {
+    console.error('Error deleting like:', error.response ? error.response.data : error.message);
+  }
+}
+
+const addFavorite = async (data) => {
+  try {
+    if (!data) {
+      console.error('Data is required.');
+      return;
+    }
+    const token = checkAccessToken();
+    if (!token) {
+      console.error('Access token is missing or invalid.');
+      return;
+    }
+    const response = await api.post('favorites/', data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log('Favorite added successfully:', response.data);
+    fetchOneCourses(data.course);
+  } catch (error) {
+    console.error('Error adding favorite:', error.response ? error.response.data : error.message);
+  }
+}
+
+const delateFavorite = async (favoriteId,courseId) => {
+  const token = checkAccessToken();
+  if (!token) {
+    console.error('Access token is missing or invalid.');
+    return;
+  }
+  try {
+    const response = await api.delete(`favorites/${favoriteId}/`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log('Favorite deleted successfully:', response.data);
+    fetchOneCourses(courseId);
+  } catch (error) {
+    console.error('Error deleting favorite:', error.response ? error.response.data : error.message);
+  }
+}
+
+const AddComment = async (comment,courseId) => {
+  try {
+    if (!comment) {
+      console.error('Data is required.');
+      return;
+    }
+    const token = checkAccessToken();
+    if (!token) {
+      console.error('Access token is missing or invalid.');
+      return;
+    }
+    const response = await api.post('comments/', comment, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log('Comment added successfully:', response.data);
+    fetchOneCourses(courseId);
+  } catch (error) {
+    console.error('Error adding comment:', error.response ? error.response.data : error.message);
+  }
+}
 
 
-// const newLikeData = {
-//   // أضف البيانات المطلوبة مثل post_id أو أي حقل آخر حسب النموذج في LikeSerializer
-// };
-
-// addLike(newLikeData);
-
-// // مثال على استدعاء دالة تعديل Like
-// const updatedLikeData = {
-//   // أضف البيانات المراد تعديلها
-// };
-
-// استخدام ID للـ Like الذي ترغب في تعديله
-// updateLike(1, updatedLikeData); // استبدل 1 بالمعرف الفعلي للـ Like
-
-export { getCourses, getCourse, addCourseData, updateCourse, deleteCourse ,api,getActiveUsre };
+export { getCourses, getCourse, addCourseData, updateCourse, deleteCourse ,api,getActiveUsre,
+   addlike, updateLike,delateLike,addFavorite,delateFavorite,AddComment};

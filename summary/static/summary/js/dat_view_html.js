@@ -3,8 +3,9 @@ import {
   fetchCourses,
   fetchOneCourses,
   updateCourseForm,
+  
 } from "./api_connect.js";
-import { getActiveUsre, addLike } from "./api.js";
+import { getActiveUsre, addlike, updateLike,AddComment } from "./api.js";
 import {
   checkAccessToken, alertMessage, displayIteam,
   viewUploudImage,
@@ -20,7 +21,8 @@ import {
   viewOneSummary,
   favoriteLikeButtonGroup,
   delateEditButtonGroup, loginMassage
-} from "./viewElmeantFunctian.js";
+,confiarmUserLike,confiarmUserFavorite,
+confiarmUserUnLike} from "./viewElmeantFunctian.js";
 // main continer in body to view courses
 const viewContinear = document.getElementById("cours-container");
 // to view course details
@@ -114,7 +116,7 @@ const displayItemDetails = async (data) => {
   if (token) {
     
     // add delate and edit button group for the user who add the course
-    const userDatiles = await getActiveUsre(token);
+    var userDatiles = await getActiveUsre(token);
 
     // add button group
     // favoriteLikeButtonGroup function from viewElmeantFunctian.js
@@ -195,25 +197,37 @@ const displayItemDetails = async (data) => {
     // add like and unlike event listener
     if (token) {
     document.getElementById("like-course").addEventListener("click", (e) => {
-      e.preventDefault;
-      addLike(id);
-      
-
+      e.preventDefault();      
+      confiarmUserLike(data,userDatiles);
     });
 
+
     document.getElementById("unlike-course").addEventListener("click", (e) => {
-      e.preventDefault;
+      e.preventDefault();
+      confiarmUserUnLike(data,userDatiles);
+
     });
 
     document.getElementById("favorite").addEventListener("click", (e) => {
-      e.preventDefault;
+      e.preventDefault();
+      confiarmUserFavorite(data,userDatiles);
     });
 
     // add commant box
-    document.getElementById("add-comments").addEventListener("click", (e) => {
-      e.preventDefault;
-      document.getElementById("comments").value;
+    document.getElementById("add-comments").addEventListener("click", async (e) => {
+      e.preventDefault();
+      const comment = new FormData(document.getElementById("comment-form"));
+      comment.append("course", id);
+      comment.append("user", userDatiles.id);
+      AddComment(comment, id);
     });
+    // document.getElementById("comment-form").addEventListener("submit",async (e) => {
+    //   e.preventDefault;
+    //   const comment =new FormData(e.target);
+    //   console.log(comment);
+    //   AddComment(comment,id);
+
+    // });
   }
     // view course comments
 
@@ -267,7 +281,6 @@ const displayItemDetails = async (data) => {
 
   // Add data To  form to update it
   const addDateToForm = async (data) => {
-    console.log("data", data);
     const coressAdd = document.getElementById("coress-add");
     document.getElementById("page-title").innerHTML = "Edit Course";
     document.getElementById("title").value = data.title;

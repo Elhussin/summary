@@ -1,6 +1,9 @@
-import {like , likeActive, unlike, unlikeActive, favorite, favoriteActive}  from "./svg_icons.js";
+import {like , likeActive, unlike, unlikeActive,
+     favorite, favoriteActive}  from "./svg_icons.js";
 import {checkAccessToken} from "./function.js";
-import {getActiveUsre} from "./api.js";
+import {getActiveUsre, addlike,updateLike,delateLike
+    ,addFavorite,delateFavorite
+} from "./api.js";
 
 // view main data for course
 const AddCourseDataToHTml = (data) => {
@@ -41,6 +44,7 @@ const viewCourseDatiles = (data) => {
     const newDiv = document.createElement("div");
     newDiv.innerHTML = `<h2>Summary</h2>
     <hr>`;
+    newDiv.appendChild(AddNewSummary());
     data.summary.forEach((iteam) => {
     newDiv.innerHTML += `
         <div id="${iteam.id}" class="summary-box">
@@ -52,6 +56,26 @@ const viewCourseDatiles = (data) => {
     });
     return newDiv;
   };
+
+const AddNewSummary = () => {
+    const newDiv = document.createElement("div");
+    newDiv.innerHTML = `
+    <h2>Add New Summary</h2>
+    <hr>
+    <form id="summary-form">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" id="title" name="title" required>
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" id="description" name="description" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Summary</button>
+    </form>
+    `;
+    return newDiv;
+};
 
 
 const viewOneSummary = (data) => {
@@ -72,7 +96,6 @@ const viewOneSummary = (data) => {
 
 // like , likeActive, unlike, unlikeActive, favorite, favoriteActive
 const favoriteLikeButtonGroup =  (data,userDatiles) => {
-    console.log("like un like",data,userDatiles);
     const newDiv = document.createElement("div");
     const userLike = data.likes.find((like) => like.user === userDatiles.id);
     const userFavorite = data.favorites.find((favorite) => favorite.user === userDatiles.id);    
@@ -116,43 +139,6 @@ const favoriteLikeButtonGroup =  (data,userDatiles) => {
 
     return newDiv;
 }
-// const favoriteLikeButtonGroup = (data, userDatiles) => {
-
-//     const newDiv = document.createElement("div");
-//     newDiv.innerHTML = `<hr>`;
-
-//     // دالة لإنشاء زر
-//     const createButton = (id, text, isActive = false) => {
-//         const button = document.createElement("button");
-//         button.className = 'btn';
-//         button.id = id;
-//         button.type = 'button';
-//         button.innerHTML = isActive ? `${text} (Active)` : text; // مثال لتفعيل الحالة
-//         return button;
-//     };
-
-//     // التحقق من حالة المتابعة
-//     const userFavorite = data.favorites.find(favorite => favorite.user === userDatiles.id);
-//     const favoriteButton = createButton('favorite', userFavorite?.followStatus ? favoriteActive : favorite);
-//     newDiv.appendChild(favoriteButton);
-
-//     // التحقق من حالة الإعجاب
-//     const userLike = data.likes.find(like => like.user === userDatiles.id);
-//     const likeButton = createButton('like-course', userLike?.likes ? likeActive : like, userLike?.likes);
-//     const unlikeButton = createButton('unlike-course', userLike?.likes ? unlike : unlikeActive, !userLike?.likes);
-//     newDiv.appendChild(likeButton);
-//     newDiv.appendChild(unlikeButton);
-
-//     // عرض رسالة في الـ console لحالة الإعجاب
-//     if (userLike) {
-//         console.log(userLike.likes ? 'المستخدم قام بتسجيل إعجاب (True).' : 'المستخدم قام بتسجيل عدم إعجاب (False).');
-//     } else {
-//         console.log('المستخدم لم يسجل إعجاب أو عدم إعجاب.');
-//     }
-
-//     newDiv.innerHTML += `<hr>`;
-//     return newDiv;
-// };
 
 
 
@@ -174,5 +160,67 @@ const loginMassage = () => {
 }
 
 
+const confiarmUserLike = (data,userDatiles ) => {
+    const userLike = data.likes.find((like) => like.user === userDatiles.id);
+    var like=true;
+    if (userLike) {
+        var LikesData={user:userDatiles.id,likes:like,course:userLike.course};
+        if (userLike.likes) {
+            delateLike(userLike.id,data.id);
+        }
+        else {
+
+            updateLike(userLike.id,LikesData);
+
+        }
+    } else {
+
+        LikesData= {user:userDatiles.id,likes:like,course:data.id}
+        addlike(LikesData);
+
+    }
+}
+
+const confiarmUserFavorite = (data,userDatiles ) => {
+    const userFavorite = data.favorites.find((favorite) => favorite.user === userDatiles.id);
+    var followStatus=true;
+    if (userFavorite) {
+        var FavoriteData={user:userDatiles.id,followStatus:followStatus,course:userFavorite.course};
+
+        if (userFavorite.followStatus) {
+            delateFavorite(userFavorite.id,data.id);
+        }
+    } else {
+
+        FavoriteData= {user:userDatiles.id,followStatus:followStatus,course:data.id}
+        addFavorite(FavoriteData);
+
+    }
+
+}
+
+
+const confiarmUserUnLike = (data,userDatiles ) => {
+    const userLike = data.likes.find((like) => like.user === userDatiles.id);
+    var like=false;
+    if (userLike) {
+        var LikesData={user:userDatiles.id,likes:like,course:userLike.course};
+        if (userLike.likes) {
+            updateLike(userLike.id,LikesData);
+        }
+        else {
+            delateLike(userLike.id,data.id);
+        }
+    } else {
+        LikesData= {user:userDatiles.id,likes:like,course:data.id}
+        addlike(LikesData);
+    }
+}
+
+// const getComment = () => {
+
+
+// }
+
 export { AddCourseDataToHTml, viewCourseDatiles, viewSummary, viewOneSummary,
-    favoriteLikeButtonGroup,delateEditButtonGroup,loginMassage };
+    favoriteLikeButtonGroup, delateEditButtonGroup, loginMassage, confiarmUserLike,confiarmUserFavorite,confiarmUserUnLike };

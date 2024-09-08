@@ -222,3 +222,43 @@ document.getElementById('fake-link').addEventListener('click', function (event) 
     // تنفيذ أي عملية إضافية، مثل جلب البيانات أو عرض محتوى جديد
     alert('تم استبدال الرابط الوهمي برابط حقيقي دون إعادة تحميل الصفحة!');
 });
+
+
+
+const favoriteLikeButtonGroup = (data, userDatiles) => {
+
+    const newDiv = document.createElement("div");
+    newDiv.innerHTML = `<hr>`;
+
+    // دالة لإنشاء زر
+    const createButton = (id, text, isActive = false) => {
+        const button = document.createElement("button");
+        button.className = 'btn';
+        button.id = id;
+        button.type = 'button';
+        button.innerHTML = isActive ? `${text} (Active)` : text; // مثال لتفعيل الحالة
+        return button;
+    };
+
+    // التحقق من حالة المتابعة
+    const userFavorite = data.favorites.find(favorite => favorite.user === userDatiles.id);
+    const favoriteButton = createButton('favorite', userFavorite?.followStatus ? favoriteActive : favorite);
+    newDiv.appendChild(favoriteButton);
+
+    // التحقق من حالة الإعجاب
+    const userLike = data.likes.find(like => like.user === userDatiles.id);
+    const likeButton = createButton('like-course', userLike?.likes ? likeActive : like, userLike?.likes);
+    const unlikeButton = createButton('unlike-course', userLike?.likes ? unlike : unlikeActive, !userLike?.likes);
+    newDiv.appendChild(likeButton);
+    newDiv.appendChild(unlikeButton);
+
+    // عرض رسالة في الـ console لحالة الإعجاب
+    if (userLike) {
+        console.log(userLike.likes ? 'المستخدم قام بتسجيل إعجاب (True).' : 'المستخدم قام بتسجيل عدم إعجاب (False).');
+    } else {
+        console.log('المستخدم لم يسجل إعجاب أو عدم إعجاب.');
+    }
+
+    newDiv.innerHTML += `<hr>`;
+    return newDiv;
+};

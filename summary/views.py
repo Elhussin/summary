@@ -70,7 +70,8 @@ class CourseViewSet(viewsets.ModelViewSet):
 class LikeViewSet(viewsets.ModelViewSet):
     queryset = Like.objects.all().order_by('created_at')
     serializer_class = LikeSerializer
-
+    permission_classes = [AllowGetWithoutAuthentication]  
+    
     def perform_create(self, serializer):
         try:
             serializer.save(user=self.request.user)
@@ -81,7 +82,7 @@ class LikeViewSet(viewsets.ModelViewSet):
 class ComentsViewSet(viewsets.ModelViewSet):
     queryset = Coments.objects.all().order_by('created_at')
     serializer_class = ComentsSerializer
-
+    permission_classes = [AllowGetWithoutAuthentication]  
     def perform_create(self, serializer):
         try:
             serializer.save(user=self.request.user)
