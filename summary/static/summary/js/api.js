@@ -275,6 +275,28 @@ const AddComment = async (comment,courseId) => {
   }
 }
 
+const addSummary = async (data) => {
+  try {
+    if (!data) {
+      console.error('Data is required.');
+      return;
+    }
+    const token = checkAccessToken();
+    if (!token) {
+      console.error('Access token is missing or invalid.');
+      return;
+    }
+    const response = await api.post('summaries/', data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log('Summary added successfully:', response.data.course);
+    fetchOneCourses(response.data.course);
+  } catch (error) {
+    console.error('Error adding summary:', error.response ? error.response.data : error.message);
+  }
+}
 
 export { getCourses, getCourse, addCourseData, updateCourse, deleteCourse ,api,getActiveUsre,
-   addlike, updateLike,delateLike,addFavorite,delateFavorite,AddComment};
+   addlike, updateLike,delateLike,addFavorite,delateFavorite,AddComment,addSummary};

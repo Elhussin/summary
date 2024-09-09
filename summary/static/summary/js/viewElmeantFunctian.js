@@ -1,6 +1,7 @@
 import {like , likeActive, unlike, unlikeActive,
      favorite, favoriteActive}  from "./svg_icons.js";
-import {checkAccessToken} from "./function.js";
+
+import {checkAccessToken ,getdate,ConfiarmActifeUserWithData} from "./function.js";
 import {getActiveUsre, addlike,updateLike,delateLike
     ,addFavorite,delateFavorite
 } from "./api.js";
@@ -22,7 +23,6 @@ const AddCourseDataToHTml = (data) => {
 const viewCourseDatiles = (data) => {
     const likesCount = data.likes.filter((item) => item.likes).length;
     const unlikesCount = data.likes.filter((item) => !item.likes).length;
-    // const likesCount = data.likes.length;
 
     const newDiv = document.createElement("div");
     newDiv.innerHTML = `
@@ -30,7 +30,7 @@ const viewCourseDatiles = (data) => {
         <h1>Title: ${data.title.toUpperCase()}  </h1>
         <p> Description: ${data.description} </p>
         <p>Add by  ${data.user.username.toUpperCase()} </p> 
-        <p> Created At: ${new Date(data.created_at)} </p>
+        <p> Created At: ${getdate(data.created_at)} </p>
         <p> Likes: ${likesCount} </p>
         <p> Unlikes: ${unlikesCount} </p>
 
@@ -40,23 +40,19 @@ const viewCourseDatiles = (data) => {
   };
 
 
+
   const viewSummary = (data) => {
     const newDiv = document.createElement("div");
     newDiv.innerHTML = `<h2>Summary</h2>
     <hr>`;
-    const token = checkAccessToken();
-    if (token) {
 
-        newDiv.appendChild(AddNewSummary());
-    }
-
-    data.summary.forEach((iteam) => {
+    data.summary.reverse().forEach((iteam) => {
     newDiv.innerHTML += `
         <div id="${iteam.id}" class="summary-box">
         <p id="${iteam.user}">Add By ${iteam.user.username}  </p>
         <h3 class="card-title"> ${iteam.title} </h3> 
         <p> ${iteam.description} </p>
-        <p>Created At: ${new Date(iteam.created_at)} </p>
+        <p>Created At: ${ getdate(iteam.created_at)} </p>
         `;
     });
     return newDiv;
@@ -68,16 +64,16 @@ const AddNewSummary = () => {
     newDiv.innerHTML = `
     <h2>Add New Summary</h2>
     <hr>
-    <form id="summary-form">
+    <form id="summaryForm">
         <div class="form-group">
             <label for="title">Title</label>
-            <input type="text" class="form-control" id="title" name="title" required>
+            <input type="text" class="form-control" id="sumary-title" name="title" required>
         </div>
         <div class="form-group">
             <label for="description">Description</label>
-            <textarea class="form-control" id="description" name="description" required></textarea>
+            <textarea class="form-control" id="sumary-description" name="description" required></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Add Summary</button>
+        <button type="submit" class="btn btn-primary" id="addSummary">Add Summary</button>
     </form>
     `;
     return newDiv;
@@ -93,7 +89,7 @@ const viewOneSummary = (data) => {
     <p id="${data.user}">Add By ${data.user}  </p>
     <h3 class="card-title"> ${data.title} </h3>
     <p> ${data.description} </p>
-    <p>Created At: ${new Date(data.created_at)} </p>
+    <p>Created At: ${getdate(data.created_at)} </p>
     </div>
     <hr>
     `;
@@ -102,6 +98,7 @@ const viewOneSummary = (data) => {
 
 // like , likeActive, unlike, unlikeActive, favorite, favoriteActive
 const favoriteLikeButtonGroup =  (data,userDatiles) => {
+    console.log(data);
     const newDiv = document.createElement("div");
     const userLike = data.likes.find((like) => like.user === userDatiles.id);
     const userFavorite = data.favorites.find((favorite) => favorite.user === userDatiles.id);    
@@ -160,7 +157,7 @@ const delateEditButtonGroup = (data) => {
 const loginMassage = () => {   
     const newDiv = document.createElement("div");
     newDiv.innerHTML =`
-    <p class="alert alert-warning"> Please Login to like or favorite and add Comments</p>
+    <p class="alert alert-warning"> Please Login to like or favorite and add Comments<a href="/login"> Login </a> </p>
     `;
     return newDiv;
 }

@@ -5,13 +5,13 @@ import {
   updateCourseForm,
   
 } from "./api_connect.js";
-import { getActiveUsre, addlike, updateLike,AddComment } from "./api.js";
+import { getActiveUsre, addlike, updateLike,AddComment, addSummary } from "./api.js";
 import {
   checkAccessToken, alertMessage, displayIteam,
   viewUploudImage,
   createCommaneElmeant,
   viewCommants,
-  updatpageurl,
+  updatpageurl,ConfiarmActifeUserWithData,
 
 } from "./function.js";
 import {
@@ -30,10 +30,11 @@ const viewContinear = document.getElementById("cours-container");
 const viewDatilesBox = document.getElementById("cours-detieals");
 
 const viewCourses = (data) => {
+  console.log(data);
   viewContinear.innerHTML = "";
   // view all courses
   //  return all courses data in html elements
-  viewContinear.innerHTML += data
+  viewContinear.innerHTML += data.reverse()
     .map(
       (item) => `
             <div class="card" id="${item.id}" >
@@ -54,12 +55,14 @@ const viewCourses = (data) => {
   cardViewEventListeners(data);
 };
 
+
 //  Event Listener for card
 // cardViewEventListeners function 
 // cardViewEventListeners will add event listener to all cards
 // when click on card it will display the course details
 // fetchOneCourses from api_connect.js
 const cardViewEventListeners = (data) => {
+
 
   document.querySelectorAll(".card").forEach((card) => {
     card.addEventListener("click", (event) => {
@@ -94,6 +97,11 @@ const cardViewEventListeners = (data) => {
 
 // Display Item Details
 
+
+
+// displayItemDetails function
+// displayItemDetails will display the course details
+
 const displayItemDetails = async (data) => {
 
   //  clear the view
@@ -110,31 +118,26 @@ const displayItemDetails = async (data) => {
   // viewSummary will return the course summary in html elements
   
 
-  viewContinear.appendChild(viewSummary(data));
-
-
-
-
   const token = checkAccessToken();
   if (token) {
     
     // add delate and edit button group for the user who add the course
     var userDatiles = await getActiveUsre(token);
 
-    // add button group
     // favoriteLikeButtonGroup function from viewElmeantFunctian.js
     // favoriteLikeButtonGroup will return the course buttons in html elements
-    // favoriteLikeButtonGroup(data)
     viewDatilesBox.appendChild(favoriteLikeButtonGroup(data,userDatiles));
 
-
+    // check if the user is the one who add the course
+    
     if (userDatiles.id == data.user.id) {
+
+      viewContinear.appendChild(AddNewSummary());
       viewDatilesBox.appendChild(delateEditButtonGroup(data));
+
       document.getElementById("delate-course").addEventListener("click", (e) => {
         e.preventDefault;
-        // remove course
         //  removeCourse function from api_connect.js
-        // removeCourse will remove the course from api.js
         removeCourse(id);
       });
 
@@ -144,21 +147,27 @@ const displayItemDetails = async (data) => {
       document.getElementById("edit-course").addEventListener("click", (e) => {
         // stop the default action
         e.preventDefault;
-        // add course data to the form to update it 
         // addDateToForm function from dat_view_html.js 
-        // addDateToForm will add the course data to the form to update it
         addDateToForm(data);
-
-        // call updateCourseForm function from api_connect.js
-        // updateCourseForm will 
-
       });
+
+      document.getElementById("summaryForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const summary =  new FormData(e.target);
+        summary.append("course", id);
+        summary.append("user", userDatiles.id);
+        console.log(summary);
+        addSummary(summary);
+      }
+      );
 
     }
   }
     else {
       viewDatilesBox.appendChild(loginMassage());
     }
+    viewContinear.appendChild(viewSummary(data));
+
 
     // update course form
     if( document.getElementById("course_form"))
@@ -217,21 +226,16 @@ const displayItemDetails = async (data) => {
       confiarmUserFavorite(data,userDatiles);
     });
 
-    // add commant box
-    document.getElementById("add-comments").addEventListener("click", async (e) => {
+
+    document.getElementById("comment-form").addEventListener("submit", async (e) => {
       e.preventDefault();
-      const comment = new FormData(document.getElementById("comment-form"));
+      const comment = new FormData(e.target);
       comment.append("course", id);
       comment.append("user", userDatiles.id);
       AddComment(comment, id);
     });
-    // document.getElementById("comment-form").addEventListener("submit",async (e) => {
-    //   e.preventDefault;
-    //   const comment =new FormData(e.target);
-    //   console.log(comment);
-    //   AddComment(comment,id);
 
-    // });
+
   }
     // view course comments
 
@@ -264,6 +268,7 @@ const displayItemDetails = async (data) => {
         const itemTitle = card.querySelector(".card-title").textContent;
         //  re set urupdatpageurll
         updatpageurl(data, itemTitle, itemId);
+        fetchOneSummary(data);
         const filteredSummary = data.summary.find(
           (summary) => summary.id == itemId
         );
@@ -273,15 +278,25 @@ const displayItemDetails = async (data) => {
   };
   // fetch one summary
 
-  const fetchOneSummary = (data) => {
+  const fetchOneSummary = async (data) => {
+    console.log(data);
     viewDatilesBox.innerHTML = "";
     viewContinear.innerHTML = "";
+
+    const token = checkAccessToken();
+    if (token) {
+    var userDatiles = await getActiveUsre(token);
+    }
     viewDatilesBox.appendChild(viewOneSummary(data));
-    viewDatilesBox.appendChild(favoriteLikeButtonGroup(data));
+    viewDatilesBox.appendChild(favoriteLikeButtonGroup(data,userDatiles));
     viewDatilesBox.appendChild(createCommaneElmeant());
-    const summary_coman = viewCommants(data.summary_comments);
+    const summary_coman = viewCommants(data.summary
+      .comments);
     viewContinear.appendChild(summary_coman);
   };
+
+
+
 
   // Add data To  form to update it
   const addDateToForm = async (data) => {

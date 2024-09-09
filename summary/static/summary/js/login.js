@@ -40,7 +40,7 @@ async function login(username, password) {
     const nextPage = urlParams.get("next") || `/profile/`; 
 
     alertMessage("Login successful!"); 
-    setInterval(() => { window.location.href = nextPage;}, 3000);
+    setInterval(() => { window.location.href = nextPage;}, 1000);
     
   } catch (error) {
 
@@ -174,7 +174,7 @@ function checkLoginStatus() {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     alertMessage("Logged out successfully");
-    setTimeout(() => { window.location.href = "/login/"; }, 3000);
+    setTimeout(() => { window.location.href = "/login/"; }, 1000);
   }
 
 

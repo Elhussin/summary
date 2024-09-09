@@ -57,7 +57,7 @@ const viewCommants = (data) => {
     newDiv.innerHTML = `<h2>Comments</h2>
     <hr>
     `;
-    data.forEach((iteam) => {
+    data.reverse().forEach((iteam) => {
         newDiv.innerHTML += `
         <div class="cmment-box">
         <p id="${iteam.user}">Add By :  ${iteam.user}</p>
@@ -65,7 +65,7 @@ const viewCommants = (data) => {
         <p> ${iteam.comment} </p> 
               <hr>
         <div>
-        <p>Created At: ${new Date(iteam.created_at)} </p>
+        <p>Created At: ${getdate(iteam.created_at)} </p>
         </div>
         </div>
         `;  
@@ -160,8 +160,25 @@ const checkAccessToken = () => {
 }
 
 
+const getdate = (date) => {
+  const currentDate = new Date(date);
+  const dateOnly = currentDate.toISOString().split('T')[0];
+  return dateOnly;
+};
+
+const ConfiarmActifeUserWithData = async (user, data) => {
+  if (user.id == data.user.id) {
+    console.log("user is the one who add the course");
+    return true;
+  } else {
+    return false;
+  }
+}
+
+
+
 export {
     alertMessage, displayIteam, viewUploudImage, createCommaneElmeant, viewCommants,updatpageurl ,
     setTheme ,applyTranslations ,initializeLanguageSwitcher,toggleNavItems,
-    toggleVisibility,checkAccessToken
+    toggleVisibility,checkAccessToken,getdate, ConfiarmActifeUserWithData
 };
