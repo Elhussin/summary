@@ -56,7 +56,7 @@ async function login(username, password) {
 function checkLoginStatus() {
 
     const accessToken = localStorage.getItem("accessToken");
-    console.log("accessToken", accessToken);
+
     if (accessToken) {
       document.getElementById("login-item").style.display = "none";
       document.getElementById("register-item").style.display = "none";
@@ -86,9 +86,14 @@ function checkLoginStatus() {
           Authorization: `Bearer ${token}`,
         },
       });
+        
 
       const userData = response.data;
-      console.log(userData);
+      // Save user data to local storage
+      localStorage.setItem("user", JSON.stringify(userData));
+      if(localStorage.getItem("user")){
+      console.log("User Profile dddd",localStorage.getItem("user"));
+      }
       document.getElementById("username").innerText = userData.username;
 
       // Display the Admin profile data
@@ -173,7 +178,9 @@ function checkLoginStatus() {
   function logout() {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
+    localStorage.removeItem('user');
     alertMessage("Logged out successfully");
+
     setTimeout(() => { window.location.href = "/login/"; }, 1000);
   }
 

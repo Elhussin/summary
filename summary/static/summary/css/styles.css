@@ -1,4 +1,31 @@
 @charset "UTF-8";
+.w-90 {
+  width: 90%;
+}
+
+.m-auto-top10 {
+  margin: auto 10px;
+}
+
+.btn-bg {
+  background-color: #a3b18a;
+  color: white;
+  border: 0px;
+  border-radius: 10px;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.5s, color, 1s;
+  margin: 10px;
+  text-align: center;
+  width: 100px;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.btn-bg:hover {
+  background-color: #5c7650;
+}
+
 .main, .navigation, .header {
   display: flex;
   justify-content: space-between;
@@ -222,10 +249,11 @@ header.dark-mode {
 }
 
 .card-datiles {
-  justify-content: center;
+  width: 95%;
+  margin: 10px auto;
 }
 .card-datiles img {
-  width: 100%;
+  width: 400px;
   height: 300px;
 }
 

@@ -9,6 +9,7 @@ import {getActiveUsre, addlike,updateLike,delateLike
 // view main data for course
 const AddCourseDataToHTml = (data) => {
     const newDiv = document.createElement("div");
+    newDiv.className = " w-90 m-auto-top10";
     newDiv.className = "card-datiles";
     newDiv.innerHTML = `
         <img src="${data.image}" alt="${data.title}">
@@ -21,13 +22,16 @@ const AddCourseDataToHTml = (data) => {
 
 // view  iteams Datiles
 const viewCourseDatiles = (data) => {
+
     const likesCount = data.likes.filter((item) => item.likes).length;
     const unlikesCount = data.likes.filter((item) => !item.likes).length;
 
     const newDiv = document.createElement("div");
+    newDiv.className = " w-90 m-auto-top10";
     newDiv.innerHTML = `
-        <h1 id="course-id" data-courseid="${data.id}">Course Id : ${data.id} </h1>
+        
         <h1>Title: ${data.title.toUpperCase()}  </h1>
+        <p id="course-id" data-courseid="${data.id}">Course No : ${data.id} </p>
         <p> Description: ${data.description} </p>
         <p>Add by  ${data.user.username.toUpperCase()} </p> 
         <p> Created At: ${getdate(data.created_at)} </p>
@@ -43,6 +47,7 @@ const viewCourseDatiles = (data) => {
 
   const viewSummary = (data) => {
     const newDiv = document.createElement("div");
+    newDiv.className = "w-90";
     newDiv.innerHTML = `<h2>Summary</h2>
     <hr>`;
 
@@ -60,12 +65,12 @@ const viewCourseDatiles = (data) => {
 
 const AddNewSummary = () => {
     const newDiv = document.createElement("div");
-    
+    newDiv.className = "w-90";
     newDiv.innerHTML = `
-    <h2>Add New Summary</h2>
+    <h2 class="m-2"> New Summary</h2>
     <hr>
     <form id="summaryForm">
-        <div class="form-group">
+        <div class="form-group ">
             <label for="title">Title</label>
             <input type="text" class="form-control" id="sumary-title" name="title" required>
         </div>
@@ -148,8 +153,8 @@ const favoriteLikeButtonGroup =  (data,userDatiles) => {
 const delateEditButtonGroup = (data) => {
     const newDiv = document.createElement("div");
     newDiv.innerHTML =`
-    <button class="btn btn-primary" id="edit-course" >Edit</button>
-    <button class="btn btn-primary" id="delate-course" >Delate</button> 
+    <button class=" btn-bg" id="edit-course" >Edit</button>
+    <button class=" btn-bg" id="delate-course" >Delate</button> 
     `;
     return newDiv;
 }

@@ -120,56 +120,60 @@ const displayItemDetails = async (data) => {
 
   const token = checkAccessToken();
   if (token) {
-    
-    // add delate and edit button group for the user who add the course
+ 
+    // get active user
     var userDatiles = await getActiveUsre(token);
 
-    // favoriteLikeButtonGroup function from viewElmeantFunctian.js
-    // favoriteLikeButtonGroup will return the course buttons in html elements
+    // favorite and like button 
     viewDatilesBox.appendChild(favoriteLikeButtonGroup(data,userDatiles));
 
     // check if the user is the one who add the course
-    
     if (userDatiles.id == data.user.id) {
 
-      viewContinear.appendChild(AddNewSummary());
-      viewDatilesBox.appendChild(delateEditButtonGroup(data));
+        // Add new summary
+        viewContinear.appendChild(AddNewSummary());
 
-      document.getElementById("delate-course").addEventListener("click", (e) => {
-        e.preventDefault;
-        //  removeCourse function from api_connect.js
-        removeCourse(id);
-      });
+        // delate and edit button group for the user who add the course
+        viewDatilesBox.appendChild(delateEditButtonGroup(data));
+
+        // delate course
+        document.getElementById("delate-course").addEventListener("click", (e) => {
+          e.preventDefault;
+          removeCourse(id);
+        });
 
 
-      // Edit Course
-      // when click on edit course it will add the course data to the form to update it
-      document.getElementById("edit-course").addEventListener("click", (e) => {
-        // stop the default action
-        e.preventDefault;
-        // addDateToForm function from dat_view_html.js 
-        addDateToForm(data);
-      });
+        // fill form with data to update it
+        //
+        document.getElementById("edit-course").addEventListener("click", (e) => {
+          e.preventDefault;
+          // addDateToForm function from dat_view_html.js 
+          addDateToForm(data);
+        });
 
-      document.getElementById("summaryForm").addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const summary =  new FormData(e.target);
-        summary.append("course", id);
-        summary.append("user", userDatiles.id);
-        console.log(summary);
-        addSummary(summary);
+        // add new summary
+        document.getElementById("summaryForm").addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const summary =  new FormData(e.target);
+          summary.append("course", id);
+          summary.append("user", userDatiles.id);
+          console.log(summary);
+          addSummary(summary);
+        }
+        );
+
       }
-      );
-
     }
-  }
     else {
+      // if the user not loged in display login message
       viewDatilesBox.appendChild(loginMassage());
     }
+
+    // view all summary for the course
     viewContinear.appendChild(viewSummary(data));
 
 
-    // update course form
+    // update course 
     if( document.getElementById("course_form"))
     {
       document.getElementById("course_form").addEventListener("submit", async (e) => {
@@ -181,71 +185,55 @@ const displayItemDetails = async (data) => {
     }
 
 
-
-    //  view course details
-    // viewCourseDatiles function from viewElmeantFunctian.js
     // viewCourseDatiles will return the course details in html elements
-
     viewDatilesBox.appendChild(viewCourseDatiles(data));
 
-    // add commant box
-    // createCommaneElmeant function from function.js
-    // createCommaneElmeant will return the course comments in html elements
+    // add commant box - createCommaneElmeant will return the course comments in html elements
     if (token) { viewDatilesBox.appendChild(createCommaneElmeant()); }
 
+    // get course id
+    let id = document.getElementById("course-id").dataset.courseid;
 
-      // checkAccessToken function from function.js
-  // get course id
-  let id = document.getElementById("course-id").dataset.courseid;
-
-    // vieew comments for course 
-    // viewCommants function from function.js
-    // viewCommants will return the course comments in html elements
+    // viewCommants will return  All comments for the course in html elements
     viewDatilesBox.appendChild(viewCommants(data.comments));
 
 
-
-
-    // add like and unlike event listener
+    // check if the user loged in 
     if (token) {
-      
-    document.getElementById("like-course").addEventListener("click", (e) => {
-      e.preventDefault();      
-      confiarmUserLike(data,userDatiles);
-    });
+        
+      // add event listener to like
+      document.getElementById("like-course").addEventListener("click", (e) => {
+        e.preventDefault();      
+        confiarmUserLike(data,userDatiles);
+      });
+
+      // add event listener to unlike
+      document.getElementById("unlike-course").addEventListener("click", (e) => {
+        e.preventDefault();
+        confiarmUserUnLike(data,userDatiles);
+
+      });
+
+      // add event listener to add favorite
+      document.getElementById("favorite").addEventListener("click", (e) => {
+        e.preventDefault();
+        confiarmUserFavorite(data,userDatiles);
+      });
+
+      // add event listener to add comment
+      document.getElementById("comment-form").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const comment = new FormData(e.target);
+        comment.append("course", id);
+        comment.append("user", userDatiles.id);
+        AddComment(comment, id);
+      });
 
 
-    document.getElementById("unlike-course").addEventListener("click", (e) => {
-      e.preventDefault();
-      confiarmUserUnLike(data,userDatiles);
+    }
 
-    });
-
-    document.getElementById("favorite").addEventListener("click", (e) => {
-      e.preventDefault();
-      confiarmUserFavorite(data,userDatiles);
-    });
-
-
-    document.getElementById("comment-form").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const comment = new FormData(e.target);
-      comment.append("course", id);
-      comment.append("user", userDatiles.id);
-      AddComment(comment, id);
-    });
-
-
-  }
-    // view course comments
-
-
-
-    // Delate Course 
-
-    // view summary deatiles
+    // add event listener when click on the summary card it will display his details
     summaryViewEventListeners(data);
-
 
   };
   // end of displayItemDetails
@@ -279,7 +267,7 @@ const displayItemDetails = async (data) => {
   // fetch one summary
 
   const fetchOneSummary = async (data) => {
-    console.log(data);
+    console.log("fetchOneSummary",data);
     viewDatilesBox.innerHTML = "";
     viewContinear.innerHTML = "";
 
@@ -290,8 +278,7 @@ const displayItemDetails = async (data) => {
     viewDatilesBox.appendChild(viewOneSummary(data));
     viewDatilesBox.appendChild(favoriteLikeButtonGroup(data,userDatiles));
     viewDatilesBox.appendChild(createCommaneElmeant());
-    const summary_coman = viewCommants(data.summary
-      .comments);
+    const summary_coman = viewCommants(data.summary.comments);
     viewContinear.appendChild(summary_coman);
   };
 

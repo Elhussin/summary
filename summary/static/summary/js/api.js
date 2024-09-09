@@ -17,6 +17,7 @@ const  getActiveUsre = async (accessToken) => {
         Authorization: `Bearer ${accessToken}`,
       },
     });
+
     return response.data;
   } catch (error) {
     console.error('Error fetching courses:', error);
@@ -49,6 +50,8 @@ const getCourse = async (id) => {
   }
 };
 
+
+// Add a course
 const addCourseData = async (formData) => {
 
   const token = checkAccessToken();
@@ -83,6 +86,9 @@ const addCourseData = async (formData) => {
     }
 };
 }
+
+
+// Update a course
 const updateCourse = async (id, formData) => {
   const accessToken = checkAccessToken();
   if (!accessToken) {
@@ -104,13 +110,10 @@ const updateCourse = async (id, formData) => {
 }
 
 
-
-
 // Delete a course
 const deleteCourse = async (id) => {
   const accessToken = checkAccessToken();
   if (!accessToken) {
-    console.error('Access token is missing or invalid.');
     throw new Error('Access token is missing or invalid.');
   }
   try {
@@ -126,14 +129,7 @@ const deleteCourse = async (id) => {
 };
 
 
-// // إعداد قاعدة URL لطلبات API
-// const api = axios.create({
-//   baseURL: 'http://localhost:8000/api/likes/', // قم بتعديل URL إذا كان الخادم يعمل على نطاق مختلف
-//   headers: {
-//     'Content-Type': 'application/json',
-//     // إضافة توكن المصادقة إذا كان مطلوباً، مثل: Authorization: `Bearer ${token}`
-//   },
-// });
+// // Add a like
 const addlike = async (data) => {
   try {
     if (!data) {
@@ -166,7 +162,7 @@ const addlike = async (data) => {
   }
 }
 
-// دالة لتعديل Like
+// Update a like
 async function updateLike(likeId, data) {
   const token = checkAccessToken();
   if (!token) {
@@ -190,6 +186,7 @@ async function updateLike(likeId, data) {
 
 }
 
+// Delete a like
 const delateLike = async (likeId,courseId) => {
   const token = checkAccessToken();
   if (!token) {
@@ -210,6 +207,7 @@ const delateLike = async (likeId,courseId) => {
   }
 }
 
+// Add a favorite
 const addFavorite = async (data) => {
   try {
     if (!data) {
@@ -233,6 +231,7 @@ const addFavorite = async (data) => {
   }
 }
 
+// Delete a favorite
 const delateFavorite = async (favoriteId,courseId) => {
   const token = checkAccessToken();
   if (!token) {
@@ -252,6 +251,7 @@ const delateFavorite = async (favoriteId,courseId) => {
   }
 }
 
+// Add a comment
 const AddComment = async (comment,courseId) => {
   try {
     if (!comment) {
@@ -275,6 +275,7 @@ const AddComment = async (comment,courseId) => {
   }
 }
 
+// Add a summary
 const addSummary = async (data) => {
   try {
     if (!data) {

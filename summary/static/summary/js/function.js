@@ -39,12 +39,12 @@ const createCommaneElmeant = () => {
 
     const newDiv = document.createElement("div");
     newDiv.innerHTML = `
-    <h2>Add Comment</h2>
-    <hr>
     <form id="comment-form" method="post">
+    <div class="form-group">
     <label for="comments"> Comment</label>
     <textarea class="form-control" name="comment" id="comment"  rows="5"></textarea>
     <input type="submit" id="add-comments" class="btn btn-primary float-right m-3" value="Comment"/>
+    </div>
     </form>
     `;
     return newDiv;
@@ -54,7 +54,8 @@ const createCommaneElmeant = () => {
 const viewCommants = (data) => {
 
     const newDiv = document.createElement("div");
-    newDiv.innerHTML = `<h2>Comments</h2>
+    newDiv.innerHTML = `
+    <h2 class="m-5">Comments</h2>
     <hr>
     `;
     data.reverse().forEach((iteam) => {
