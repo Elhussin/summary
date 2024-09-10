@@ -12,6 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ComentsSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
     class Meta:
         model = Coments
         fields = ['id', 'user', 'course', 'comment', 'created_at']
@@ -51,6 +52,7 @@ class SummaryFovariteSerializer(serializers.ModelSerializer):
 
 
 class SummarySerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
     comments = serializers.SerializerMethodField()  # قائمة بالتعليقات على الكورس
     likes = serializers.SerializerMethodField()     # قائمة بالإعجابات على الكورس
     favorites = serializers.SerializerMethodField() # قائمة بالملخصات المرتبطة بالكورس

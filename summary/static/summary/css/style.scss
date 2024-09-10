@@ -25,15 +25,20 @@ $w-90: 90%;
   transition: $transition;
   margin: 10px;
   text-align: center;
-  width: 100px;
+  min-width: 100px;
   display: inline-block;
   text-decoration: none;
   
 }
 .btn-bg:hover{
   background-color: $therd-color;
+
   // color: $primary-color;
 }
+.btn-bg:focus{
+  outline: $color auto 1px;
+}
+
 
 %flex-containers {
   display: flex;
@@ -239,8 +244,12 @@ header.dark-mode {
   li:hover{
     background-color: $color
   }
+  .box-end {
+    margin-left: auto;
+  } 
   
 }
+
 
 
 .main {
@@ -410,10 +419,9 @@ align-items: center;
   }
   .navigation{
       display: none;
-      li{
-        flex-direction: block;
-      }
- 
+    ul{
+      display: block;
+    }
   }
 
   

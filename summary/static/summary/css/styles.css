@@ -17,13 +17,17 @@
   transition: background-color 0.5s, color, 1s;
   margin: 10px;
   text-align: center;
-  width: 100px;
+  min-width: 100px;
   display: inline-block;
   text-decoration: none;
 }
 
 .btn-bg:hover {
   background-color: #5c7650;
+}
+
+.btn-bg:focus {
+  outline: #dad7cd auto 1px;
 }
 
 .main, .navigation, .header {
@@ -194,6 +198,9 @@ header.dark-mode {
 .navigation li:hover {
   background-color: #dad7cd;
 }
+.navigation .box-end {
+  margin-left: auto;
+}
 
 .main section {
   flex-grow: 2;
@@ -347,8 +354,8 @@ header.dark-mode {
   .navigation {
     display: none;
   }
-  .navigation li {
-    flex-direction: block;
+  .navigation ul {
+    display: block;
   }
 }
 

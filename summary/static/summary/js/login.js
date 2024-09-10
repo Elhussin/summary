@@ -19,10 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-
-
-
-
 // // دالة تسجيل الدخول
 async function login(username, password) {
   try {
@@ -48,8 +44,6 @@ async function login(username, password) {
     alertMessage("Login failed. Please check your credentials."); 
   }
 }
-
-
 
 
 // Function to check login status
@@ -119,12 +113,8 @@ function checkLoginStatus() {
   });
 }
 
+
   // Function to check if the user is logged in
-
- 
-
-
-// 
   api.interceptors.request.use(
     (config) => {
       const accessToken = localStorage.getItem('accessToken');
@@ -155,6 +145,7 @@ function checkLoginStatus() {
     }
   }
 
+
   // Update Token using the Refresh Token
   api.interceptors.response.use(
     (response) => response,
@@ -171,7 +162,6 @@ function checkLoginStatus() {
       return Promise.reject(error);
     }
   );
-
 
 
   // logout 

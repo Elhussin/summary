@@ -53,6 +53,7 @@ const createCommaneElmeant = () => {
 
 // view   Comments
 const viewCommants = (data) => {
+  console.log("data",data); 
 
     const newDiv = document.createElement("div");
     newDiv.innerHTML = `
@@ -62,7 +63,7 @@ const viewCommants = (data) => {
     data.reverse().forEach((iteam) => {
         newDiv.innerHTML += `
         <div class="cmment-box">
-        <p id="${iteam.user}">Add By :  ${iteam.user}</p>
+        <p id="${iteam.user}">Add By :  ${iteam.user.username}</p>
               <hr>
         <p> ${iteam.comment} </p> 
               <hr>
@@ -161,7 +162,8 @@ const checkAccessToken = () => {
   }
 }
 const checkUserLogin = () => {
-  const user = localStorage.getItem("user");
+  let user = localStorage.getItem("user");
+  user = JSON.parse(user);
   if (!user) {
     alertMessage("Please login to add course");
     console.log("NO accessToken");

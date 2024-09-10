@@ -45,39 +45,32 @@ const  checkUserLoggedIn= async () => {
     }
   }
 
+  
 const displayUserProfile = (data) => {  
-      console.log("data",data);
       document.getElementById('user-profile').style.display = 'block';
       document.getElementById('user-username').innerText = data.username;
       document.getElementById('user-email').innerText = data.email;
   
-      // عرض الأزرار إذا كان المستخدم مشرفًا
+      // view user courses if the user is a staff or superuser
       if (data.is_staff || data.is_superuser) {
         courseViewBox.style.display = 'block';
         coressAddBox.style.display = 'block';
         viewBox.style.display = 'block';
-
-       
       }else{
         courseViewBox.style.display = 'none';
         coressAddBox.style.display = 'none';
         viewBox.style.display = 'none';
       }
-  
     }
-
-
     if(coressAddBox){
       coressAddBox.addEventListener("click", function () {
         displayIteam(FormBox,viewContinear,"block");
         viewUploudImage();
-
       });
     }
 
 
-//  Add New Course
-
+//  Add New Course+
 CourseForm.addEventListener("submit", function (event) {
   // block out Send form
   event.preventDefault();
@@ -107,9 +100,6 @@ courseViewBox.addEventListener("click", () => {
 // get all courses
 const getUerCourses = async () => {
   let userdatiles= checkUserLogin();
-  userdatiles=JSON.parse(userdatiles);
-  console.log("userdatiles",userdatiles);
-
   try {
     const response = await getCourses()
     console.log("response",response);
@@ -125,14 +115,3 @@ const getUerCourses = async () => {
 };
 
 
-// Fovorite Courses
-const favoriteCourses = async () => {
-  const user = checkUserLogin();
-  const courses = await getCourses();
-  console.log("courses",courses);
-  const favoriteCourses = courses.filter(course => course.id== course.favorites.course);
-  // viewCourses(favoriteCourses);
-  console.log("favoriteCourses",favoriteCourses);
-
-};
-favoriteCourses()

@@ -78,7 +78,7 @@ const AddNewSummary = () => {
             <label for="description">Description</label>
             <textarea class="form-control" id="sumary-description" name="description" required></textarea>
         </div>
-        <button type="submit" class="btn btn-primary" id="addSummary">Add Summary</button>
+        <button type="submit" class="btn-bg" id="addSummary" title="Add New Summary">New Summary</button>
     </form>
     `;
     return newDiv;
@@ -113,11 +113,11 @@ const favoriteLikeButtonGroup =  (data,userDatiles) => {
     if (userFavorite) {
         if (userFavorite.followStatus) {
             newDiv.innerHTML +=`
-            <button class="btn" id='favorite' type="button"Romver From Favorite>${favoriteActive}</button>
+            <button class="btn" id='favorite' type="button" title="Romve From Favorite">${favoriteActive}</button>
             `;
         } else {
             newDiv.innerHTML +=`
-            <button class="btn" id='favorite' type="button "Add To Favorite >${favorite}</button>
+            <button class="btn" id='favorite' type="button title="Add To Favorite" >${favorite}</button>
             `;
         }
     } else {
