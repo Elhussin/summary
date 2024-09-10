@@ -38,12 +38,13 @@ const viewUploudImage = () => {
 const createCommaneElmeant = () => {
 
     const newDiv = document.createElement("div");
+    newDiv.className = "m-auto-top10";
     newDiv.innerHTML = `
     <form id="comment-form" method="post">
     <div class="form-group">
     <label for="comments"> Comment</label>
     <textarea class="form-control" name="comment" id="comment"  rows="5"></textarea>
-    <input type="submit" id="add-comments" class="btn btn-primary float-right m-3" value="Comment"/>
+    <input type="submit" id="add-comments" class="btn-bg float-right m-3" value="Comment"/>
     </div>
     </form>
     `;

@@ -11,13 +11,12 @@
 
 {% block body %}
 
-
+<div id="cours-container" class="cards-container"></div>
 <article  id="view-box" class="dislay-off" >
-    <div id="form-box" class="dislay-off">
+    <article  id="coress-add" class="dislay-off" >
+        {% include 'summary/layout/form.html' %}
+    </article>
 
-    {% include 'summary/layout/form.html' %}
-    </div>
-    <div id="courses-container" class="cards-container dislay-off"></div>
 </article>
 
 <div>
@@ -32,12 +31,13 @@
 {% endblock %}
 
 {% block rightside %}
+
 <div id="user-profile" class="display-off">
     <h2><strong>Welcome, <span id="user-username"> </span></strong></h2>
     <p><strong>Email: </strong><span id="user-email"></span></p>
     <p><strong>Role: </strong><span id="user-role"></span></p>
-
 </div>
+<div id="cours-detieals" ></div>
 <!-- Add any right side content if needed -->
 {% endblock %}
 

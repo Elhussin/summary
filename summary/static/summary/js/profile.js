@@ -3,11 +3,11 @@ import { logout } from './login.js';
 import { alertMessage ,toggleVisibility,viewUploudImage,checkAccessToken,checkUserLogin ,displayIteam} from './function.js';
 import { viewCourses } from './dat_view_html.js';
 const CourseForm = document.getElementById("course_form");
-const FormBox = document.getElementById("form-box");
+const FormBox = document.getElementById("coress-add");
 const viewBox = document.getElementById("view-box");
 const coressAddBox = document.getElementById("course-add-box");
 const courseViewBox = document.getElementById("course-view-box");
-const viewContinear= document.getElementById("courses-container");
+const viewContinear= document.getElementById("cours-container");
 
     // Load the user profile data when the page is loaded
     // confirm that the user is logged in using JWT
@@ -123,3 +123,16 @@ const getUerCourses = async () => {
     throw error;
   }
 };
+
+
+// Fovorite Courses
+const favoriteCourses = async () => {
+  const user = checkUserLogin();
+  const courses = await getCourses();
+  console.log("courses",courses);
+  const favoriteCourses = courses.filter(course => course.id== course.favorites.course);
+  // viewCourses(favoriteCourses);
+  console.log("favoriteCourses",favoriteCourses);
+
+};
+favoriteCourses()
