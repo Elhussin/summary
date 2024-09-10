@@ -113,34 +113,34 @@ const favoriteLikeButtonGroup =  (data,userDatiles) => {
     if (userFavorite) {
         if (userFavorite.followStatus) {
             newDiv.innerHTML +=`
-            <button class="btn" id='favorite' type="button">${favoriteActive}</button>
+            <button class="btn" id='favorite' type="button"Romver From Favorite>${favoriteActive}</button>
             `;
         } else {
             newDiv.innerHTML +=`
-            <button class="btn" id='favorite' type="button">${favorite}</button>
+            <button class="btn" id='favorite' type="button "Add To Favorite >${favorite}</button>
             `;
         }
     } else {
         newDiv.innerHTML +=`
-        <button class="btn" id='favorite' type="button">${favorite}</button>
+        <button class="btn" id='favorite' type="button" title="Add To Favorite">${favorite}</button>
         `;
     }
     // confirm user is like or not
     if (userLike) {
         if (userLike.likes) {
         newDiv.innerHTML +=`
-            <button class="btn" id="like-course"  >${likeActive}</button>
-            <button class="btn" id="unlike-course"  >${unlike}</button>
+            <button class="btn" id="like-course" title="Romve Like"  >${likeActive}</button>
+            <button class="btn" id="unlike-course" title="UnLike"  >${unlike}</button>
         `;
         } else {
         newDiv.innerHTML +=`
-            <button class="btn" id="like-course"  >${like}</button>
-            <button class="btn" id="unlike-course" >${unlikeActive}</button>`;
+            <button class="btn" id="like-course" title="Like"  >${like}</button>
+            <button class="btn" id="unlike-course" title="Romve Unlike" >${unlikeActive}</button>`;
         }
     } else {
         newDiv.innerHTML +=`
-        <button class="btn" id="like-course" >${like}</button>
-        <button class="btn " id="unlike-course" >${unlike}</button>
+        <button class="btn" id="like-course" title="Like" >${like}</button>
+        <button class="btn " id="unlike-course" title="UnLike" >${unlike}</button>
         `;
     }
      newDiv.innerHTML +=`<hr>`;

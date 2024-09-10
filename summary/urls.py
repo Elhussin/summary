@@ -5,7 +5,7 @@ from .views import (
     index, login_view, logout_view, register, usersProfile,
     CourseViewSet, SummaryViewSet, LikeViewSet, ComentsViewSet,
     FovariteViewSet, SummaryLikeViewSet, SummaryComentsViewSet,
-    SummaryFovariteViewSet,user_profile_view
+    SummaryFovariteViewSet,user_profile_view,favorite
 )
 
 
@@ -30,4 +30,5 @@ urlpatterns = [
     path("logout/", logout_view, name="logout"),
     path("register/", register, name="register"),
     path("profile/", usersProfile, name="profile"),
+    path('favorites/', favorite, name='favorite'),
 ]

@@ -31,7 +31,7 @@ const  getActiveUsre = async (accessToken) => {
 const getCourses = async () => {
   try {
     // const response = await axios.get(`${API_URL}/courses/`);
-    const response = await axios.get(`${API_URL}courses/`)
+    const response = await api.get(`courses/`)
     return response.data;
   } catch (error) {
     console.error('Error fetching courses:', error);
@@ -42,7 +42,7 @@ const getCourses = async () => {
 // Get one course
 const getCourse = async (id) => {
   try {
-    const response = await axios.get(`${API_URL}courses/ ${id}/`);
+    const response = await api.get(`courses/ ${id}/`);
     return response.data;
   } catch (error) {
     console.error(`Error fetching course with id ${id}:`, error);

@@ -132,20 +132,7 @@ class SummaryComentsViewSet(viewsets.ModelViewSet):
         except IntegrityError:
             return Response({"error": "Error saving commented summary."}, status=status.HTTP_400_BAD_REQUEST)
 
-# def login_view(request):
-#     if request.method == "POST":
-#         email = request.POST["email"]
-#         password = request.POST["password"]
-#         user = authenticate(request, username=email, password=password)
-#         if user is not None:
-#             if user.is_active:
-#                 login(request, user)
-#                 return HttpResponseRedirect(reverse("index"))
-#             else:
-#                 messages.error(request, "Account is inactive.")
-#         else:
-#             messages.error(request, "Invalid email and/or password.")
-#     return render(request, "summary/auth/login.html")
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])  # التأكد من أن المستخدم مسجل الدخول
 def user_profile_view(request):
@@ -154,19 +141,14 @@ def user_profile_view(request):
     return Response(serializer.data)
 
 
-@csrf_exempt  # تعطيل التحقق من CSRF لهذه الـ View
-@api_view(['POST'])
-def custom_login_view(request):
-    # إعداد دالة تسجيل الدخول هنا
-    return Response({"message": "Login successful!"})
 
 
-@csrf_exempt
+
+
 def login_view(request):
-    return render(request, 'summary/auth/login.html')  # تقديم القالب لتسجيل الدخول
+    return render(request, 'summary/auth/login.html') 
 
 def logout_view(request):
-    logout(request)
     return HttpResponseRedirect(reverse("index"))
 
 def register(request):
@@ -185,6 +167,9 @@ def register(request):
 
 def usersProfile(request):
     return render(request, "summary/profile.html")
+
+def favorite(request):
+    return render(request, "summary/favorite.html")
 
 def pageNotFound(request, exception):
     return redirect('index')

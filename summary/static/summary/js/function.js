@@ -55,7 +55,7 @@ const viewCommants = (data) => {
 
     const newDiv = document.createElement("div");
     newDiv.innerHTML = `
-    <h2 class="m-5">Comments</h2>
+    <h2 class="m-1">Comments</h2>
     <hr>
     `;
     data.reverse().forEach((iteam) => {
@@ -159,7 +159,15 @@ const checkAccessToken = () => {
     return accessToken;
   }
 }
-
+const checkUserLogin = () => {
+  const user = localStorage.getItem("user");
+  if (!user) {
+    alertMessage("Please login to add course");
+    console.log("NO accessToken");
+  } else {
+    return user;
+  }
+}
 
 const getdate = (date) => {
   const currentDate = new Date(date);
@@ -181,5 +189,5 @@ const ConfiarmActifeUserWithData = async (user, data) => {
 export {
     alertMessage, displayIteam, viewUploudImage, createCommaneElmeant, viewCommants,updatpageurl ,
     setTheme ,applyTranslations ,initializeLanguageSwitcher,toggleNavItems,
-    toggleVisibility,checkAccessToken,getdate, ConfiarmActifeUserWithData
+    toggleVisibility,checkAccessToken,getdate, ConfiarmActifeUserWithData ,checkUserLogin
 };

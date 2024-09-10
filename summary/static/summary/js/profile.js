@@ -1,12 +1,13 @@
-import {getActiveUsre ,addCourseData } from './api.js';  
+import {getActiveUsre ,addCourseData ,getCourses } from './api.js';  
 import { logout } from './login.js';
-import { alertMessage ,toggleVisibility,viewUploudImage,checkAccessToken} from './function.js';
-
+import { alertMessage ,toggleVisibility,viewUploudImage,checkAccessToken,checkUserLogin ,displayIteam} from './function.js';
+import { viewCourses } from './dat_view_html.js';
 const CourseForm = document.getElementById("course_form");
 const FormBox = document.getElementById("form-box");
 const viewBox = document.getElementById("view-box");
 const coressAddBox = document.getElementById("course-add-box");
 const courseViewBox = document.getElementById("course-view-box");
+const viewContinear= document.getElementById("courses-container");
 
     // Load the user profile data when the page is loaded
     // confirm that the user is logged in using JWT
@@ -51,12 +52,16 @@ const displayUserProfile = (data) => {
       document.getElementById('user-email').innerText = data.email;
   
       // عرض الأزرار إذا كان المستخدم مشرفًا
-      if (data.is_staff) {
+      if (data.is_staff || data.is_superuser) {
         courseViewBox.style.display = 'block';
         coressAddBox.style.display = 'block';
         viewBox.style.display = 'block';
 
        
+      }else{
+        courseViewBox.style.display = 'none';
+        coressAddBox.style.display = 'none';
+        viewBox.style.display = 'none';
       }
   
     }
@@ -64,8 +69,7 @@ const displayUserProfile = (data) => {
 
     if(coressAddBox){
       coressAddBox.addEventListener("click", function () {
-
-        toggleVisibility(FormBox);
+        displayIteam(FormBox,viewContinear,"block");
         viewUploudImage();
 
       });
@@ -91,4 +95,31 @@ CourseForm.addEventListener("submit", function (event) {
 
 
 
+courseViewBox.addEventListener("click", () => {
 
+  displayIteam(viewContinear,FormBox,"flex");
+    getUerCourses();
+  });
+
+
+
+// view all courses active user
+// get all courses
+const getUerCourses = async () => {
+  let userdatiles= checkUserLogin();
+  userdatiles=JSON.parse(userdatiles);
+  console.log("userdatiles",userdatiles);
+
+  try {
+    const response = await getCourses()
+    console.log("response",response);
+    
+    // filter courses by user id
+    const userCourses = response.filter(course => course.user.id === userdatiles.id);
+    console.log("userCourses",userCourses);
+    viewCourses(userCourses);
+  } catch (error) {
+    console.error('Error fetching courses:', error);
+    throw error;
+  }
+};
