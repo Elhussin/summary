@@ -42,35 +42,34 @@
     </header>
 
     <nav id="navigation" class="navigation">
-        <ul class="navigation-iteam" id="nav-items">
-            <div>
-            <li class="nav-item" id="Courses">
-                <a class="nav-link btn nav-list"id="home"  href="{% url 'index' %}" title="Home "> <strong id="username"></strong></a>
+        <ul class="" id="nav-items">
+            <li class="" id="Courses">
+                <a class="nav-link btn nav-list" id="home"  href="{% url 'index' %}" title="Home "> <strong id="username"></strong></a>
             </li>
             <!-- User but   -->
-            <li class="nav-item" id="profile-item" style="display: none;">
+            <li class="" id="profile-item" style="display: none;">
                 <a class="nav-link btn nav-list" href="{% url 'profile' %}" title="View Profile"> <strong id="username"></strong></a>
             </li>
-            <li class="nav-item" id="admin-item" style="display: none;">
+            <li class="" id="admin-item" style="display: none;">
                 <a class="nav-link btn" href="/admin"><strong id="userAdmin">Admin</strong></a>
             </li>
-            <li class="nav-item" id="favourites-item" style="display: none;">
+            <li class="" id="favourites-item" style="display: none;">
                 <a class="nav-link btn" id="favourites" href="{% url 'favorite' %}" title="View Favourites">Favourites</a>
             </li>
-            </div>
+        </ul>
             <!-- Login and registear but-->
-
-            <div class="box-end">
-            <li class="nav-item" id="login-item">
+        <ul>
+            <li class="" id="login-item">
                 <a class="nav-link btn" id="log-in " href="{% url 'login' %}"  title="Log In">Log In</a>
             </li>
-            <li class="nav-item" id="register-item">
+            <li class="" id="register-item">
                 <a class="nav-link btn" id="register" href="{% url 'register' %}" title="Register">Register</a>
             </li>
-            <li class="nav-item" id="logout-item" style="display: none;">
+            <li class="" id="logout-item" style="display: none;">
                 <a class="nav-link btn btn-danger" id="log-out" title="Log Out">Log Out</a>
             </li>
-            </div>
+
+        </ul>
     </nav>
 
     <main class="main">

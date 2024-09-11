@@ -1,8 +1,9 @@
 from rest_framework import serializers
 from .models import (
     User, Course, Summary, Coments, Like, Fovarite,
-    SummaryComents, SummaryLike, SummaryFovarite
+    SummaryComents,SummaryLike,SummaryFovarite
 )
+
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -22,9 +23,6 @@ class LikeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Like
         fields = '__all__'
-        
-        
-        # fields = ['id', 'user', 'course', 'likes' 'created_at']
 
 
 class FovariteSerializer(serializers.ModelSerializer):
@@ -32,30 +30,34 @@ class FovariteSerializer(serializers.ModelSerializer):
         model = Fovarite
         fields = ['id', 'user', 'course', 'followStatus', 'timestamp']
 
-
 class SummaryComentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = SummaryComents
-        fields = ['id', 'user', 'course', 'summary', 'comment', 'created_at']
+        fields = '__all__'
+# SummaryComents,SummaryLike,SummaryFovarite
 
+# class SummaryLikeSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = SummaryLike
+#         fields = '__all__'
 
+# serializers.py
 class SummaryLikeSerializer(serializers.ModelSerializer):
     class Meta:
-        model = SummaryLike
-        fields = ['id', 'user', 'course', 'summary', 'likes', 'created_at']
-
+        model = SummaryLike  # Ensure the correct model is used
+        fields = '__all__'        
 
 class SummaryFovariteSerializer(serializers.ModelSerializer):
     class Meta:
         model = SummaryFovarite
-        fields = ['id', 'user', 'course', 'summary', 'followStatus', 'timestamp']
+        fields = '__all__'
 
 
 class SummarySerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
-    comments = serializers.SerializerMethodField()  # قائمة بالتعليقات على الكورس
-    likes = serializers.SerializerMethodField()     # قائمة بالإعجابات على الكورس
-    favorites = serializers.SerializerMethodField() # قائمة بالملخصات المرتبطة بالكورس
+    comments = serializers.SerializerMethodField() # list of comments on the course
+    likes = serializers.SerializerMethodField()     # list of likes on the course
+    favorites = serializers.SerializerMethodField() # list of favorites on the course
 
     class Meta:
         model = Summary

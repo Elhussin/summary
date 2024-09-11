@@ -3,7 +3,8 @@ import {like , likeActive, unlike, unlikeActive,
 
 import {checkAccessToken ,getdate,ConfiarmActifeUserWithData} from "./function.js";
 import {getActiveUsre, addlike,updateLike,delateLike
-    ,addFavorite,delateFavorite
+    ,addFavorite,delateFavorite ,likeSummary,updateLikeSummary,delatelikeSummary,
+    delateSummaryFavorite ,addSummaryFavorite
 } from "./api.js";
 
 // view main data for course
@@ -78,7 +79,7 @@ const AddNewSummary = () => {
             <label for="description">Description</label>
             <textarea class="form-control" id="sumary-description" name="description" required></textarea>
         </div>
-        <button type="submit" class="btn-bg" id="addSummary" title="Add New Summary">New Summary</button>
+        <button type="submit" class="btn-bg" id="addSummary" title="Add New Summary" >New Summary</button>
     </form>
     `;
     return newDiv;
@@ -87,14 +88,14 @@ const AddNewSummary = () => {
 
 const viewOneSummary = (data) => {
     const newDiv = document.createElement("div");
+    newDiv.className = "w-90";
     newDiv.innerHTML = `
     <h2>Summary : ${data.title}</h2>
     <hr>
-    <div id="${data.id}" class="">
-    <p id="${data.user}">Add By ${data.user}  </p>
-    <h3 class="card-title"> ${data.title} </h3>
+    <div>
+   
     <p> ${data.description} </p>
-    <p>Created At: ${getdate(data.created_at)} </p>
+    <p>Created At: ${getdate(data.created_at)} <pre>      Add By <a href="index">  ${data.user.username}</a>  </pre> </p>
     </div>
     <hr>
     `;
@@ -225,10 +226,64 @@ const confiarmUserUnLike = (data,userDatiles ) => {
     }
 }
 
-// const getComment = () => {
+const addSummaryLikes = (data,userDatiles ) => {
+    const userLike = data.likes.find((like) => like.user === userDatiles.id);
+    var like=true;
+    if (userLike) {
+        var likeSummaryData={course:data.course,summary:data.id,user:userDatiles.id,likes:like};
+        if (userLike.likes) {
+            delatelikeSummary(userLike.id,data);
+        }
+        else {
+
+            updateLikeSummary(userLike.id,likeSummaryData,data);
+
+        }
+    } else {
+        likeSummaryData={course:data.course,summary:data.id,user:userDatiles.id,likes:like};
+        likeSummary(likeSummaryData,data);
+
+    }
+}
 
 
-// }
+const addSummaryunLikes = (data,userDatiles ) => {
+    // updateLikeSummary,delatelikeSummary,favoriteSummary
+    console.log("dddd",data);
+    const userLike = data.likes.find((like) => like.user === userDatiles.id);
+    var like=false;
+    if (userLike) {
+        var likeSummaryData={course:data.course,summary:data.id,user:userDatiles.id,likes:like};
+        if (userLike.likes) {
+            updateLikeSummary(userLike.id,likeSummaryData,data);
+        }
+        else {
+            delatelikeSummary(userLike.id,data);
+        }
+    } else {
+        likeSummaryData={course:data.course,summary:data.id,user:userDatiles.id,likes:like};
+        likeSummary(likeSummaryData,data);
+    }
+}
+
+const addSummaryFavorites = (data,userDatiles ) => {
+    const userFavorite = data.favorites.find((favorite) => favorite.user === userDatiles.id);
+    var followStatus=true;
+    if (userFavorite) {
+        var FavoriteData={user:userDatiles.id,followStatus:followStatus,summary:userFavorite.summary};
+
+        if (userFavorite.followStatus) {
+            delateSummaryFavorite(userFavorite.id,data.id);
+        }
+    } else {
+
+        FavoriteData= {user:userDatiles.id,followStatus:followStatus,summary:data.id ,course:data.course}
+        addSummaryFavorite(FavoriteData);
+
+    }
+
+}
 
 export { AddCourseDataToHTml, viewCourseDatiles, viewSummary, viewOneSummary,
-    favoriteLikeButtonGroup, delateEditButtonGroup, loginMassage, confiarmUserLike,confiarmUserFavorite,confiarmUserUnLike,AddNewSummary };
+    favoriteLikeButtonGroup, delateEditButtonGroup, loginMassage, confiarmUserLike,confiarmUserFavorite,confiarmUserUnLike,
+    AddNewSummary, addSummaryLikes,addSummaryunLikes,addSummaryFavorites    };

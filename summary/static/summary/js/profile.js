@@ -9,6 +9,7 @@ const coressAddBox = document.getElementById("course-add-box");
 const courseViewBox = document.getElementById("course-view-box");
 const viewContinear= document.getElementById("cours-container");
 
+
     // Load the user profile data when the page is loaded
     // confirm that the user is logged in using JWT
     document.addEventListener('DOMContentLoaded', () => {
@@ -115,3 +116,35 @@ const getUerCourses = async () => {
 };
 
 
+const getLikedCourses = async () => { 
+
+  let user = checkUserLogin();
+  try {
+    const response = await getCourses();
+    const likedCourses = response.filter(course => course.likes.some(like => like.user === user.id));
+    console.log("likedCourses",likedCourses);
+    viewCourses(likedCourses);
+  } catch (error) {
+    console.error('Error fetching courses:', error);
+    throw error;
+  }
+}
+
+const getUnlikedCourses = async () => { 
+
+  let user = checkUserLogin();
+  try {
+    const response = await getCourses();
+    const unlikedCourses = response.filter(course => course.likes.some(like => like.user === user.id && like.likes === false));
+    // var  favorites = courses.filter(course => 
+    //   course.favorites.some(favorite => favorite.user === user.id && favorite.followStatus === true));
+    console.log("unlikedCourses",unlikedCourses);
+    viewCourses(unlikedCourses);
+  } catch (error) {
+    console.error('Error fetching courses:', error);
+    throw error;
+  }
+}
+
+document.getElementById('liked-course').addEventListener('click', getLikedCourses);
+document.getElementById('unliked-course').addEventListener('click', getUnlikedCourses);

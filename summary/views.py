@@ -13,7 +13,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated, BasePermission
-from .models import Summary, Course, Like, Coments, Fovarite
+from .models import Summary, Course, Like, Coments, Fovarite, SummaryComents, SummaryLike, SummaryFovarite
 from .serializers import (
     SummarySerializer, CourseSerializer, LikeSerializer,
     ComentsSerializer, FovariteSerializer, SummaryFovariteSerializer,
@@ -46,7 +46,14 @@ def index(request):
 class SummaryViewSet(viewsets.ModelViewSet):
     queryset = Summary.objects.all().order_by("course")
     serializer_class = SummarySerializer
-
+    def perform_create(self, serializer):
+        try:
+            serializer.save(user=self.request.user)
+        except IntegrityError:
+            return Response({"error": "Error saving like."}, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+    
 class CourseViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all().order_by('created_at')
     serializer_class = CourseSerializer
@@ -54,17 +61,9 @@ class CourseViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowGetWithoutAuthentication]  
     def perform_create(self, serializer):
         try:
-            # حفظ الدورة وضبط المستخدم من التوكن
             serializer.save(user=self.request.user)
-        except IntegrityError as e:
-            # معالجة خطأ سلامة البيانات
-            raise ValidationError({"error": "Error saving course. Please ensure data integrity."})
-        except ValidationError as e:
-            # معالجة الأخطاء المتعلقة بالتحقق من البيانات
-            raise ValidationError({"error": e.detail})
-        except Exception as e:
-            # معالجة الأخطاء العامة وإظهار رسالة الخطأ
-            raise ValidationError({"error": str(e)})
+        except IntegrityError:
+            return Response({"error": "Error saving like."}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class LikeViewSet(viewsets.ModelViewSet):
@@ -102,7 +101,7 @@ class FovariteViewSet(viewsets.ModelViewSet):
 
 
 class SummaryLikeViewSet(viewsets.ModelViewSet):
-    queryset = Like.objects.all().order_by('created_at')
+    queryset = SummaryLike.objects.all().order_by('created_at')  # Ensure this is correct
     serializer_class = SummaryLikeSerializer
 
     def perform_create(self, serializer):
@@ -111,8 +110,11 @@ class SummaryLikeViewSet(viewsets.ModelViewSet):
         except IntegrityError:
             return Response({"error": "Error saving liked summary."}, status=status.HTTP_400_BAD_REQUEST)
 
+
+
+# SummaryComents, SummaryLike, SummaryFovarite
 class SummaryFovariteViewSet(viewsets.ModelViewSet):
-    queryset = Fovarite.objects.all().order_by('timestamp')
+    queryset = SummaryFovarite.objects.all().order_by('timestamp')
     serializer_class = SummaryFovariteSerializer
 
     def perform_create(self, serializer):
@@ -123,7 +125,7 @@ class SummaryFovariteViewSet(viewsets.ModelViewSet):
 
 
 class SummaryComentsViewSet(viewsets.ModelViewSet):
-    queryset = Coments.objects.all().order_by('created_at')
+    queryset = SummaryComents.objects.all().order_by('created_at')
     serializer_class = SummaryComentsSerializer
 
     def perform_create(self, serializer):

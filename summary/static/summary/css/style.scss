@@ -30,6 +30,10 @@ $w-90: 90%;
   text-decoration: none;
   
 }
+.a-btn{
+  color: $font-color;
+  padding: 0px;
+}
 .btn-bg:hover{
   background-color: $therd-color;
 
@@ -236,17 +240,19 @@ header.dark-mode {
   ul {
     @extend %ul;
     display: flex;
+    flex-direction: row;
+    
     }
   li{
-     display: inline-block;
+     display: flex;
+
+    
   }
 
   li:hover{
     background-color: $color
   }
-  .box-end {
-    margin-left: auto;
-  } 
+
   
 }
 

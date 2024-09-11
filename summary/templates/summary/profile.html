@@ -36,11 +36,14 @@
 
 {% block rightside %}
 
-<button class="btn btn-bg btn-lg btn-block  dislay-off" id="course-add-box" ><strong class="btn">New Course</strong></button>
-<button class="btn btn-bg btn-lg btn-block dislay-off" id="course-view-box"><strong class="btn">View Courses</strong></button>
+<button class="btn btn-bg btn-lg btn-block  dislay-off" id="course-add-box" >New Course</button>
+<button class="btn btn-bg btn-lg btn-block dislay-off" id="course-view-box">View Courses</button>
 <button class="btn btn-bg btn-lg btn-block " id="user-profile-box">
-    <a class="btn "  href="{% url 'favorite' %}" title="View favorite">View Favourites</a>
+    <a class="btn a-btn "   href="{% url 'favorite' %}" title="View favorite">View Favourites</a>
 </button>
+<button class="btn btn-bg btn-lg btn-block" id="liked-course" >Like Courses</button>
+<button class="btn btn-bg btn-lg btn-block" id="unliked-course">UnLike Courses</button>
+
 <article id="information"></article>
 {% endblock %}
 

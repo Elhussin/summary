@@ -22,6 +22,11 @@
   text-decoration: none;
 }
 
+.a-btn {
+  color: white;
+  padding: 0px;
+}
+
 .btn-bg:hover {
   background-color: #5c7650;
 }
@@ -191,15 +196,13 @@ header.dark-mode {
 }
 .navigation ul {
   display: flex;
+  flex-direction: row;
 }
 .navigation li {
-  display: inline-block;
+  display: flex;
 }
 .navigation li:hover {
   background-color: #dad7cd;
-}
-.navigation .box-end {
-  margin-left: auto;
 }
 
 .main section {

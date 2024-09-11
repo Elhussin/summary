@@ -3,16 +3,17 @@ import {
   fetchCourses,
   fetchOneCourses,
   updateCourseForm,
+
   
 } from "./api_connect.js";
-import { getActiveUsre, addlike, updateLike,AddComment, addSummary } from "./api.js";
+import { getActiveUsre,AddComment, addSummary,addSummaryComments,delateOneSummary } from "./api.js";
 import {
-  checkAccessToken, alertMessage, displayIteam,
+  checkAccessToken, displayIteam,
   viewUploudImage,
   createCommaneElmeant,
   viewCommants,
-  updatpageurl,ConfiarmActifeUserWithData,
-
+  updatpageurl,
+checkUserLogin
 } from "./function.js";
 import {
   AddCourseDataToHTml,
@@ -23,14 +24,15 @@ import {
   favoriteLikeButtonGroup,
   delateEditButtonGroup, loginMassage
 ,confiarmUserLike,confiarmUserFavorite,
-confiarmUserUnLike} from "./viewElmeantFunctian.js";
+confiarmUserUnLike, addSummaryLikes,addSummaryunLikes,addSummaryFavorites
+} from "./viewElmeantFunctian.js";
 // main continer in body to view courses
 const viewContinear = document.getElementById("cours-container");
 // to view course details
 const viewDatilesBox = document.getElementById("cours-detieals");
 
 const viewCourses = (data) => {
-  console.log(data);
+  viewDatilesBox.innerHTML = "";
   viewContinear.innerHTML = "";
   // view all courses
   //  return all courses data in html elements
@@ -62,8 +64,6 @@ const viewCourses = (data) => {
 // when click on card it will display the course details
 // fetchOneCourses from api_connect.js
 const cardViewEventListeners = (data) => {
-
-
   document.querySelectorAll(".card").forEach((card) => {
     card.addEventListener("click", (event) => {
 
@@ -151,16 +151,20 @@ const displayItemDetails = async (data) => {
           addDateToForm(data);
         });
 
-        // add new summary
-        document.getElementById("summaryForm").addEventListener("submit", async (e) => {
-          e.preventDefault();
-          const summary =  new FormData(e.target);
-          summary.append("course", id);
-          summary.append("user", userDatiles.id);
-          console.log(summary);
-          addSummary(summary);
-        }
-        );
+        
+          // add new summary
+    document.getElementById("summaryForm").addEventListener("submit", async (e) => {
+      const userid = checkUserLogin().id;
+      console.log("id",id);
+      e.preventDefault();
+      const summary =  new FormData(e.target);
+
+      summary.append("course", id);
+      summary.append("user", userid);
+      addSummary(summary);
+    }
+    );
+
 
       }
     }
@@ -178,6 +182,9 @@ const displayItemDetails = async (data) => {
     {
       document.getElementById("course_form").addEventListener("submit", async (e) => {
         e.preventDefault();
+        // const id = checkUserLogin()
+
+        // console.log("id",id);
         const formData = new FormData(e.target);
         updateCourseForm(id, formData);
       });
@@ -192,12 +199,10 @@ const displayItemDetails = async (data) => {
     if (token) { viewDatilesBox.appendChild(createCommaneElmeant()); }
 
     // get course id
-    let id = document.getElementById("course-id").dataset.courseid;
+    var id = document.getElementById("course-id").dataset.courseid;
 
     // viewCommants will return  All comments for the course in html elements
     viewDatilesBox.appendChild(viewCommants(data.comments));
-
-
     // check if the user loged in 
     if (token) {
         
@@ -256,32 +261,71 @@ const displayItemDetails = async (data) => {
         const itemTitle = card.querySelector(".card-title").textContent;
         //  re set urupdatpageurll
         updatpageurl(data, itemTitle, itemId);
-        fetchOneSummary(data);
-        const filteredSummary = data.summary.find(
-          (summary) => summary.id == itemId
-        );
-        fetchOneSummary(filteredSummary);
+        const course = data.summary.find((item) => item.id == itemId);
+        fetchOneSummary(course);
       });
     });
   };
-  // fetch one summary
 
+
+  // fetch one summary
   const fetchOneSummary = async (data) => {
-    console.log("fetchOneSummary",data);
     viewDatilesBox.innerHTML = "";
     viewContinear.innerHTML = "";
 
     const token = checkAccessToken();
     if (token) {
     var userDatiles = await getActiveUsre(token);
-    }
-    viewDatilesBox.appendChild(viewOneSummary(data));
+    
+    viewContinear.appendChild(viewOneSummary(data));
+    viewContinear.appendChild(createCommaneElmeant());
+    viewContinear.appendChild(viewCommants(data.comments));
     viewDatilesBox.appendChild(favoriteLikeButtonGroup(data,userDatiles));
-    viewDatilesBox.appendChild(createCommaneElmeant());
-    const summary_coman = viewCommants(data.summary.comments);
-    viewContinear.appendChild(summary_coman);
-  };
+    if (userDatiles.id == data.user.id) {
+      viewDatilesBox.appendChild(delateEditButtonGroup(data));
+      document.getElementById("delate-course").addEventListener("click", (e) => {
+        e.preventDefault;
+        delateOneSummary(data.id, data.course);
+      });
+      document.getElementById("edit-course").addEventListener("click", (e) => {
+        e.preventDefault;
+        viewDatilesBox.appendChild(AddNewSummary());
+        // addDateToForm(data);
+      });
 
+  
+
+      // add event listener to like button to add like four summary 
+      document.getElementById("like-course").addEventListener("click", (e) => {
+        e.preventDefault();
+        
+        addSummaryLikes(data,userDatiles);
+
+        // console.log("like");
+      });
+      document.getElementById("unlike-course").addEventListener("click", (e) => {
+        e.preventDefault();
+        addSummaryunLikes(data,userDatiles);
+
+      });
+
+      document.getElementById("favorite").addEventListener("click", (e) => {
+        e.preventDefault();
+        addSummaryFavorites(data,userDatiles);
+        console.log("favorite");
+      });
+      document.getElementById("comment-form").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const comment = new FormData(e.target);
+        comment.append("course", data.course);
+        comment.append("user", userDatiles.id);
+        comment.append("summary", data.id);
+        addSummaryComments(comment);
+        // AddComment(comment, data.id);
+      });
+    }
+  }
+  };
 
 
 

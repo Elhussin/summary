@@ -38,7 +38,7 @@ const viewUploudImage = () => {
 const createCommaneElmeant = () => {
 
     const newDiv = document.createElement("div");
-    newDiv.className = "m-auto-top10";
+    newDiv.className = "w-90 m-auto-top10";
     newDiv.innerHTML = `
     <form id="comment-form" method="post">
     <div class="form-group">
@@ -56,6 +56,7 @@ const viewCommants = (data) => {
   console.log("data",data); 
 
     const newDiv = document.createElement("div");
+    newDiv.className = "w-90 m-auto-top10";
     newDiv.innerHTML = `
     <h2 class="m-1">Comments</h2>
     <hr>
@@ -155,7 +156,7 @@ const   toggleVisibility = (element)=> {
 const checkAccessToken = () => {
   const accessToken = localStorage.getItem("accessToken");
   if (!accessToken) {
-
+    alertMessage("Please login to View course details");
     console.log("NO accessToken");
   } else {
     return accessToken;

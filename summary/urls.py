@@ -16,9 +16,9 @@ router.register(r'courses', CourseViewSet, basename='courses')
 router.register(r'comments', ComentsViewSet, basename='comments')
 router.register(r'likes', LikeViewSet, basename='likes')
 router.register(r'favorites', FovariteViewSet, basename='favorites')
-router.register(r'summary_likes', SummaryLikeViewSet, basename='summaryLikes')
-router.register(r'summary_comments', SummaryComentsViewSet, basename='summaryComments')
-router.register(r'summary_favorites', SummaryFovariteViewSet, basename='summaryCavorites')
+router.register(r'summaryLikes', SummaryLikeViewSet, basename='summaryLikes')
+router.register(r'summaryComments', SummaryComentsViewSet, basename='summaryComments')
+router.register(r'summaryFavorites', SummaryFovariteViewSet, basename='summaryCavorites')
 
 urlpatterns = [
     path('view/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),  
