@@ -26,11 +26,13 @@ class LikeSerializer(serializers.ModelSerializer):
 
 
 class FovariteSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
     class Meta:
         model = Fovarite
         fields = ['id', 'user', 'course', 'followStatus', 'timestamp']
 
 class SummaryComentsSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
     class Meta:
         model = SummaryComents
         fields = '__all__'

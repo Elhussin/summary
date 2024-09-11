@@ -305,6 +305,17 @@ const addSummary = async (data) => {
   }
 }
 
+const getSummaries = async () => {
+  try {
+    const response = await api.get('summaries/');
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching summaries:', error);
+    throw error;
+  }
+};
+
+
 const getOneSummary = async (id) => {
   try { 
     const response = await api.get(`summaries/${id}/`);
@@ -443,6 +454,19 @@ const delateSummaryFavorite = async (favoriteId,summaryId) => {
 }
 
 
+const addUpdateSummaryForm= async (id,data) => {
+  try {
+    const response = await api.put(`summaries/${id}/`, data);
+    console.log('Summary updated successfully:', response.data);
+    alertMessage("Summary updated successfully");
+    const getOneSummarydata = await getOneSummary(id);
+    fetchOneSummary(getOneSummarydata);
+  } catch (error) {
+    console.error('Error updating summary:', error.response ? error.response.data : error.message);
+  }
+}
+
+
 const addSummaryComments = async (data) => {
   try {
     if (!data) {
@@ -471,4 +495,4 @@ const addSummaryComments = async (data) => {
 
 export { getCourses, getCourse, addCourseData, updateCourse, deleteCourse ,api,getActiveUsre,
    addlike, updateLike,delateLike,addFavorite,delateFavorite,AddComment,addSummary,likeSummary,
-   updateLikeSummary,delatelikeSummary,addSummaryFavorite,delateSummaryFavorite,addSummaryComments,delateOneSummary};
+   updateLikeSummary,delatelikeSummary,addSummaryFavorite,delateSummaryFavorite,addSummaryComments,delateOneSummary,getSummaries,getOneSummary,addUpdateSummaryForm};

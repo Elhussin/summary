@@ -6,7 +6,7 @@ import {
 
   
 } from "./api_connect.js";
-import { getActiveUsre,AddComment, addSummary,addSummaryComments,delateOneSummary } from "./api.js";
+import { getActiveUsre,AddComment, addSummary,addSummaryComments,delateOneSummary,addUpdateSummaryForm } from "./api.js";
 import {
   checkAccessToken, displayIteam,
   viewUploudImage,
@@ -24,7 +24,7 @@ import {
   favoriteLikeButtonGroup,
   delateEditButtonGroup, loginMassage
 ,confiarmUserLike,confiarmUserFavorite,
-confiarmUserUnLike, addSummaryLikes,addSummaryunLikes,addSummaryFavorites
+confiarmUserUnLike, addSummaryLikes,addSummaryunLikes,addSummaryFavorites,updateSummaryForm
 } from "./viewElmeantFunctian.js";
 // main continer in body to view courses
 const viewContinear = document.getElementById("cours-container");
@@ -82,7 +82,7 @@ const cardViewEventListeners = (data) => {
       //  re set url & page Title 
       // updatpageurl function from function.js
       // updatpageurl will re set url
-      updatpageurl(course, itemTitle, itemId);
+      updatpageurl('courses', itemTitle, itemId);
 
 
       // view one course
@@ -174,7 +174,7 @@ const displayItemDetails = async (data) => {
     }
 
     // view all summary for the course
-    viewContinear.appendChild(viewSummary(data));
+    viewContinear.appendChild(viewSummary(data.summary));
 
 
     // update course 
@@ -260,7 +260,7 @@ const displayItemDetails = async (data) => {
         // get elemant title
         const itemTitle = card.querySelector(".card-title").textContent;
         //  re set urupdatpageurll
-        updatpageurl(data, itemTitle, itemId);
+        updatpageurl('summaries', itemTitle, itemId);
         const course = data.summary.find((item) => item.id == itemId);
         fetchOneSummary(course);
       });
@@ -289,20 +289,32 @@ const displayItemDetails = async (data) => {
       });
       document.getElementById("edit-course").addEventListener("click", (e) => {
         e.preventDefault;
-        viewDatilesBox.appendChild(AddNewSummary());
-        // addDateToForm(data);
+        viewContinear.innerHTML = "";
+        viewDatilesBox.innerHTML = "";
+        viewContinear.appendChild(updateSummaryForm(data));
+       
+
+          document.getElementById("updateSummary").addEventListener("submit", async (e) => {
+            console.log("data",e.target);
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            formData.append("course", data.course);
+            formData.append("user", userDatiles.id);
+            addUpdateSummaryForm(data.id, formData);
+          });
+
+    
+
       });
 
-  
+    }
 
       // add event listener to like button to add like four summary 
       document.getElementById("like-course").addEventListener("click", (e) => {
         e.preventDefault();
-        
         addSummaryLikes(data,userDatiles);
-
-        // console.log("like");
       });
+
       document.getElementById("unlike-course").addEventListener("click", (e) => {
         e.preventDefault();
         addSummaryunLikes(data,userDatiles);
@@ -312,8 +324,8 @@ const displayItemDetails = async (data) => {
       document.getElementById("favorite").addEventListener("click", (e) => {
         e.preventDefault();
         addSummaryFavorites(data,userDatiles);
-        console.log("favorite");
       });
+
       document.getElementById("comment-form").addEventListener("submit", async (e) => {
         e.preventDefault();
         const comment = new FormData(e.target);
@@ -321,11 +333,13 @@ const displayItemDetails = async (data) => {
         comment.append("user", userDatiles.id);
         comment.append("summary", data.id);
         addSummaryComments(comment);
-        // AddComment(comment, data.id);
       });
+
     }
-  }
+  
   };
+
+
 
 
 
@@ -348,5 +362,7 @@ const displayItemDetails = async (data) => {
     cardViewEventListeners,
     fetchOneSummary,
     addDateToForm,
+    viewSummary,  
+
   };
 

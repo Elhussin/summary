@@ -1,7 +1,7 @@
-import {getActiveUsre ,addCourseData ,getCourses } from './api.js';  
+import {getActiveUsre ,addCourseData ,getCourses,getSummaries, getOneSummary } from './api.js';  
 import { logout } from './login.js';
-import { alertMessage ,toggleVisibility,viewUploudImage,checkAccessToken,checkUserLogin ,displayIteam} from './function.js';
-import { viewCourses } from './dat_view_html.js';
+import { alertMessage ,toggleVisibility,viewUploudImage,checkAccessToken,checkUserLogin ,displayIteam,updatpageurl} from './function.js';
+import { viewCourses,viewSummary,    summaryViewEventListeners,fetchOneSummary } from './dat_view_html.js';
 const CourseForm = document.getElementById("course_form");
 const FormBox = document.getElementById("coress-add");
 const viewBox = document.getElementById("view-box");
@@ -136,15 +136,67 @@ const getUnlikedCourses = async () => {
   try {
     const response = await getCourses();
     const unlikedCourses = response.filter(course => course.likes.some(like => like.user === user.id && like.likes === false));
-    // var  favorites = courses.filter(course => 
-    //   course.favorites.some(favorite => favorite.user === user.id && favorite.followStatus === true));
-    console.log("unlikedCourses",unlikedCourses);
     viewCourses(unlikedCourses);
   } catch (error) {
     console.error('Error fetching courses:', error);
     throw error;
   }
 }
+
+const getUnlikedsummary = async () => {
+  const user = checkUserLogin();
+  try {
+    const response = await   getSummaries();
+    const unlikedSummary = response.filter(course => course.likes.some(like => like.user === user.id && like.likes === false));
+    viewContinear.innerHTML = '';  
+    viewContinear.appendChild( viewSummary(unlikedSummary));
+    document.querySelectorAll(".summary-box").forEach((card) => {
+      card.addEventListener("click",async (event) => {
+        getSummariesAndFetch(card.id);
+      });
+    });
+  } catch (error) {
+    console.error('Error fetching courses:', error);
+    throw error;
+  }
+
+}
+
+const getikedsummary = async () => {
+  const user = checkUserLogin();
+  try {
+    const response = await   getSummaries();
+    const unlikedSummary = response.filter(course => course.likes.some(like => like.user === user.id && like.likes === true));
+    viewContinear.innerHTML = '';  
+    viewContinear.appendChild( viewSummary(unlikedSummary));
+
+
+    
+    
+
+  } catch (error) {
+    console.error('Error fetching courses:', error);
+    throw error;
+  }
+
+}
+
+const getSummariesAndFetch = async (SummaryId) => {
+
+  try {
+    const response = await getOneSummary(SummaryId);
+    fetchOneSummary(response);
+  } catch (error) {
+    console.error('Error fetching courses:', error);
+    throw error;
+  }
+}
+
+
+
+
+document.getElementById('liked-summary').addEventListener('click', getikedsummary);
+document.getElementById('unliked-summary').addEventListener('click', getUnlikedsummary);
 
 document.getElementById('liked-course').addEventListener('click', getLikedCourses);
 document.getElementById('unliked-course').addEventListener('click', getUnlikedCourses);

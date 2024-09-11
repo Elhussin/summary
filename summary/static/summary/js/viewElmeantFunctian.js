@@ -47,18 +47,19 @@ const viewCourseDatiles = (data) => {
 
 
   const viewSummary = (data) => {
+
     const newDiv = document.createElement("div");
     newDiv.className = "w-90";
     newDiv.innerHTML = `<h2>Summary</h2>
     <hr>`;
 
-    data.summary.reverse().forEach((iteam) => {
+    data.reverse().forEach((iteam) => {
     newDiv.innerHTML += `
         <div id="${iteam.id}" class="summary-box">
-        <p id="${iteam.user}">Add By ${iteam.user.username}  </p>
+        <p>Add By ${iteam.user.username}  </p>
         <h3 class="card-title"> ${iteam.title} </h3> 
         <p> ${iteam.description} </p>
-        <p>Created At: ${ getdate(iteam.created_at)} </p>
+        <p>Created At: ${ getdate(iteam.created_at)} <pre> Last Update ${ getdate(iteam.updated_at)} <pre> </p> 
         `;
     });
     return newDiv;
@@ -84,6 +85,28 @@ const AddNewSummary = () => {
     `;
     return newDiv;
 };
+
+const updateSummaryForm = (data) => {
+    const newDiv = document.createElement("div");
+    newDiv.className = "w-90";  
+    newDiv.innerHTML = `
+    <h2 class="m-2"> Update Summary</h2>
+    <hr>
+    <form id="updateSummary">
+        <div class="form-group ">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" id="sumary-title" name="title" value="${data.title}" required>
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" id="sumary-description" name="description" required>${data.description}</textarea>
+        </div>
+        <button type="submit" class="btn-bg"  title="Update Summary" >Update Summary</button>
+    </form>
+    `;
+    return newDiv;
+};
+
 
 
 const viewOneSummary = (data) => {
@@ -286,4 +309,4 @@ const addSummaryFavorites = (data,userDatiles ) => {
 
 export { AddCourseDataToHTml, viewCourseDatiles, viewSummary, viewOneSummary,
     favoriteLikeButtonGroup, delateEditButtonGroup, loginMassage, confiarmUserLike,confiarmUserFavorite,confiarmUserUnLike,
-    AddNewSummary, addSummaryLikes,addSummaryunLikes,addSummaryFavorites    };
+    AddNewSummary, addSummaryLikes,addSummaryunLikes,addSummaryFavorites,updateSummaryForm    };

@@ -39,10 +39,13 @@
 <button class="btn btn-bg btn-lg btn-block  dislay-off" id="course-add-box" >New Course</button>
 <button class="btn btn-bg btn-lg btn-block dislay-off" id="course-view-box">View Courses</button>
 <button class="btn btn-bg btn-lg btn-block " id="user-profile-box">
-    <a class="btn a-btn "   href="{% url 'favorite' %}" title="View favorite">View Favourites</a>
+    <a class="btn a-btn w-100 "href="{% url 'favorite' %}" title="View favorite">View Favourites</a>
 </button>
 <button class="btn btn-bg btn-lg btn-block" id="liked-course" >Like Courses</button>
 <button class="btn btn-bg btn-lg btn-block" id="unliked-course">UnLike Courses</button>
+<button class="btn btn-bg btn-lg btn-block" id="liked-summary" >Like Summaries</button>
+<button class="btn btn-bg btn-lg btn-block" id="unliked-summary">UnLike Summaries</button>
+
 
 <article id="information"></article>
 {% endblock %}

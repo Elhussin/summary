@@ -80,7 +80,7 @@ const viewCommants = (data) => {
 
 const updatpageurl = (data,title,itemId) => {
     document.title = `${title}`;
-    const newUrl = `/view/courses/${itemId}`;
+    const newUrl = `/view/${data}/${itemId}`;
     history.pushState({ path: newUrl }, "", newUrl);
 };
 
