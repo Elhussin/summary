@@ -26,7 +26,7 @@
   padding: 10px;
   cursor: pointer;
   transition: background-color 0.5s, color, 1s;
-  margin: 10px;
+  margin-top: 10px;
   text-align: center;
   min-width: 100px;
   display: inline-block;
@@ -113,6 +113,7 @@ body.dark-mode {
   font-size: small;
   font-style: italic;
   text-align: center;
+  margin: 10px;
 }
 
 .header {

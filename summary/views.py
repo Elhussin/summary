@@ -66,6 +66,7 @@ class CourseViewSet(viewsets.ModelViewSet):
             return Response({"error": "Error saving like."}, status=status.HTTP_400_BAD_REQUEST)
 
 
+
 class LikeViewSet(viewsets.ModelViewSet):
     queryset = Like.objects.all().order_by('created_at')
     serializer_class = LikeSerializer

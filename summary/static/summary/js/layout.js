@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initializeDarkMode();
     initializeLanguageSwitcher();
     setupNavButton();
-
+    
   });
 
 
@@ -33,4 +33,11 @@ function setupNavButton() {
   
    
 
-
+  const getUsers = async(e)=>{
+    e.preventDefault();
+    const id = e.target.id;
+    console.log("id", id);
+  }
+  
+  
+  

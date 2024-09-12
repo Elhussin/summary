@@ -5,9 +5,15 @@
 
 {% block left-side %}
 <div id="user-profile" class="display-off"></div>
+     <div class="Cardnavgation">
     <h2><strong>Welcome, <span id="user-username"> </span></strong></h2>
+    </div>
+    <div class="Cardnavgation">
     <p><strong>Email: </strong><span id="user-email"></span></p>
+    </div>
+    <div class="Cardnavgation">
     <p><strong>Role: </strong><span id="user-role"></span></p>
+    </div>
 </div>
 <div id="cours-detieals" ></div>
 
@@ -30,15 +36,20 @@
 
 {% block rightside %}
 
-<button class="btn btn-bg btn-lg btn-block  dislay-off" id="course-add-box" >New Course</button>
+<button class="btn btn-bg btn-lg w-100  dislay-off" id="course-add-box" >New Course</button>
 <button class="btn btn-bg btn-lg btn-block dislay-off" id="course-view-box">View Courses</button>
 <button class="btn btn-bg btn-lg btn-block " id="user-profile-box">
     <a class="btn a-btn w-100 "href="{% url 'favorite' %}" title="View favorite">View Favourites</a>
 </button>
+<button class="btn btn-bg btn-lg btn-block" id="favorite-summaries">Favorite Summaries</button>
 <button class="btn btn-bg btn-lg btn-block" id="liked-course" >Like Courses</button>
 <button class="btn btn-bg btn-lg btn-block" id="unliked-course">UnLike Courses</button>
 <button class="btn btn-bg btn-lg btn-block" id="liked-summary" >Like Summaries</button>
 <button class="btn btn-bg btn-lg btn-block" id="unliked-summary">UnLike Summaries</button>
+
+{% endblock %}
+
+{% block information %}
 
 
 <article id="information"></article>

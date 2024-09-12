@@ -21,6 +21,7 @@ const AddCourseDataToHTml = (data) => {
 };
 
 
+
 // view  iteams Datiles
 const viewCourseDatiles = (data) => {
 
@@ -35,11 +36,14 @@ const viewCourseDatiles = (data) => {
 
         <p> Description: ${data.description} </p>
         <div class="Cardnavgation">
-        <p class="card-author">By <a href="/users" class="card-author">${capitalizeFirstLetter(data.user.username)}</a> </p> 
-        <p id="course-id" data-courseid="${data.id}">Course No : ${data.id} </p>
-        <p> Date: ${getdate(data.created_at)} </p>
         <p> Likes: ${likesCount} </p>
         <p> Unlikes: ${unlikesCount} </p>
+        <p> Favorites: ${data.favorites.filter((item) => item.followStatus).length} </p>
+        <p>By <a href="/users" class="user_id"   id="${data.user.id}">${capitalizeFirstLetter(data.user.username)}</a> </p> 
+        <p id="course-id" data-courseid="${data.id}">Course No : ${data.id} </p>
+        <p> Date: ${getdate(data.created_at)} </p>
+        <p> Last Update: ${getdate(data.updated_at)} </p>
+
         </div>
 
    
@@ -53,7 +57,7 @@ const viewCourseDatiles = (data) => {
 
     const newDiv = document.createElement("div");
     newDiv.className = "w-90";
-    newDiv.innerHTML = `<h2>Summary</h2>
+    newDiv.innerHTML = `<h2>Summaries</h2>
     <hr>`;
 
     data.reverse().forEach((iteam) => {
@@ -64,6 +68,7 @@ const viewCourseDatiles = (data) => {
         <div class="Cardnavgation">
         <p> Likes: ${iteam.likes.filter((item) => item.likes).length} </p>
         <p> Unlikes: ${iteam.likes.filter((item) => !item.likes).length} </p>
+        <p> Favorites: ${iteam.favorites.filter((item) => item.followStatus).length} </p>
         <p>Created At: ${ getdate(iteam.created_at)}</p>
          <p>  Last Update: ${ getdate(iteam.updated_at)} </p> 
         <p class="card-author" >Add By: ${iteam.user.username.toUpperCase()}  </p>
@@ -121,14 +126,18 @@ const viewOneSummary = (data) => {
     const newDiv = document.createElement("div");
     newDiv.className = "w-90";
     newDiv.innerHTML = `
-    <h2>Summary : ${data.title.toUpperCase()}</h2>
+    <h2>Summary : ${capitalizeFirstLetter(data.title)}</h2>
     <hr>
     <div>
     <div style="white-space: pre-wrap;"> ${data.description} </div>
     <div class="Cardnavgation">
+    <p> Likes: ${data.likes.filter((item) => item.likes).length} </p>
+    <p> Unlikes: ${data.likes.filter((item) => !item.likes).length} </p>
+    <p> Favorites: ${data.favorites.filter((item) => item.followStatus).length} </p>
     <p>Date: ${getdate(data.created_at)}  </p>
-    <p> Add By <a href="index">  ${data.user.username.toUpperCase()}</a>  </p>
-    </div>
+    <p> Last Update: ${getdate(data.updated_at)} </p>
+    <p> Add By <a href="/users" class="user_id" id="${data.user.id}">  ${capitalizeFirstLetter(data.user.username)}</a>  </p>
+
     </div>
     <hr>
     `;
@@ -244,7 +253,7 @@ const confiarmUserFavorite = (data,userDatiles ) => {
 
 
 const confiarmUserUnLike = (data,userDatiles ) => {
-    const userLike = data.likes.find((like) => like.user.id === userDatiles.id);
+    const userLike = data.likes.find((like) => like.user === userDatiles.id);
     var like=false;
     if (userLike) {
         var LikesData={user:userDatiles.id,likes:like,course:userLike.course};
@@ -322,3 +331,5 @@ const addSummaryFavorites = (data,userDatiles ) => {
 export { AddCourseDataToHTml, viewCourseDatiles, viewSummary, viewOneSummary,
     favoriteLikeButtonGroup, delateEditButtonGroup, loginMassage, confiarmUserLike,confiarmUserFavorite,confiarmUserUnLike,
     AddNewSummary, addSummaryLikes,addSummaryunLikes,addSummaryFavorites,updateSummaryForm    };
+
+

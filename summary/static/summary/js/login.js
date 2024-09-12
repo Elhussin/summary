@@ -114,54 +114,6 @@ function checkLoginStatus() {
 }
 
 
-  // Function to check if the user is logged in
-  api.interceptors.request.use(
-    (config) => {
-      const accessToken = localStorage.getItem('accessToken');
-      if (accessToken) {
-        config.headers.Authorization = `Bearer ${accessToken}`;
-      }
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
-    }
-  );
-
-  // تحديث Access Token باستخدام Refresh Token
-  async function refreshToken() {
-    const refreshToken = localStorage.getItem('refreshToken');
-    try {
-      const response = await api.post('token/refresh/', {
-        refresh: refreshToken,
-      });
-
-      // تخزين الرمز الجديد
-      localStorage.setItem('accessToken', response.data.access);
-      return response.data.access;
-    } catch (error) {
-      console.error('Error refreshing token:', error.response ? error.response.data : error.message);
-      logout();
-    }
-  }
-
-
-  // Update Token using the Refresh Token
-  api.interceptors.response.use(
-    (response) => response,
-    async (error) => {
-      const originalRequest = error.config;
-      if (error.response.status === 401 && !originalRequest._retry) {
-        originalRequest._retry = true; // Set the retry flag to prevent infinite loop
-        const newAccessToken = await refreshToken();
-        if (newAccessToken) {
-          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-          return api(originalRequest); // Retry the original request with the new token
-        }
-      }
-      return Promise.reject(error);
-    }
-  );
 
 
   // logout 

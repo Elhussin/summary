@@ -94,10 +94,14 @@ TO Create App
 
   ``
 
+  DJANGO APP
+  How 
+  // How Can use Django step By step
+
 
 
 ### Make makemigrations
-- ofterc choise db make imgratian
+- aftear choise db make imgratian
 
 ```
 python manage.py makemigrations

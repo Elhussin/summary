@@ -17,19 +17,14 @@ document.addEventListener("DOMContentLoaded", (event) => {
 });
 
 
-// filter courses by User
-document.querySelectorAll(".card-author").forEach((user) => {
-  user.addEventListener("click", (event) => {
-    console.log("user", user);
-    event.preventDefault();
-    // fetchCourses();
-  });
-
-}
-);
-
-// const filterCourses = (courses) => {
-//   const user = getActiveUsre();
-//   return courses.filter((course) => course.user === user.id);
-// };
-
+// Add event listener to get search form data
+document.getElementById("search-form").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const formData = new FormData(event.target);
+  const searchQuery = formData.get("search");
+  console.log("searchQuery", searchQuery);
+  // Fetch courses from the database
+  // const courses = await getCourses(searchQuery);
+  // console.log("courses", courses);
+  // Display the courses
+});
