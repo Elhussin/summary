@@ -16,3 +16,20 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
 });
 
+
+// filter courses by User
+document.querySelectorAll(".card-author").forEach((user) => {
+  user.addEventListener("click", (event) => {
+    console.log("user", user);
+    event.preventDefault();
+    // fetchCourses();
+  });
+
+}
+);
+
+// const filterCourses = (courses) => {
+//   const user = getActiveUsre();
+//   return courses.filter((course) => course.user === user.id);
+// };
+

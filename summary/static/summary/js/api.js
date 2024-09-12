@@ -226,7 +226,7 @@ const addFavorite = async (data) => {
       },
     });
     console.log('Favorite added successfully:', response.data);
-    fetchOneCourses(data.course);
+    fetchOneCourses(response.data.course);
   } catch (error) {
     console.error('Error adding favorite:', error.response ? error.response.data : error.message);
   }

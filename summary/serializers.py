@@ -36,24 +36,18 @@ class SummaryComentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = SummaryComents
         fields = '__all__'
-# SummaryComents,SummaryLike,SummaryFovarite
 
-# class SummaryLikeSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = SummaryLike
-#         fields = '__all__'
 
-# serializers.py
 class SummaryLikeSerializer(serializers.ModelSerializer):
     class Meta:
         model = SummaryLike  # Ensure the correct model is used
         fields = '__all__'        
 
 class SummaryFovariteSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
     class Meta:
         model = SummaryFovarite
-        fields = '__all__'
-
+        fields = ['id', 'user','summary', 'course', 'followStatus', 'timestamp']
 
 class SummarySerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)

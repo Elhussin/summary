@@ -3,8 +3,19 @@
   width: 90%;
 }
 
+.bg-primary-color {
+  background-color: #344e41;
+  color: white;
+  font-size: small;
+  font-style: italic;
+}
+
 .m-auto-top10 {
   margin: auto 10px;
+}
+
+.viewText {
+  white-space: pre-wrap;
 }
 
 .btn-bg {
@@ -35,7 +46,7 @@
   outline: #dad7cd auto 1px;
 }
 
-.main, .navigation, .header {
+.main, .navigation, .header, .Cardnavgation {
   display: flex;
   justify-content: space-between;
   align-items: top;
@@ -88,6 +99,20 @@ body.light-mode {
 body.dark-mode {
   background-color: #344e41;
   color: white;
+}
+
+.Cardnavgation {
+  background-color: #344e41;
+  padding: 10px;
+  border: 1px;
+  border-radius: 10px;
+  color: #dad7cd;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: small;
+  font-style: italic;
+  text-align: center;
 }
 
 .header {
@@ -266,7 +291,7 @@ header.dark-mode {
   margin: 10px auto;
 }
 .card-datiles img {
-  width: 400px;
+  width: 100%;
   height: 300px;
 }
 
@@ -320,14 +345,14 @@ header.dark-mode {
   border-radius: 10px;
   padding: 10px;
   margin: 10px;
-  background-color: #5c7650;
+  background-color: #a3b18a;
   cursor: pointer;
   justify-content: space-between;
   align-items: center;
   color: #dad7cd;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 900px) {
   .certfi-grid {
     grid-template-columns: auto;
   }
@@ -359,6 +384,9 @@ header.dark-mode {
   }
   .navigation ul {
     display: block;
+  }
+  .Cardnavgation {
+    flex-direction: column;
   }
 }
 

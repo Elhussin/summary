@@ -174,5 +174,8 @@ def usersProfile(request):
 def favorite(request):
     return render(request, "summary/favorite.html")
 
+def UsersDatilesView(request):
+    return render(request, "summary/users.html")
+
 def pageNotFound(request, exception):
     return redirect('index')

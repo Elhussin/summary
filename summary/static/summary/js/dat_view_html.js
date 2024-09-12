@@ -13,7 +13,7 @@ import {
   createCommaneElmeant,
   viewCommants,
   updatpageurl,
-checkUserLogin
+checkUserLogin,getdate,capitalizeFirstLetter
 } from "./function.js";
 import {
   AddCourseDataToHTml,
@@ -42,9 +42,12 @@ const viewCourses = (data) => {
             <div class="card" id="${item.id}" >
               <img src="${item.image}" alt="${item.title}">
               <div class="card-content">
-                  <h2 class="card-title">${item.title}</h2>
-                  <p class="card-description">${item.description}</p>
+                  <h2 class="card-title">${capitalizeFirstLetter(item.title)}</h2>
               </div>
+              <div class="card-footer bg-primary-color">
+                  <p class="card-author" id="${item.user.id}">By: ${capitalizeFirstLetter(item.user.username)}</p>
+                  <p class="card-date">Date: ${getdate(item.created_at)}</p>
+                </div>
             </div>
           `
     )
@@ -103,6 +106,7 @@ const cardViewEventListeners = (data) => {
 // displayItemDetails will display the course details
 
 const displayItemDetails = async (data) => {
+  console.log("view",data);
 
   //  clear the view
   viewDatilesBox.innerHTML = "";
@@ -348,12 +352,52 @@ const displayItemDetails = async (data) => {
     const coressAdd = document.getElementById("coress-add");
     document.getElementById("page-title").innerHTML = "Edit Course";
     document.getElementById("title").value = data.title;
-    document.getElementById("description").value = data.description;
+    editorInstance.on('instanceReady', function() {
+      loadEditorData(data.description); // Load data when editor is ready
+    });
+    // document.getElementById("description").value = data.description;
     document.getElementById("imagePreview").src = data.image;
     document.getElementById("send").value = "Update";
     displayIteam(coressAdd, viewContinear, "block");
     viewUploudImage();
   };
+
+  function loadEditorData(content) {
+    // Check if CKEditor is initialized
+    if (editorInstance) {
+        editorInstance.setData(content); // Set the data in CKEditor
+    } else {
+        console.error('CKEditor instance not found.');
+    }
+}  
+
+
+
+              // Ensure the CKEditor initialization runs after the DOM is fully loaded
+           
+                // Check if CKEDITOR is defined
+                if (typeof CKEDITOR !== 'undefined') {
+                  // Initialize CKEditor on the textarea with id 'editor1'
+                  var editorInstance= CKEDITOR.replace('description', {
+                      height: 300,               // Set the editor height
+                      toolbar: [
+                          { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript'] },
+                          { name: 'paragraph', items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote'] },
+                          { name: 'editing', items: ['Scayt'] },
+                          { name: 'links', items: ['Link', 'Unlink'] },
+                          { name: 'insert', items: ['Image', 'Table', 'HorizontalRule', 'SpecialChar'] },
+                          { name: 'styles', items: ['Styles', 'Format'] },
+                          { name: 'about', items: ['About'] }
+                      ]
+                  });
+              } else {
+                  console.error('CKEDITOR is not defined. Check the script link or network connectivity.');
+              }
+
+
+
+
+
 
   export {
     viewCourses,

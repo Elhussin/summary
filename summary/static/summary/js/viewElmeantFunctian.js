@@ -1,7 +1,7 @@
 import {like , likeActive, unlike, unlikeActive,
      favorite, favoriteActive}  from "./svg_icons.js";
 
-import {checkAccessToken ,getdate,ConfiarmActifeUserWithData} from "./function.js";
+import {checkAccessToken ,getdate,ConfiarmActifeUserWithData,capitalizeFirstLetter} from "./function.js";
 import {getActiveUsre, addlike,updateLike,delateLike
     ,addFavorite,delateFavorite ,likeSummary,updateLikeSummary,delatelikeSummary,
     delateSummaryFavorite ,addSummaryFavorite
@@ -31,13 +31,16 @@ const viewCourseDatiles = (data) => {
     newDiv.className = " w-90 m-auto-top10";
     newDiv.innerHTML = `
         
-        <h1>Title: ${data.title.toUpperCase()}  </h1>
-        <p id="course-id" data-courseid="${data.id}">Course No : ${data.id} </p>
+        <h1>Title: ${capitalizeFirstLetter(data.title)}  </h1>
+
         <p> Description: ${data.description} </p>
-        <p>Add by  ${data.user.username.toUpperCase()} </p> 
-        <p> Created At: ${getdate(data.created_at)} </p>
+        <div class="Cardnavgation">
+        <p class="card-author">By <a href="/users" class="card-author">${capitalizeFirstLetter(data.user.username)}</a> </p> 
+        <p id="course-id" data-courseid="${data.id}">Course No : ${data.id} </p>
+        <p> Date: ${getdate(data.created_at)} </p>
         <p> Likes: ${likesCount} </p>
         <p> Unlikes: ${unlikesCount} </p>
+        </div>
 
    
     `;
@@ -56,10 +59,15 @@ const viewCourseDatiles = (data) => {
     data.reverse().forEach((iteam) => {
     newDiv.innerHTML += `
         <div id="${iteam.id}" class="summary-box">
-        <p>Add By ${iteam.user.username}  </p>
         <h3 class="card-title"> ${iteam.title} </h3> 
-        <p> ${iteam.description} </p>
-        <p>Created At: ${ getdate(iteam.created_at)} <pre> Last Update ${ getdate(iteam.updated_at)} <pre> </p> 
+        <div style="white-space: pre-wrap;"> ${iteam.description} </div>
+        <div class="Cardnavgation">
+        <p> Likes: ${iteam.likes.filter((item) => item.likes).length} </p>
+        <p> Unlikes: ${iteam.likes.filter((item) => !item.likes).length} </p>
+        <p>Created At: ${ getdate(iteam.created_at)}</p>
+         <p>  Last Update: ${ getdate(iteam.updated_at)} </p> 
+        <p class="card-author" >Add By: ${iteam.user.username.toUpperCase()}  </p>
+        </div>
         `;
     });
     return newDiv;
@@ -113,12 +121,14 @@ const viewOneSummary = (data) => {
     const newDiv = document.createElement("div");
     newDiv.className = "w-90";
     newDiv.innerHTML = `
-    <h2>Summary : ${data.title}</h2>
+    <h2>Summary : ${data.title.toUpperCase()}</h2>
     <hr>
     <div>
-   
-    <p> ${data.description} </p>
-    <p>Created At: ${getdate(data.created_at)} <pre>      Add By <a href="index">  ${data.user.username}</a>  </pre> </p>
+    <div style="white-space: pre-wrap;"> ${data.description} </div>
+    <div class="Cardnavgation">
+    <p>Date: ${getdate(data.created_at)}  </p>
+    <p> Add By <a href="index">  ${data.user.username.toUpperCase()}</a>  </p>
+    </div>
     </div>
     <hr>
     `;
@@ -127,13 +137,13 @@ const viewOneSummary = (data) => {
 
 // like , likeActive, unlike, unlikeActive, favorite, favoriteActive
 const favoriteLikeButtonGroup =  (data,userDatiles) => {
-    console.log(data);
     const newDiv = document.createElement("div");
     const userLike = data.likes.find((like) => like.user === userDatiles.id);
-    const userFavorite = data.favorites.find((favorite) => favorite.user === userDatiles.id);    
+    const userFavorite = data.favorites.find((favorite) => favorite.user.id == userDatiles.id);   
     // add favorite and like button
     newDiv.innerHTML =`<hr>`;   
     // confirm user is follow or not
+
     if (userFavorite) {
         if (userFavorite.followStatus) {
             newDiv.innerHTML +=`
@@ -149,6 +159,7 @@ const favoriteLikeButtonGroup =  (data,userDatiles) => {
         <button class="btn" id='favorite' type="button" title="Add To Favorite">${favorite}</button>
         `;
     }
+
     // confirm user is like or not
     if (userLike) {
         if (userLike.likes) {
@@ -214,7 +225,7 @@ const confiarmUserLike = (data,userDatiles ) => {
 }
 
 const confiarmUserFavorite = (data,userDatiles ) => {
-    const userFavorite = data.favorites.find((favorite) => favorite.user === userDatiles.id);
+    const userFavorite = data.favorites.find((favorite) => favorite.user.id === userDatiles.id);
     var followStatus=true;
     if (userFavorite) {
         var FavoriteData={user:userDatiles.id,followStatus:followStatus,course:userFavorite.course};
@@ -233,7 +244,7 @@ const confiarmUserFavorite = (data,userDatiles ) => {
 
 
 const confiarmUserUnLike = (data,userDatiles ) => {
-    const userLike = data.likes.find((like) => like.user === userDatiles.id);
+    const userLike = data.likes.find((like) => like.user.id === userDatiles.id);
     var like=false;
     if (userLike) {
         var LikesData={user:userDatiles.id,likes:like,course:userLike.course};
@@ -290,7 +301,8 @@ const addSummaryunLikes = (data,userDatiles ) => {
 }
 
 const addSummaryFavorites = (data,userDatiles ) => {
-    const userFavorite = data.favorites.find((favorite) => favorite.user === userDatiles.id);
+    console.log("dddd",data);
+    const userFavorite = data.favorites.find((favorite) => favorite.user.id === userDatiles.id);
     var followStatus=true;
     if (userFavorite) {
         var FavoriteData={user:userDatiles.id,followStatus:followStatus,summary:userFavorite.summary};

@@ -74,7 +74,11 @@ const displayUserProfile = (data) => {
 //  Add New Course+
 CourseForm.addEventListener("submit", function (event) {
   // block out Send form
+
   event.preventDefault();
+  for (let instance in CKEDITOR.instances) {
+    CKEDITOR.instances[instance].updateElement();
+}
   // get form detiels
   let formData = new FormData(this);
   try {
@@ -191,7 +195,6 @@ const getSummariesAndFetch = async (SummaryId) => {
     throw error;
   }
 }
-
 
 
 

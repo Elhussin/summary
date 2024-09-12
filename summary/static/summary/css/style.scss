@@ -12,8 +12,18 @@ $w-90: 90%;
 .w-90{
   width: $w-90;
 }
+.bg-primary-color{
+  background-color: $primary-color;
+  color: $font-color;
+  font-size: small;
+  font-style: italic;
+}
 .m-auto-top10{
   margin: auto 10px;
+}
+
+.viewText{
+  white-space: pre-wrap;
 }
 .btn-bg{
   background-color: $forth-color;
@@ -112,6 +122,21 @@ body.dark-mode {
   color:$font-color;
 }
 
+.Cardnavgation{
+  @extend %flex-containers;
+  background-color: $primary-color;
+  padding: 10px;
+  border: 1px;
+  border-radius: 10px;
+  color: $color;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: small;
+  font-style: italic;
+  text-align: center;
+  
+}
 .header {
   @extend %flex-containers;
   transition: $transition;
@@ -330,7 +355,7 @@ header.dark-mode {
   margin: 10px auto;
 
   img {
-    width: 400px;
+    width: 100%;
     height: 300px;
   }
 }
@@ -383,7 +408,7 @@ align-items: center;
   border-radius: 10px;
   padding: 10px;
   margin: 10px;
-  background-color: $therd-color;
+  background-color: $forth-color;
   cursor: pointer;
   // display: flex;
   justify-content: space-between;
@@ -391,7 +416,7 @@ align-items: center;
   color: $color;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 900px) {
   .certfi-grid{
  grid-template-columns: auto;
   }
@@ -428,6 +453,9 @@ align-items: center;
     ul{
       display: block;
     }
+  }
+  .Cardnavgation{
+    flex-direction: column;
   }
 
   

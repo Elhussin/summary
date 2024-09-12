@@ -64,12 +64,10 @@ const viewCommants = (data) => {
     data.reverse().forEach((iteam) => {
         newDiv.innerHTML += `
         <div class="cmment-box">
-        <p id="${iteam.user}">Add By :  ${iteam.user.username}</p>
-              <hr>
-        <p> ${iteam.comment} </p> 
-              <hr>
-        <div>
-        <p>Created At: ${getdate(iteam.created_at)} </p>
+          <p> ${iteam.comment} </p> 
+          <div class="Cardnavgation">
+        <p id="${iteam.user}">By :  ${iteam.user.username}</p>
+        <p>Date: ${getdate(iteam.created_at)} </p>
         </div>
         </div>
         `;  
@@ -188,10 +186,12 @@ const ConfiarmActifeUserWithData = async (user, data) => {
   }
 }
 
-
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+}
 
 export {
     alertMessage, displayIteam, viewUploudImage, createCommaneElmeant, viewCommants,updatpageurl ,
     setTheme ,applyTranslations ,initializeLanguageSwitcher,toggleNavItems,
-    toggleVisibility,checkAccessToken,getdate, ConfiarmActifeUserWithData ,checkUserLogin
+    toggleVisibility,checkAccessToken,getdate, ConfiarmActifeUserWithData ,checkUserLogin,capitalizeFirstLetter
 };
