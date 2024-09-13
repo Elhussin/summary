@@ -22,7 +22,8 @@ import {
   updatpageurl,
   checkUserLogin,
   getdate,
-  capitalizeFirstLetter,getRate
+  capitalizeFirstLetter,getRate,getrateValue,createRateeButton
+  
 } from "./function.js";
 import {
   AddCourseDataToHTml,
@@ -189,7 +190,7 @@ const displayItemDetails = async (data) => {
   // view all summary for the course
   viewContinear.appendChild(viewSummary(data.summary));
 
-  // update course
+
   if (document.getElementById("course_form")) {
     document
       .getElementById("course_form")
@@ -209,6 +210,8 @@ const displayItemDetails = async (data) => {
 
   // add commant box - createCommaneElmeant will return the course comments in html elements
   if (token) {
+    viewDatilesBox.appendChild(createRateeButton());
+    getrateValue()
     viewDatilesBox.appendChild(createCommaneElmeant());
   }
 
@@ -236,7 +239,7 @@ const displayItemDetails = async (data) => {
       e.preventDefault();
       confiarmUserFavorite(data, userDatiles);
     });
-
+  
     // add event listener to add comment
     document
       .getElementById("comment-form")

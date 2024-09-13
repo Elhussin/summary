@@ -361,7 +361,7 @@ header.dark-mode {
 
 .rating {
   display: flex;
-  direction: row-reverse;
+  direction: row;
   justify-content: center;
 }
 

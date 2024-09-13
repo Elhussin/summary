@@ -112,9 +112,9 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
  # تأكد من إعداد المسار الصحيح لمجلد static
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')] 
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'summary/static')] 
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'summary/media')
@@ -141,10 +141,13 @@ REST_FRAMEWORK = {
         'rest_framework.throttling.UserRateThrottle',
         'rest_framework.throttling.AnonRateThrottle',
     ],
-    'DEFAULT_THROTTLE_RATES': {
-        'user': '1000/day',
-        'anon': '100/day',
-    },
+       # to disable throttling
+    'DEFAULT_THROTTLE_CLASSES': [], 
+        #  to set the throttle rate
+    # 'DEFAULT_THROTTLE_RATES': {
+    #     'user': '10000/day',
+    #     'anon': '1000/day',
+    # },
 }
 
 

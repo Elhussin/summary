@@ -229,7 +229,7 @@ const favoriteCourses = async () => {
 const getRate=(data)=> {
   const rate= data.rate.reduce((acc, item) => acc + item.rate, 0) / data.rate.length
   if(isNaN(rate)){
-      return 0;
+      return 'No Rate';
   }
   return rate;
 }
@@ -250,20 +250,34 @@ const createRateButton=(data)=>{
 
 const createRateeButton=()=>{
   const newDiv = document.createElement("div");
-  newDiv.className = "Cardnavgation";
+  newDiv.className = "w-90 m-auto-top10 Cardnavgation";
   newDiv.innerHTML = `
   <div class="rating ">
-  <input type="radio" name="star" id="star1"><label for="star1"></label>
-  <input type="radio" name="star" id="star2"><label for="star2"></label>
-  <input type="radio" name="star" id="star3"><label for="star3"></label>
-  <input type="radio" name="star" id="star4"><label for="star4"></label>
-  <input type="radio" name="star" id="star5"><label for="star5"></label>
+  <input type="radio" name="star" id="star1" value="1"><label for="star1"></label>
+  <input type="radio" name="star" id="star2" value="2"><label for="star2"></label>
+  <input type="radio" name="star" id="star3" value="3"><label for="star3"></label>
+  <input type="radio" name="star" id="star4" value="4"><label for="star4"></label>
+  <input type="radio" name="star" id="star5" value="5"><label for="star5"></label>
 </div>`;
   return newDiv;
 }
+
+const getrateValue=()=>{
+
+  document.querySelectorAll('input[name="star"]').forEach((radio) => {
+    // Add event listener to each radio button
+    radio.addEventListener('change', function() {
+      // Get the value of the selected radio button
+      const selectedRating = this.value;
+      console.log(`Selected rating: ${selectedRating}`);
+    });
+  });
+}
+
+
 export {
     alertMessage, displayIteam, viewUploudImage, createCommaneElmeant, viewCommants,updatpageurl ,
     setTheme ,applyTranslations ,initializeLanguageSwitcher,toggleNavItems,
     toggleVisibility,checkAccessToken,getdate, ConfiarmActifeUserWithData ,checkUserLogin,capitalizeFirstLetter,searchFunctian,favoriteCourses,getRate
-    ,createRateeButton
+    ,createRateeButton,getrateValue
 };

@@ -48,7 +48,7 @@ const viewCourseDatiles = (data) => {
 
         </div>
     `;
-    newDiv.appendChild(createRateeButton());
+    // newDiv.appendChild(createRateeButton());
     return newDiv
   };
 
