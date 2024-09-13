@@ -14,6 +14,7 @@ import {
   checkUserLogin,
   displayIteam,
   updatpageurl,
+  favoriteCourses,
 } from "./function.js";
 import {
   viewCourses,
@@ -242,3 +243,6 @@ document
   .getElementById("favorite-summaries")
   .addEventListener("click", favoriteSummaries);
 
+document
+  .getElementById("favourites-courses")
+  .addEventListener("click",   favoriteCourses);

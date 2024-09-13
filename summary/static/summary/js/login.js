@@ -86,7 +86,6 @@ function checkLoginStatus() {
       // Save user data to local storage
       localStorage.setItem("user", JSON.stringify(userData));
       if(localStorage.getItem("user")){
-      console.log("User Profile dddd",localStorage.getItem("user"));
       }
       document.getElementById("username").innerText = userData.username;
 

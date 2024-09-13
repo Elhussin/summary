@@ -1,7 +1,7 @@
 import {like , likeActive, unlike, unlikeActive,
      favorite, favoriteActive}  from "./svg_icons.js";
 
-import {checkAccessToken ,getdate,ConfiarmActifeUserWithData,capitalizeFirstLetter} from "./function.js";
+import {checkAccessToken ,getdate,ConfiarmActifeUserWithData,capitalizeFirstLetter,getRate,createRateeButton} from "./function.js";
 import {getActiveUsre, addlike,updateLike,delateLike
     ,addFavorite,delateFavorite ,likeSummary,updateLikeSummary,delatelikeSummary,
     delateSummaryFavorite ,addSummaryFavorite
@@ -43,11 +43,12 @@ const viewCourseDatiles = (data) => {
         <p id="course-id" data-courseid="${data.id}">Course No : ${data.id} </p>
         <p> Date: ${getdate(data.created_at)} </p>
         <p> Last Update: ${getdate(data.updated_at)} </p>
+        <p> Rate: ${getRate(data)} </p>
+    
 
         </div>
-
-   
     `;
+    newDiv.appendChild(createRateeButton());
     return newDiv
   };
 

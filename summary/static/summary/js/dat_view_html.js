@@ -22,7 +22,7 @@ import {
   updatpageurl,
   checkUserLogin,
   getdate,
-  capitalizeFirstLetter,
+  capitalizeFirstLetter,getRate
 } from "./function.js";
 import {
   AddCourseDataToHTml,
@@ -47,6 +47,9 @@ const viewContinear = document.getElementById("cours-container");
 const viewDatilesBox = document.getElementById("cours-detieals");
 
 const viewCourses = (data) => {
+  console.log("view", data);
+
+
   viewDatilesBox.innerHTML = "";
   viewContinear.innerHTML = "";
   // view all courses
@@ -66,6 +69,7 @@ const viewCourses = (data) => {
                   <p class="card-author" id="${item.user.id
         }">By: ${capitalizeFirstLetter(item.user.username)}</p>
                   <p class="card-date">Date: ${getdate(item.created_at)}</p>
+                  <p>Rate: ${getRate(item)} </p>
                 </div>
             </div>
           `
@@ -95,10 +99,6 @@ const cardViewEventListeners = (data) => {
 
       // get elemant title
       const itemTitle = card.querySelector(".card-title").textContent;
-
-      // find course by id
-      const course = data.find((item) => item.id == itemId);
-
       //  re set url & page Title
       // updatpageurl function from function.js
       // updatpageurl will re set url

@@ -1,11 +1,12 @@
-from django.urls import path, include
+from django.urls import path, include,re_path
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from django.views.generic import TemplateView
 from .views import (
     index, login_view, logout_view, register, usersProfile,
     CourseViewSet, SummaryViewSet, LikeViewSet, ComentsViewSet,
     FovariteViewSet, SummaryLikeViewSet, SummaryComentsViewSet,
-    SummaryFovariteViewSet,user_profile_view,favorite,UsersDatilesView
+    SummaryFovariteViewSet,user_profile_view,favorite
 )
 
 
@@ -31,5 +32,6 @@ urlpatterns = [
     path("register/", register, name="register"),
     path("profile/", usersProfile, name="profile"),
     path('favorites/', favorite, name='favorite'),
-    path('users/', UsersDatilesView, name='users'),
+    re_path(r'^.*$', TemplateView.as_view(template_name='summary/index.html')),
+    
 ]

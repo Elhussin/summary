@@ -109,6 +109,8 @@ class SummaryComents(models.Model):
         return f"Comment by {self.user} on {self.summary}"
 
 
+
+
 class SummaryLike(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="summary_likes")
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="summary_likes")
@@ -129,3 +131,13 @@ class SummaryFovarite(models.Model):
 
     def __str__(self):
         return f"Favorite by {self.user} on {self.summary}"
+
+
+class RateCourse(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="rate_course")
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="rate_course")
+    rate = models.IntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Rate by {self.user} on {self.course}"

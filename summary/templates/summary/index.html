@@ -14,6 +14,7 @@
 
 <article>
     <div id="cours-container" class="cards-container"></div>
+ 
 </article>
 
 <article  id="coress-add" class="dislay-off" >
@@ -21,14 +22,24 @@
 </article>
 
 
+{% endblock %}
+
+
+
+{% block rightside %}
+
+<div class="buttonContinear" id="buttonContinear">
+    <div id="Find" > <h2>Finde Courses</h2></div>
+<button id="top-rate" class="btn btn-bg btn-lg btn-block ">Top Rates</button>
+<button id="Last-add" class="btn btn-bg btn-lg btn-block ">Last Courses</button>
+<button id="top-like" class="btn btn-bg btn-lg btn-block ">Top Liked</button>
+<button id="top-fav" class="btn btn-bg btn-lg btn-block ">Top Add To Fovarites</button>
+</div>
+
 <script  type="module" src="{% static 'summary/js/index.js' %}"></script>
 {% endblock %}
 
 
                 
-
-
-
-
 
 

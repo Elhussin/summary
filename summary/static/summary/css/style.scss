@@ -21,7 +21,11 @@ $w-90: 90%;
 .m-auto-top10{
   margin: auto 10px;
 }
-
+.buttonContinear{
+  max-width: 350px;
+  margin: auto;
+  padding: 10px;
+}
 .viewText{
   white-space: pre-wrap;
 }
@@ -418,6 +422,42 @@ align-items: center;
   color: $color;
 }
 
+// class for the rating
+
+.rating {
+  display: flex;
+  direction: row-reverse;
+  justify-content: center;
+}
+
+.rating input {
+  display: none;
+}
+
+.rating label {
+  font-size: 2rem;
+  color: $color;
+  cursor: pointer;
+  padding: 0 5px;
+}
+
+.rating label:before {
+  content: '★';
+}
+
+.rating input:checked ~ label {
+  color: #ffc107;
+}
+
+.rating label:hover,
+.rating label:hover ~ label,
+.rating input:checked ~ label:hover,
+.rating input:checked ~ label:hover ~ label {
+  color: #ffc107;
+}
+
+
+
 @media (max-width: 900px) {
   .certfi-grid{
  grid-template-columns: auto;
@@ -459,6 +499,11 @@ align-items: center;
   .Cardnavgation{
     flex-direction: column;
   }
+  .buttonContinear{
+    max-width: 100%;
+
+  }
+
 
   
 }

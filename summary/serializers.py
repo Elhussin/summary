@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import (
     User, Course, Summary, Coments, Like, Fovarite,
-    SummaryComents,SummaryLike,SummaryFovarite
+    SummaryComents,SummaryLike,SummaryFovarite,RateCourse
 )
 
 
@@ -49,6 +49,14 @@ class SummaryFovariteSerializer(serializers.ModelSerializer):
         model = SummaryFovarite
         fields = ['id', 'user','summary', 'course', 'followStatus', 'timestamp']
 
+class RateCourseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RateCourse
+        fields = ['id', 'user', 'course', 'rate', 'created_at']
+    
+
+    
+
 class SummarySerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     comments = serializers.SerializerMethodField() # list of comments on the course
@@ -59,7 +67,7 @@ class SummarySerializer(serializers.ModelSerializer):
         model = Summary
         fields = [
            'id', 'title', 'description', 'created_at', 'updated_at',
-            'user', 'course', 'comments', 'likes', 'favorites'
+            'user', 'course', 'comments', 'likes', 'favorites',
         ]
 
     def get_comments(self, obj):
@@ -82,10 +90,10 @@ class CourseSerializer(serializers.ModelSerializer):
     likes = serializers.SerializerMethodField()     # قائمة بالإعجابات على الكورس
     favorites = serializers.SerializerMethodField() # قائمة بالمفضلات على الكورس
     summary = serializers.SerializerMethodField()   # قائمة بالملخصات المرتبطة بالكورس
-
+    rate = serializers.SerializerMethodField()      # قائمة بتقييمات الكورس
     class Meta:
         model = Course
-        fields = ['id', 'title', 'description', 'created_at', 'image', 'updated_at', 'user', 'comments', 'likes', 'favorites', 'summary']
+        fields = ['id', 'title', 'description', 'created_at', 'image', 'updated_at', 'user', 'comments', 'likes', 'favorites', 'summary', 'rate']
 
     def get_comments(self, obj):
         comments = Coments.objects.filter(course=obj).select_related('user')
@@ -102,3 +110,7 @@ class CourseSerializer(serializers.ModelSerializer):
     def get_summary(self, obj):
         summary = Summary.objects.filter(course=obj).select_related('user')
         return SummarySerializer(summary, many=True).data
+    
+    def get_rate(self, obj):
+        rate = RateCourse.objects.filter(course=obj).select_related('user')
+        return RateCourseSerializer(rate, many=True).data

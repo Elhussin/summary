@@ -1,4 +1,4 @@
-import { alertMessage, setTheme ,initializeLanguageSwitcher,toggleNavItems } from "./function.js";
+import { alertMessage, setTheme ,initializeLanguageSwitcher,toggleNavItems,searchFunctian } from "./function.js";
 
 // تحميل الصفحة والتحقق من الإعدادات الحالية
 document.addEventListener("DOMContentLoaded", () => {
@@ -31,13 +31,20 @@ function setupNavButton() {
     document.getElementById("nav-view").onclick = toggleNavItems;
   }
   
-   
+  
+  
 
-  const getUsers = async(e)=>{
-    e.preventDefault();
-    const id = e.target.id;
-    console.log("id", id);
-  }
+// Add event listener to get search form data
+document.getElementById("searchForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const searchQuery = formData.get("search");
+  searchFunctian(searchQuery)
+});
+
+document.getElementById("search").addEventListener("input", async (event) => {
+  const searchQuery = event.target.value;
+  searchFunctian(searchQuery)
   
-  
-  
+});
+// 

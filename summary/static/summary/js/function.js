@@ -1,4 +1,6 @@
-import { getActiveUsre } from "./api.js";
+import { getCourses } from "./api.js";
+import { viewCourses } from "./dat_view_html.js";
+
 import { translations } from "./translations.js";
 const alertMessage = (message) => {
     const messageAlrt = document.getElementById("message-alrt");
@@ -190,8 +192,78 @@ function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 }
 
+
+
+const searchFunctian=async(searchQuery)=>{
+  
+  var AllCourses=await getCourses()
+  const findCourses = AllCourses.filter((course) => {
+    return course.title.includes(searchQuery);
+  });
+  viewCourses(findCourses);
+  if (findCourses.length === 0) {
+    alertMessage("No courses found", "danger");
+  }
+  if (searchQuery === "") {
+    alertMessage("Please enter a search query", "danger");
+  }
+
+}
+const favoriteCourses = async () => {
+  const user = checkUserLogin();
+
+  if (user) {
+    try {
+      const courses = await getCourses();
+ 
+      var  favorites = courses.filter(course => 
+        course.favorites.some(favorite => favorite.user.id === user.id && favorite.followStatus === true));
+        viewCourses(favorites);
+        document.getElementById("cours-detieals").innerHTML = `<h2  class="m-5" >Your Favorite Courses</h2>`;
+    } catch (error) {
+      console.error('Error fetching courses:', error.response ? error.response.data : error.message);
+    }
+  }
+};
+
+const getRate=(data)=> {
+  const rate= data.rate.reduce((acc, item) => acc + item.rate, 0) / data.rate.length
+  if(isNaN(rate)){
+      return 0;
+  }
+  return rate;
+}
+
+const createRateButton=(data)=>{
+  const user = checkUserLogin();
+  if (user) {
+    const rate = data.rate.find((rate) => rate.user.id === user.id);
+    if (rate) {
+      return `<button id="rate" class="btn-bg float-right m-3" disabled>Rate</button>`;
+    } else {
+      return `<button id="rate" class="btn-bg float-right m-3">Rate</button>`;
+    }
+  } else {
+    return `<button id="rate" class="btn-bg float-right m-3" disabled>Rate</button>`;
+  }
+}
+
+const createRateeButton=()=>{
+  const newDiv = document.createElement("div");
+  newDiv.className = "Cardnavgation";
+  newDiv.innerHTML = `
+  <div class="rating ">
+  <input type="radio" name="star" id="star1"><label for="star1"></label>
+  <input type="radio" name="star" id="star2"><label for="star2"></label>
+  <input type="radio" name="star" id="star3"><label for="star3"></label>
+  <input type="radio" name="star" id="star4"><label for="star4"></label>
+  <input type="radio" name="star" id="star5"><label for="star5"></label>
+</div>`;
+  return newDiv;
+}
 export {
     alertMessage, displayIteam, viewUploudImage, createCommaneElmeant, viewCommants,updatpageurl ,
     setTheme ,applyTranslations ,initializeLanguageSwitcher,toggleNavItems,
-    toggleVisibility,checkAccessToken,getdate, ConfiarmActifeUserWithData ,checkUserLogin,capitalizeFirstLetter
+    toggleVisibility,checkAccessToken,getdate, ConfiarmActifeUserWithData ,checkUserLogin,capitalizeFirstLetter,searchFunctian,favoriteCourses,getRate
+    ,createRateeButton
 };
