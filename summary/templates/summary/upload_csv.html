@@ -1,0 +1,55 @@
+
+{% extends "summary/layout.html" %}
+{% load static %}
+
+
+
+{% block title %}Add Multi Course {% endblock %}
+
+{% block left-side %}
+
+{% endblock %}
+
+{% block body %}
+
+<h1>Upload CSV File</h1>
+
+{% if messages %}
+    <ul class="message-list">
+        {% for message in messages %}
+            <li class="message {{ message.tags }}">
+                {{ message|safe }} 
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Upload</button>
+</form>
+
+<p>
+    You Can Download CSV Template For Course:
+    <a href="{% static 'summary/csv/course_template.csv' %}" download>Download CSV Template</a>
+</p>
+
+<p></p>
+    You Can Download CSV Template For Summary:
+    <a href="{% static 'summary/csv/summary_template.csv' %}" download>Download CSV Template</a>
+</p>
+
+{% endblock %}
+
+
+</script>
+
+
+{% block rightside %}
+{% endblock %}
+
+
+                
+
+

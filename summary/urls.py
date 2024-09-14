@@ -8,7 +8,7 @@ from .views import (
     index, login_view, logout_view, register, usersProfile,
     CourseViewSet, SummaryViewSet, LikeViewSet, ComentsViewSet,
     FovariteViewSet, SummaryLikeViewSet, SummaryComentsViewSet,
-    SummaryFovariteViewSet,user_profile_view,favorite,RateViewSet
+    SummaryFovariteViewSet,user_profile_view,favorite,RateViewSet,upload_csv,summary_upload
 )
 
 # register the viewsets with the router
@@ -35,6 +35,8 @@ urlpatterns = [
     path("register/", register, name="register"),
     path("profile/", usersProfile, name="profile"), 
     path('favorites/', favorite, name='favorite'),
+    path('upload-csv/',upload_csv, name='upload_csv'),
+    path('summary-upload/',summary_upload, name='summary_upload'),
     *static(settings.STATIC_URL, document_root=settings.STATIC_ROOT), # To Allow  static files  Urls
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT), # To Allow media files urls
     re_path(r'^.*$', TemplateView.as_view(template_name='summary/index.html')),   # To Render the Unkown Urls to the index.html

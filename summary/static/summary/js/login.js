@@ -92,8 +92,12 @@ function checkLoginStatus() {
       // Display the Admin profile data
       if (userData.is_superuser) {
         document.getElementById("admin-item").style.display = "block";
+        document.getElementById("uploud-course").style.display = "block";
+        document.getElementById("summary-upload").style.display = "block";
       }
       document.getElementById("favourites-item").style.display = "block";
+      
+      
     } catch (error) {
       console.error("Failed to fetch user profile:", error);
       alertMessage("Failed to fetch user profile. Please log in again.");

@@ -31,8 +31,8 @@ const viewContinear = document.getElementById("cours-container");
 
 // to view course details
 const viewDatilesBox = document.getElementById("cours-detieals");
-// Load the user profile data when the page is loaded
-// confirm that the user is logged in using JWT
+
+
 document.addEventListener("DOMContentLoaded", () => {
   checkUserLoggedIn();
 });
@@ -71,6 +71,10 @@ const displayUserProfile = (data) => {
   document.getElementById("user-profile").style.display = "block";
   document.getElementById("user-username").innerText = data.username;
   document.getElementById("user-email").innerText = data.email;
+  document.getElementById("user-role").innerText = data.is_staff ? "Staff" : "User";
+  document.getElementById("user-id").innerText = data.id
+  document.getElementById("user-joined").innerText = new Date(data.date_joined).toDateString();
+
 
   // view user courses if the user is a staff or superuser
   if (data.is_staff || data.is_superuser) {
@@ -78,7 +82,7 @@ const displayUserProfile = (data) => {
     coressAddBox.style.display = "block";
     viewBox.style.display = "block";
   } else {
-    courseViewBox.style.display = "none";
+    courseViewBox.style.display = "none";  
     coressAddBox.style.display = "none";
     viewBox.style.display = "none";
   }

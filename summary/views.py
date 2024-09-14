@@ -6,9 +6,14 @@ from django.db import IntegrityError
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated, BasePermission
-from summary.forms import UserRegistraForm
+from summary.forms import UserRegistraForm, CSVUploadForm
+import csv
+
+
+
 from .models import (
     Summary,
     Course,
@@ -253,8 +258,8 @@ def register(request):
             user = form.save(commit=False)
             user.set_password(form.cleaned_data["password"])
             user.save()
-            messages.success(request, "Account created successfully")
-            return render(request, "summary/profile.html")
+            messages.success(request, f"Account created successfully ! <a href='/login'>Login</a>")
+            return render(request, "summary/auth/register.html", {"form": form})
 
             # return redirect("login")
     else:
@@ -284,3 +289,122 @@ def pageNotFound(request, exception):
     """
 
     return redirect("index")
+
+
+
+def upload_csv(request):
+    if request.method == "POST":
+        form = CSVUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            csv_file = request.FILES['file']
+            
+            # التحقق من نوع الملف
+            if not csv_file.name.endswith('.csv'):
+                messages.error(request, 'File Type Should be  CSV.')
+                return redirect('upload_csv')
+            
+            try:
+                # قراءة الملف
+                decoded_file = csv_file.read().decode('utf-8').splitlines()
+                reader = csv.DictReader(decoded_file)
+
+                # التحقق من صحة البيانات
+                for row in reader:
+                    title = row.get('title')
+                    description = row.get('description', '')
+                    image= row.get('image', '')
+                    user_id = row.get('user_id', '')
+                    
+                    if not user_id:
+                        messages.error(request, f"User id is not find in Row: {row}")
+                        continue
+                    if not title:
+                        # messages.error(request, f"Title is : {row}")
+                        messages.error(request,f"Title is not find in Row: {row}")
+                        continue
+                    if not description:
+                        messages.error(request, f"Description is is not find in Row:  {row}")
+                        continue
+                    
+
+                    Course.objects.create(
+                            title=title,
+                            description=description,
+                            image=image,
+                            user_id = user_id
+                        )
+                    messages.success(request, 'All Courses uploaded successfully.')
+
+                return render(request, 'summary/upload_csv.html', {'form': form})
+
+            except Exception as e:
+                messages.error(request, f'Error processing file: {e}')
+                return redirect('upload_csv')
+
+    else:
+        form = CSVUploadForm()
+    messages.warning(request, 'Confirm the data in the CSV file before uploading it.')
+    return render(request, 'summary/upload_csv.html', {'form': form})
+
+
+# @authentication_classes([JWTAuthentication])
+# @permission_classes([IsAuthenticated])
+def summary_upload(request):
+    if request.method == "POST":
+        form = CSVUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            csv_file = request.FILES['file']
+            
+            # التحقق من نوع الملف
+            if not csv_file.name.endswith('.csv'):
+                messages.error(request, 'File Type Should be  CSV.')
+                return redirect('upload_csv')
+            
+            try:
+                # قراءة الملف
+                decoded_file = csv_file.read().decode('utf-8').splitlines()
+                reader = csv.DictReader(decoded_file)
+
+                # التحقق من صحة البيانات
+                for row in reader:
+                    title = row.get('title')
+                    description = row.get('description', '')
+                    image= row.get('image', '')
+                    user_id = row.get('user_id', '')
+                    course_id = row.get('course_id', '')
+                    
+                    if not user_id:
+                        messages.error(request, f"User id is not find in Row: {row}")
+                        continue
+                    if not course_id:
+                        messages.error(request, f"Course id is not find in Row: {row}")
+                        continue
+                    
+                    if not title:
+                        # messages.error(request, f"Title is : {row}")
+                        messages.error(request,f"Title is not find in Row: {row}")
+                        continue
+                    if not description:
+                        messages.error(request, f"Description is is not find in Row:  {row}")
+                        continue
+                    
+
+                    Course.objects.create(
+                            title=title,
+                            description=description,
+                            image=image,
+                            user_id = user_id,
+                            course_id=course_id,
+                        )
+                    messages.success(request, 'All Summaries uploaded successfully.')
+
+                return render(request, 'summary/upload_csv.html', {'form': form})
+
+            except Exception as e:
+                messages.error(request, f'Error processing file: {e}')
+                return redirect('upload_csv')
+
+    else:
+        form = CSVUploadForm()
+    messages.warning(request, 'Confirm the data in the CSV file before uploading it.')
+    return render(request, 'summary/upload_csv.html', {'form': form})

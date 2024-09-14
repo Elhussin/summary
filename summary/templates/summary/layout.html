@@ -60,7 +60,15 @@
             <li class="" id="favourites-item" style="display: none;">
                 <a class="nav-link btn" id="favourites" href="{% url 'favorite' %}" title="View Favourites">Favourites</a>
             </li>
+            <li class="" id="uploud-course" style="display: none;">
+                <a class="nav-link btn" id="uploud-course" href="{% url 'upload_csv' %}" title="Uploud Course">Upload Course</a>
+            </li>
+            <li class="" id="summary-upload" style="display: none;">
+                <a class="nav-link btn" id="summary-upload" href="{% url 'summary_upload' %}" title="Uploud Summary">Upload Summary</a>
+            </li>
         </ul>
+        
+
 
         <form class="form-inline my-2 my-lg-0" id="searchForm">
             <input class="form-control mr-sm-2" type="search" id="search" name="search" placeholder="Search" aria-label="Search">
@@ -89,9 +97,7 @@
             {% endblock left-side %}
         </aside>
         <section>
-            {% if message %}
-                <div>{{ message }}</div>
-            {% endif %}
+
             <div class="message-alrt dislay-off" id="message-alrt"></div>
             {% block body %}
             {% endblock %}

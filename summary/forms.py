@@ -1,7 +1,7 @@
 
 from summary.models import User
-from django.forms import ModelForm, TextInput, EmailInput, PasswordInput
-
+from django.forms import ModelForm, TextInput, EmailInput, PasswordInput 
+from django import forms
 
 class UserRegistraForm(ModelForm):
     """Class for the User Registration Form"""
@@ -38,3 +38,6 @@ class UserRegistraForm(ModelForm):
                 'placeholder': 'Password'
             }),
         }
+
+class CSVUploadForm(forms.Form):
+    file = forms.FileField(label="Upload CSV File")
