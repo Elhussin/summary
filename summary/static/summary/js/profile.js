@@ -29,6 +29,8 @@ const coressAddBox = document.getElementById("course-add-box");
 const courseViewBox = document.getElementById("course-view-box");
 const viewContinear = document.getElementById("cours-container");
 
+// to view course details
+const viewDatilesBox = document.getElementById("cours-detieals");
 // Load the user profile data when the page is loaded
 // confirm that the user is logged in using JWT
 document.addEventListener("DOMContentLoaded", () => {
@@ -169,9 +171,11 @@ const getUnlikedsummary = async () => {
     viewContinear.innerHTML = "";
     viewContinear.appendChild(viewSummary(unlikedSummary));
     document.querySelectorAll(".summary-box").forEach((card) => {
-      card.addEventListener("click", async (event) => {
-        getSummariesAndFetch(card.id);
-      });
+      // card.addEventListener("click", async (event) => {
+      //   // getSummariesAndFetch(card.id);
+        
+      // });
+      summaryViewEventListeners();
     });
   } catch (error) {
     console.error("Error fetching courses:", error);
@@ -188,21 +192,22 @@ const getikedsummary = async () => {
     );
     viewContinear.innerHTML = "";
     viewContinear.appendChild(viewSummary(unlikedSummary));
+    summaryViewEventListeners();
   } catch (error) {
     console.error("Error fetching courses:", error);
     throw error;
   }
 };
 
-const getSummariesAndFetch = async (SummaryId) => {
-  try {
-    const response = await getOneSummary(SummaryId);
-    fetchOneSummary(response);
-  } catch (error) {
-    console.error("Error fetching courses:", error);
-    throw error;
-  }
-};
+// const getSummariesAndFetch = async (SummaryId) => {
+//   try {
+//     const response = await getOneSummary(SummaryId);
+//     fetchOneSummary(response);
+//   } catch (error) {
+//     console.error("Error fetching courses:", error);
+//     throw error;
+//   }
+// };
 
 const favoriteSummaries = async () => {
   const user = checkUserLogin();
@@ -214,9 +219,7 @@ const favoriteSummaries = async () => {
         summary.favorites.some(favorite => favorite.user.id === user.id && favorite.followStatus === true));
         viewContinear.innerHTML = "";
         viewContinear.appendChild(viewSummary(userFavoritesSummaries));
-
-
-
+        summaryViewEventListeners();
     } catch (error) {
       console.error('Error fetching courses:', error.response ? error.response.data : error.message);
     }

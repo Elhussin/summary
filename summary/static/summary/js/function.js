@@ -1,4 +1,4 @@
-import { getCourses } from "./api.js";
+import { getCourses,addRate } from "./api.js";
 import { viewCourses } from "./dat_view_html.js";
 
 import { translations } from "./translations.js";
@@ -227,49 +227,56 @@ const favoriteCourses = async () => {
 };
 
 const getRate=(data)=> {
-  const rate= data.rate.reduce((acc, item) => acc + item.rate, 0) / data.rate.length
+  let rate= data.rate.reduce((acc, item) => acc + item.rate, 0) / data.rate.length
+  rate=rate.toFixed(1);
   if(isNaN(rate)){
       return 'No Rate';
   }
   return rate;
 }
 
-const createRateButton=(data)=>{
-  const user = checkUserLogin();
-  if (user) {
-    const rate = data.rate.find((rate) => rate.user.id === user.id);
-    if (rate) {
-      return `<button id="rate" class="btn-bg float-right m-3" disabled>Rate</button>`;
-    } else {
-      return `<button id="rate" class="btn-bg float-right m-3">Rate</button>`;
-    }
-  } else {
-    return `<button id="rate" class="btn-bg float-right m-3" disabled>Rate</button>`;
-  }
-}
 
-const createRateeButton=()=>{
+const createRateeButton=(data)=>{
+  getRate(data);
+  const CountRate =data.rate.length;
   const newDiv = document.createElement("div");
-  newDiv.className = "w-90 m-auto-top10 Cardnavgation";
+  newDiv.className = "w-90 m-auto-top10 ";
   newDiv.innerHTML = `
-  <div class="rating ">
-  <input type="radio" name="star" id="star1" value="1"><label for="star1"></label>
-  <input type="radio" name="star" id="star2" value="2"><label for="star2"></label>
+  <div class="rating">
+  <div>
+  <input type="radio" name="star" id="star1" value="5"><label for="star1"></label>
+  <input type="radio" name="star" id="star2" value="4"><label for="star2"></label>
   <input type="radio" name="star" id="star3" value="3"><label for="star3"></label>
-  <input type="radio" name="star" id="star4" value="4"><label for="star4"></label>
-  <input type="radio" name="star" id="star5" value="5"><label for="star5"></label>
-</div>`;
+  <input type="radio" name="star" id="star4" value="2"><label for="star4"></label>
+  <input type="radio" name="star" id="star5" value="1"><label for="star5"></label>
+  </div>
+  <div><p>Rate: ${getRate(data)} <p>Votes:${CountRate} </p></p></div>
+
+
+
+`;
   return newDiv;
 }
 
-const getrateValue=()=>{
 
+
+
+
+const getrateValue=()=>{
+  var course_id = document.getElementById("course-id").dataset.courseid;
+  const getActiveUsre = checkUserLogin().id;
   document.querySelectorAll('input[name="star"]').forEach((radio) => {
     // Add event listener to each radio button
-    radio.addEventListener('change', function() {
+    radio.addEventListener('change', function(e) {
+      e.preventDefault();
       // Get the value of the selected radio button
       const selectedRating = this.value;
-      console.log(`Selected rating: ${selectedRating}`);
+      const data = {
+        course: course_id,
+        user: getActiveUsre,
+        rate: selectedRating,
+      };
+      addRate(data);
     });
   });
 }

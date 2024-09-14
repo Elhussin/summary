@@ -127,22 +127,25 @@ body.dark-mode {
   color:$font-color;
 }
 
-.Cardnavgation{
-  @extend %flex-containers;
+%CardNagat{
   background-color: $primary-color;
   padding: 10px;
   border: 1px;
   border-radius: 10px;
   color: $color;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 10px;
   font-size: small;
   font-style: italic;
   text-align: center;
   margin: 10px;
-  
 }
+.Cardnavgation{
+  @extend %flex-containers;
+  @extend %CardNagat;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 .header {
   @extend %flex-containers;
   transition: $transition;
@@ -423,11 +426,12 @@ align-items: center;
 }
 
 // class for the rating
-
 .rating {
+  @extend %CardNagat;
   display: flex;
   direction: row;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .rating input {

@@ -1,6 +1,6 @@
 import {like , likeActive, unlike, unlikeActive,
      favorite, favoriteActive}  from "./svg_icons.js";
-
+import {  summaryViewEventListeners } from "./dat_view_html.js";
 import {checkAccessToken ,getdate,ConfiarmActifeUserWithData,capitalizeFirstLetter,getRate,createRateeButton} from "./function.js";
 import {getActiveUsre, addlike,updateLike,delateLike
     ,addFavorite,delateFavorite ,likeSummary,updateLikeSummary,delatelikeSummary,
@@ -43,12 +43,15 @@ const viewCourseDatiles = (data) => {
         <p id="course-id" data-courseid="${data.id}">Course No : ${data.id} </p>
         <p> Date: ${getdate(data.created_at)} </p>
         <p> Last Update: ${getdate(data.updated_at)} </p>
-        <p> Rate: ${getRate(data)} </p>
+        <input type="hidden" id="course-rate" value="${data.rate}">
+
     
 
         </div>
     `;
+            // <p> Rate: ${getRate(data)} </p>
     // newDiv.appendChild(createRateeButton());
+
     return newDiv
   };
 
@@ -98,6 +101,7 @@ const AddNewSummary = () => {
     </form>
     `;
     return newDiv;
+    
 };
 
 const updateSummaryForm = (data) => {

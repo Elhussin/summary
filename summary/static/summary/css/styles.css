@@ -107,19 +107,22 @@ body.dark-mode {
   color: white;
 }
 
-.Cardnavgation {
+.rating, .Cardnavgation {
   background-color: #344e41;
   padding: 10px;
   border: 1px;
   border-radius: 10px;
   color: #dad7cd;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 10px;
   font-size: small;
   font-style: italic;
   text-align: center;
   margin: 10px;
+}
+
+.Cardnavgation {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .header {
@@ -362,7 +365,8 @@ header.dark-mode {
 .rating {
   display: flex;
   direction: row;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .rating input {

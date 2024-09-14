@@ -55,7 +55,7 @@
                 <a class="nav-link btn nav-list" href="{% url 'profile' %}" title="View Profile"> <strong id="username"></strong></a>
             </li>
             <li class="" id="admin-item" style="display: none;">
-                <a class="nav-link btn" href="/admin"><strong id="userAdmin">Admin</strong></a>
+                <a class="nav-link btn" href="/admin/"><strong id="userAdmin">Admin</strong></a>
             </li>
             <li class="" id="favourites-item" style="display: none;">
                 <a class="nav-link btn" id="favourites" href="{% url 'favorite' %}" title="View Favourites">Favourites</a>
@@ -83,11 +83,15 @@
     </nav>
 
     <main class="main">
+
         <aside>
             {% block left-side %}
             {% endblock left-side %}
         </aside>
         <section>
+            {% if message %}
+                <div>{{ message }}</div>
+            {% endif %}
             <div class="message-alrt dislay-off" id="message-alrt"></div>
             {% block body %}
             {% endblock %}

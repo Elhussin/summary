@@ -11,7 +11,7 @@ import {
   addSummaryComments,
   delateOneSummary,
   addUpdateSummaryForm,
-  getCourses,
+  getCourses,getOneSummary
 } from "./api.js";
 import {
   checkAccessToken,
@@ -48,9 +48,6 @@ const viewContinear = document.getElementById("cours-container");
 const viewDatilesBox = document.getElementById("cours-detieals");
 
 const viewCourses = (data) => {
-  console.log("view", data);
-
-
   viewDatilesBox.innerHTML = "";
   viewContinear.innerHTML = "";
   // view all courses
@@ -70,7 +67,7 @@ const viewCourses = (data) => {
                   <p class="card-author" id="${item.user.id
         }">By: ${capitalizeFirstLetter(item.user.username)}</p>
                   <p class="card-date">Date: ${getdate(item.created_at)}</p>
-                  <p>Rate: ${getRate(item)} </p>
+                  <p >Rate: ${getRate(item)} </p>
                 </div>
             </div>
           `
@@ -105,11 +102,7 @@ const cardViewEventListeners = (data) => {
       // updatpageurl will re set url
       updatpageurl("courses", itemTitle, itemId);
 
-      // view one course
-      // fetchOneCourses from api_connect.js
       //fetchOneCourses will fetch one course from api.js then render data to displayItemDetails
-      // and displayItemDetails will display the course details
-      // displayItemDetails from dat_view_html.js
       fetchOneCourses(itemId);
     });
   });
@@ -121,14 +114,11 @@ const cardViewEventListeners = (data) => {
 // displayItemDetails will display the course details
 
 const displayItemDetails = async (data) => {
-  console.log("view", data);
 
   //  clear the view
   viewDatilesBox.innerHTML = "";
   viewContinear.innerHTML = "";
 
-  // view main data for course
-  // AddCourseDataToHTml function from viewElmeantFunctian.js
   // AddCourseDataToHTml will return the course data in html elements
   viewDatilesBox.appendChild(AddCourseDataToHTml(data));
  
@@ -210,7 +200,7 @@ const displayItemDetails = async (data) => {
 
   // add commant box - createCommaneElmeant will return the course comments in html elements
   if (token) {
-    viewDatilesBox.appendChild(createRateeButton());
+    viewDatilesBox.appendChild(createRateeButton(data));
     getrateValue()
     viewDatilesBox.appendChild(createCommaneElmeant());
   }
@@ -253,22 +243,23 @@ const displayItemDetails = async (data) => {
   }
 
   // add event listener when click on the summary card it will display his details
-  summaryViewEventListeners(data);
+  summaryViewEventListeners();
 };
 // end of displayItemDetails
 
 // get summary view event listeners
-const summaryViewEventListeners = (data) => {
+const summaryViewEventListeners = () => {
   document.querySelectorAll(".summary-box").forEach((card) => {
-    card.addEventListener("click", (event) => {
+    card.addEventListener("click",async (event) => {
       event.preventDefault();
       const itemId = card.id;
       // get elemant title
       const itemTitle = card.querySelector(".card-title").textContent;
       //  re set urupdatpageurll
       updatpageurl("summaries", itemTitle, itemId);
-      const course = data.summary.find((item) => item.id == itemId);
-      fetchOneSummary(course);
+      const getSummary = await getOneSummary(itemId);
+      // const course = data.summary.find((item) => item.id == itemId);
+      fetchOneSummary(getSummary);
     });
   });
 };

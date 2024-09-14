@@ -232,6 +232,29 @@ const addFavorite = async (data) => {
   }
 }
 
+const addRate= async (data) => {
+  try {
+    if (!data) {
+      console.error('Data is required.');
+      return;
+    }
+    const token = checkAccessToken();
+    if (!token) {
+      console.error('Access token is missing or invalid.');
+      return;
+    }
+    const response = await api.post('rates/', data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log('Rate added successfully:', response.data);
+    fetchOneCourses(response.data.course);
+  } catch (error) {
+    console.error('Error adding rate:', error.response ? error.response.data : error.message);
+  }
+}
+
 // Delete a favorite
 const delateFavorite = async (favoriteId,courseId) => {
   const token = checkAccessToken();
@@ -546,4 +569,5 @@ const addSummaryComments = async (data) => {
 
 export { getCourses, getCourse, addCourseData, updateCourse, deleteCourse ,api,getActiveUsre,
    addlike, updateLike,delateLike,addFavorite,delateFavorite,AddComment,addSummary,likeSummary,
-   updateLikeSummary,delatelikeSummary,addSummaryFavorite,delateSummaryFavorite,addSummaryComments,delateOneSummary,getSummaries,getOneSummary,addUpdateSummaryForm};
+   updateLikeSummary,delatelikeSummary,addSummaryFavorite,delateSummaryFavorite,addSummaryComments,
+   delateOneSummary,getSummaries,getOneSummary,addUpdateSummaryForm,addRate};

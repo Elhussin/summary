@@ -4,6 +4,27 @@
 {% block title %}Profile{% endblock %}
 
 {% block left-side %}
+<div id="cours-detieals" ></div>
+
+{% endblock %}
+
+{% block body %}
+
+<div id="cours-container" class="cards-container"></div>
+
+<article  id="view-box" class="dislay-off" >
+    <article  id="coress-add" class="m-5 dislay-off" >
+        {% include 'summary/layout/form.html' %}
+    </article>
+</article>
+
+
+
+<script  type="module" src="{% static 'summary/js/profile.js' %}"></script>
+{% endblock %}
+
+{% block rightside %}
+
 <div id="user-profile" class="display-off"></div>
      <div class="Cardnavgation">
     <h2><strong>Welcome, <span id="user-username"> </span></strong></h2>
@@ -26,27 +47,7 @@
     <button class="btn btn-bg btn-lg btn-block" id="unliked-summary">UnLike Summaries</button>
     </div>
 
-<div id="cours-detieals" ></div>
-
-{% endblock %}
-
-{% block body %}
-
-<div id="cours-container" class="cards-container"></div>
-
-<article  id="view-box" class="dislay-off" >
-    <article  id="coress-add" class="m-5 dislay-off" >
-        {% include 'summary/layout/form.html' %}
-    </article>
-</article>
-
-
-
-<script  type="module" src="{% static 'summary/js/profile.js' %}"></script>
-{% endblock %}
-
-{% block rightside %}
-
+</div>
 {% endblock %}
 
 {% block information %}
