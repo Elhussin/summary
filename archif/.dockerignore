@@ -1,8 +1,0 @@
-
-Dockerfile
-.env
-readme.md
-.gitignore
-docker-compose*
-__pycache__*
-
