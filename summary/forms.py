@@ -39,5 +39,14 @@ class UserRegistraForm(ModelForm):
             }),
         }
 
+
+
 class CSVUploadForm(forms.Form):
-    file = forms.FileField(label="Upload CSV File")
+    file = forms.FileField(
+        label="Upload CSV File",
+        widget=forms.ClearableFileInput(attrs={
+            'class': 'form-control form-control-sm',  
+             'style': 'width: 400px; max-width:90%; margin:auto;',
+            'placeholder': 'Select CSV File', 
+        })
+    )

@@ -1,16 +1,15 @@
 
-const API_URL = 'http://127.0.0.1:8000/view/';
-import {alertMessage, checkAccessToken} from "./function.js";
+import { alertMessage, checkAccessToken } from "./function.js";
+import { fetchOneCourses } from "./api_connect.js";
+import { fetchOneSummary } from "./dat_view_html.js";
+import {logout} from "./login.js";
 
-import{fetchOneCourses} from "./api_connect.js";
-import{fetchOneSummary} from "./dat_view_html.js";
-// Set up Axios with CSRF token
 const api = axios.create({
   baseURL: "/view/",
 });
 
 
-const  getActiveUsre = async (accessToken) => {
+const getActiveUsre = async (accessToken) => {
   try {
     // Fetch user profile data using the access token
     const response = await api.get("/user-profile/", {
@@ -31,7 +30,6 @@ const  getActiveUsre = async (accessToken) => {
 // Get all Courses
 const getCourses = async () => {
   try {
-    // const response = await axios.get(`${API_URL}/courses/`);
     const response = await api.get(`courses/`)
     return response.data;
   } catch (error) {
@@ -56,11 +54,6 @@ const addCourseData = async (formData) => {
 
   const token = checkAccessToken();
 
-  if (!token) {
-    console.error('Access token is missing or invalid.');
-    throw new Error('Access token is missing or invalid.');
-  }
-  
   try {
     const response = await api.post('courses/', formData, {
       headers: {
@@ -71,39 +64,24 @@ const addCourseData = async (formData) => {
     alertMessage("Course added successfully");
     return response.data;
   } catch (error) {
-    if (error.response) {
-      // Server responded with a status other than 2xx
-      console.error('Server error:', error.response.data.message || 'Unknown server error');
-      throw new Error(error.response.data.message || 'Error occurred while adding the course.');
-    } else if (error.request) {
-      // Request was made but no response received
-      console.error('No response received from server:', error.message);
-      throw new Error('No response received from server.');
-    } else {
-      // Error setting up the request
-      console.error('Error setting up request:', error.message);
+
+      console.error('Error setting up request:', error);
       throw new Error('Error setting up the request.');
     }
-};
 }
 
 
 // Update a course
 const updateCourse = async (id, formData) => {
-  const accessToken = checkAccessToken();
-  if (!accessToken) {
-    console.error('Access token is missing or invalid.');
-    throw new Error('Access token is missing or invalid.');
-  }
-  // Send data by Axio
+  const token = checkAccessToken();
   try {
     const response = await api.put(`courses/${id}/`, formData, {
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${token}`,
       },
     });
     return response.data;
-  }catch(error){
+  } catch (error) {
     console.error(`Error updating course with id ${id}:`, error);
     throw error;
   }
@@ -113,14 +91,12 @@ const updateCourse = async (id, formData) => {
 
 // Delete a course
 const deleteCourse = async (id) => {
-  const accessToken = checkAccessToken();
-  if (!accessToken) {
-    throw new Error('Access token is missing or invalid.');
-  }
+  const token = checkAccessToken();
+
   try {
-    await api.delete(`courses/${id}/`,{
+    await api.delete(`courses/${id}/`, {
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${token}`,
       },
     });
   } catch (error) {
@@ -133,31 +109,14 @@ const deleteCourse = async (id) => {
 // // Add a like
 const addlike = async (data) => {
   try {
-    if (!data) {
-      console.error('Data is required.');
-      return;
-    }
-
-
-    const token = checkAccessToken();
-    if (!token) {
-      console.error('Access token is missing or invalid.');
-      return;
-    }
-    // add token to the header
+    const token = checkAccessToken()
 
     const response = await api.post(`likes/`, data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    // const response = await api.post('likes', data);
-    console.log('Like added successfully:', response.data);
-
-      fetchOneCourses(data.course);
-    // return response.data;
-
-
+    fetchOneCourses(data.course);
   } catch (error) {
     console.error('Error adding like:', error.response ? error.response.data : error.message);
   }
@@ -166,10 +125,6 @@ const addlike = async (data) => {
 // Update a like
 async function updateLike(likeId, data) {
   const token = checkAccessToken();
-  if (!token) {
-    console.error('Access token is missing or invalid.');
-    return;
-  }
   try {
     const response = await api.put(`likes/${likeId}/`, data,
       {
@@ -179,8 +134,7 @@ async function updateLike(likeId, data) {
 
       }
     );
-    fetchOneCourses(data.course);
-    console.log('Like updated successfully:', response.data);
+    fetchOneCourses(response.data.course);
   } catch (error) {
     console.error('Error updating like:', error.response ? error.response.data : error.message);
   }
@@ -188,7 +142,7 @@ async function updateLike(likeId, data) {
 }
 
 // Delete a like
-const delateLike = async (likeId,courseId) => {
+const delateLike = async (likeId, courseId) => {
   const token = checkAccessToken();
   if (!token) {
     console.error('Access token is missing or invalid.');
@@ -200,7 +154,6 @@ const delateLike = async (likeId,courseId) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log('Like deleted successfully:', response.data);
     fetchOneCourses(courseId);
 
   } catch (error) {
@@ -211,44 +164,28 @@ const delateLike = async (likeId,courseId) => {
 // Add a favorite
 const addFavorite = async (data) => {
   try {
-    if (!data) {
-      console.error('Data is required.');
-      return;
-    }
     const token = checkAccessToken();
-    if (!token) {
-      console.error('Access token is missing or invalid.');
-      return;
-    }
     const response = await api.post('favorites/', data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log('Favorite added successfully:', response.data);
     fetchOneCourses(response.data.course);
   } catch (error) {
     console.error('Error adding favorite:', error.response ? error.response.data : error.message);
   }
 }
 
-const addRate= async (data) => {
+const addRate = async (data) => {
   try {
-    if (!data) {
-      console.error('Data is required.');
-      return;
-    }
     const token = checkAccessToken();
-    if (!token) {
-      console.error('Access token is missing or invalid.');
-      return;
-    }
+
     const response = await api.post('rates/', data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log('Rate added successfully:', response.data);
+
     fetchOneCourses(response.data.course);
   } catch (error) {
     console.error('Error adding rate:', error.response ? error.response.data : error.message);
@@ -256,19 +193,14 @@ const addRate= async (data) => {
 }
 
 // Delete a favorite
-const delateFavorite = async (favoriteId,courseId) => {
+const delateFavorite = async (favoriteId, courseId) => {
   const token = checkAccessToken();
-  if (!token) {
-    console.error('Access token is missing or invalid.');
-    return;
-  }
   try {
     const response = await api.delete(`favorites/${favoriteId}/`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log('Favorite deleted successfully:', response.data);
     fetchOneCourses(courseId);
   } catch (error) {
     console.error('Error deleting favorite:', error.response ? error.response.data : error.message);
@@ -276,24 +208,15 @@ const delateFavorite = async (favoriteId,courseId) => {
 }
 
 // Add a comment
-const AddComment = async (comment,courseId) => {
+const AddComment = async (comment) => {
   try {
-    if (!comment) {
-      console.error('Data is required.');
-      return;
-    }
     const token = checkAccessToken();
-    if (!token) {
-      console.error('Access token is missing or invalid.');
-      return;
-    }
     const response = await api.post('comments/', comment, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log('Comment added successfully:', response.data);
-    fetchOneCourses(courseId);
+    fetchOneCourses(response.data.course);
   } catch (error) {
     console.error('Error adding comment:', error.response ? error.response.data : error.message);
   }
@@ -302,20 +225,7 @@ const AddComment = async (comment,courseId) => {
 // Add a summary
 const addSummary = async (data) => {
   try {
-    if (!data) {
-      console.error('Data is required.');
-      return;
-    }
     const token = checkAccessToken();
-    if (!token) {
-      console.error('Access token is missing or invalid.');
-      return;
-    }
-    console.log("summary",data);
-    console.log("summary",data.get("title"));
-    console.log("summary",data.get("description"));
-    console.log("summary",data.get("course"));
-    console.log("summary",data.get("user"));
     const response = await api.post('summaries/', data, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -328,6 +238,7 @@ const addSummary = async (data) => {
   }
 }
 
+// Get all Sumaries
 const getSummaries = async () => {
   try {
     const response = await api.get('summaries/');
@@ -338,9 +249,9 @@ const getSummaries = async () => {
   }
 };
 
-
+// get One Summary 
 const getOneSummary = async (id) => {
-  try { 
+  try {
     const response = await api.get(`summaries/${id}/`);
     return response.data;
   } catch (error) {
@@ -350,13 +261,12 @@ const getOneSummary = async (id) => {
 
 }
 
-const delateOneSummary = async (id,courseId) => {
+// Delate One Summary  
+const delateOneSummary = async (id, courseId) => {
   try {
     const response = await api.delete(`summaries/${id}/`);
-    // return response.data;
-    fetchOneCourses(courseId);
     alertMessage("Summary deleted successfully");
-    console.log('Summary deleted successfully:', response.data);
+    fetchOneCourses(courseId);
   } catch (error) {
     console.error(`Error fetching summary with id ${id}:`, error);
     throw error;
@@ -366,121 +276,94 @@ const delateOneSummary = async (id,courseId) => {
 
 
 // Like a summary
-const likeSummary = async (likedata,data) => {
-  console.log("likedata",data);
+const likeSummary = async (likedata) => {
   try {
-
     const token = checkAccessToken();
-    if (!token) {
-      console.error('Access token is missing or invalid.');
-      return;
-    }
+
     const response = await api.post('summaryLikes/', likedata, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
 
-    const getOneSummarydata = await getOneSummary(data.id);
-    console.log("getOneSummary",getOneSummarydata);
+    const getOneSummarydata = await getOneSummary(response.data.summary);
     fetchOneSummary(getOneSummarydata);
 
-    console.log('Summary liked successfully:', response.data);
   } catch (error) {
     console.error('Error liking summary:', error.response ? error.response.data : error.message);
   }
 }
 
-const delatelikeSummary = async (likeId,data) => {
+// Delate Like For Summary 
+const delatelikeSummary = async (likeId, summaryID) => {
   const token = checkAccessToken();
-  if (!token) {
-    console.error('Access token is missing or invalid.');
-    return;
-  }
   try {
     const response = await api.delete(`summaryLikes/${likeId}/`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    const getOneSummarydata = await getOneSummary(data.id);
-    console.log("getOneSummary",getOneSummarydata);
+    const getOneSummarydata = await getOneSummary(summaryID);
     fetchOneSummary(getOneSummarydata);
-    console.log('Summary unliked successfully:', response.data);
   } catch (error) {
     console.error('Error unliking summary:', error.response ? error.response.data : error.message);
   }
 }
 
-const updateLikeSummary = async (likeId,likedata,data) => { 
+// Updat likes For summary
+const updateLikeSummary = async (likeId, data,) => {
   const token = checkAccessToken();
-  if (!token) {
-    console.error('Access token is missing or invalid.');
-    return;
-  }
   try {
-    const response = await api.put(`summaryLikes/${likeId}/`, likedata, {
+    const response = await api.put(`summaryLikes/${likeId}/`, data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    const getOneSummarydata = await getOneSummary(data.id);
+    const getOneSummarydata = await getOneSummary(response.data.summary);
     fetchOneSummary(getOneSummarydata);
-    console.log('Summary liked successfully:', response.data);
   } catch (error) {
     console.error('Error liking summary:', error.response ? error.response.data : error.message);
   }
 }
 
+// Add one Summary To Favorites
 const addSummaryFavorite = async (data) => {
   try {
-    if (!data) {
-      console.error('Data is required.');
-      return;
-    }
     const token = checkAccessToken();
-    if (!token) {
-      console.error('Access token is missing or invalid.');
-      return;
-    }
     const response = await api.post('summaryFavorites/', data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    const getOneSummarydata = await getOneSummary(data.summary);
+    const getOneSummarydata = await getOneSummary(response.data.summary);
     fetchOneSummary(getOneSummarydata);
-    console.log('Summary favorited successfully:', response.data);
   } catch (error) {
     console.error('Error favoriting summary:', error.response ? error.response.data : error.message);
   }
 }
 
-const delateSummaryFavorite = async (favoriteId,summaryId) => {
+// Dealte one summary from Favorites
+const delateSummaryFavorite = async (favoriteId, summaryId) => {
   const token = checkAccessToken();
-  if (!token) {
-    console.error('Access token is missing or invalid.');
-    return;
-  }
   try {
     const response = await api.delete(`summaryFavorites/${favoriteId}/`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
+
     const getOneSummarydata = await getOneSummary(summaryId);
     fetchOneSummary(getOneSummarydata);
-    console.log('Summary unfavorited successfully:', response.data);
+
   } catch (error) {
     console.error('Error unfavoriting summary:', error.response ? error.response.data : error.message);
   }
 }
 
-
-const addUpdateSummaryForm= async (id,data) => {
+// Update one Summary 
+const addUpdateSummaryForm = async (id, data) => {
   try {
     const response = await api.put(`summaries/${id}/`, data);
-    console.log('Summary updated successfully:', response.data);
     alertMessage("Summary updated successfully");
     const getOneSummarydata = await getOneSummary(id);
     fetchOneSummary(getOneSummarydata);
@@ -489,28 +372,19 @@ const addUpdateSummaryForm= async (id,data) => {
   }
 }
 
-
+// Add comment for Summary
 const addSummaryComments = async (data) => {
   try {
-    if (!data) {
-      console.error('Data is required.');
-      return;
-    }
     const token = checkAccessToken();
-    if (!token) {
-      console.error('Access token is missing or invalid.');
-      return;
-    }
     const response = await api.post('summaryComments/', data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log('Summary comment added successfully:', response.data);
-    const getOneSummarydata = await getOneSummary(data.get("summary"));
 
+    const getOneSummarydata = await getOneSummary(response.data.summary);
     fetchOneSummary(getOneSummarydata);
-   
+
   } catch (error) {
     console.error('Error adding comment:', error.response ? error.response.data : error.message);
   }
@@ -518,56 +392,58 @@ const addSummaryComments = async (data) => {
 
 
 
-  // Function to check if the user is logged in
-  api.interceptors.request.use(
-    (config) => {
-      const accessToken = localStorage.getItem('accessToken');
-      if (accessToken) {
-        config.headers.Authorization = `Bearer ${accessToken}`;
-      }
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
+// Function to check if the user is logged in
+api.interceptors.request.use(
+  (config) => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
     }
-  );
-
-  // تحديث Access Token باستخدام Refresh Token
-  async function refreshToken() {
-    const refreshToken = localStorage.getItem('refreshToken');
-    try {
-      const response = await api.post('token/refresh/', {
-        refresh: refreshToken,
-      });
-
-      // تخزين الرمز الجديد
-      localStorage.setItem('accessToken', response.data.access);
-      return response.data.access;
-    } catch (error) {
-      console.error('Error refreshing token:', error.response ? error.response.data : error.message);
-      logout();
-    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
   }
+);
+
+// Update Token 
+async function refreshToken() {
+  const refreshToken = localStorage.getItem('refreshToken');
+  try {
+    const response = await api.post('token/refresh/', {
+      refresh: refreshToken,
+    });
+
+    // Save New token
+    localStorage.setItem('accessToken', response.data.access);
+    return response.data.access;
+  } catch (error) {
+    console.error('Error refreshing token:', error.response ? error.response.data : error.message);
+    logout();
+  }
+}
 
 
-  // Update Token using the Refresh Token
-  api.interceptors.response.use(
-    (response) => response,
-    async (error) => {
-      const originalRequest = error.config;
-      if (error.response.status === 401 && !originalRequest._retry) {
-        originalRequest._retry = true; // Set the retry flag to prevent infinite loop
-        const newAccessToken = await refreshToken();
-        if (newAccessToken) {
-          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-          return api(originalRequest); // Retry the original request with the new token
-        }
+// Update Token using the Refresh Token
+api.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+    if (error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true; // Set the retry flag to prevent infinite loop
+      const newAccessToken = await refreshToken();
+      if (newAccessToken) {
+        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+        return api(originalRequest); // Retry the original request with the new token
       }
-      return Promise.reject(error);
     }
-  );
+    return Promise.reject(error);
+  }
+);
 
-export { getCourses, getCourse, addCourseData, updateCourse, deleteCourse ,api,getActiveUsre,
-   addlike, updateLike,delateLike,addFavorite,delateFavorite,AddComment,addSummary,likeSummary,
-   updateLikeSummary,delatelikeSummary,addSummaryFavorite,delateSummaryFavorite,addSummaryComments,
-   delateOneSummary,getSummaries,getOneSummary,addUpdateSummaryForm,addRate};
+export {
+  getCourses, getCourse, addCourseData, updateCourse, deleteCourse, api, getActiveUsre,
+  addlike, updateLike, delateLike, addFavorite, delateFavorite, AddComment, addSummary, likeSummary,
+  updateLikeSummary, delatelikeSummary, addSummaryFavorite, delateSummaryFavorite, addSummaryComments,
+  delateOneSummary, getSummaries, getOneSummary, addUpdateSummaryForm, addRate,refreshToken
+};

@@ -1,10 +1,12 @@
-import {like , likeActive, unlike, unlikeActive,
-     favorite, favoriteActive}  from "./svg_icons.js";
-import {  summaryViewEventListeners } from "./dat_view_html.js";
-import {checkAccessToken ,getdate,ConfiarmActifeUserWithData,capitalizeFirstLetter,getRate,createRateeButton} from "./function.js";
-import {getActiveUsre, addlike,updateLike,delateLike
-    ,addFavorite,delateFavorite ,likeSummary,updateLikeSummary,delatelikeSummary,
-    delateSummaryFavorite ,addSummaryFavorite
+import {
+    like, likeActive, unlike, unlikeActive,
+    favorite, favoriteActive
+} from "./svg_icons.js";
+import { getdate, capitalizeFirstLetter } from "./function.js";
+import {
+    addlike, updateLike, delateLike
+    , addFavorite, delateFavorite, likeSummary, updateLikeSummary, delatelikeSummary,
+    delateSummaryFavorite, addSummaryFavorite
 } from "./api.js";
 
 // view main data for course
@@ -24,48 +26,34 @@ const AddCourseDataToHTml = (data) => {
 
 // view  iteams Datiles
 const viewCourseDatiles = (data) => {
-
     const likesCount = data.likes.filter((item) => item.likes).length;
     const unlikesCount = data.likes.filter((item) => !item.likes).length;
-
     const newDiv = document.createElement("div");
     newDiv.className = " w-90 m-auto-top10";
-    newDiv.innerHTML = `
-        
+    newDiv.innerHTML = `   
         <h1>Title: ${capitalizeFirstLetter(data.title)}  </h1>
-
         <p> Description: ${data.description} </p>
         <div class="Cardnavgation">
-        <p> Likes: ${likesCount} </p>
-        <p> Unlikes: ${unlikesCount} </p>
-        <p> Favorites: ${data.favorites.filter((item) => item.followStatus).length} </p>
-        <p>By <a href="/users" class="user_id"   id="${data.user.id}">${capitalizeFirstLetter(data.user.username)}</a> </p> 
         <p id="course-id" data-courseid="${data.id}">Course No : ${data.id} </p>
+        <p>By <a href="/users" class="user_id"   id="${data.user.id}">${capitalizeFirstLetter(data.user.username)}</a> </p> 
+        <p><span> Likes: ${likesCount}   </span> <span>   Unlikes: ${unlikesCount} </span> </p>
+        <span> Favorites: ${data.favorites.filter((item) => item.followStatus).length} </span>
         <p> Date: ${getdate(data.created_at)} </p>
         <p> Last Update: ${getdate(data.updated_at)} </p>
-        <input type="hidden" id="course-rate" value="${data.rate}">
-
-    
-
         </div>
     `;
-            // <p> Rate: ${getRate(data)} </p>
-    // newDiv.appendChild(createRateeButton());
-
     return newDiv
-  };
+};
 
 
-
-  const viewSummary = (data) => {
-
+// View All Summary 
+const viewSummary = (data) => {
     const newDiv = document.createElement("div");
     newDiv.className = "w-90";
     newDiv.innerHTML = `<h2>Summaries</h2>
     <hr>`;
-
     data.reverse().forEach((iteam) => {
-    newDiv.innerHTML += `
+        newDiv.innerHTML += `
         <div id="${iteam.id}" class="summary-box">
         <h3 class="card-title"> ${iteam.title} </h3> 
         <div style="white-space: pre-wrap;"> ${iteam.description} </div>
@@ -73,15 +61,16 @@ const viewCourseDatiles = (data) => {
         <p> Likes: ${iteam.likes.filter((item) => item.likes).length} </p>
         <p> Unlikes: ${iteam.likes.filter((item) => !item.likes).length} </p>
         <p> Favorites: ${iteam.favorites.filter((item) => item.followStatus).length} </p>
-        <p>Created At: ${ getdate(iteam.created_at)}</p>
-         <p>  Last Update: ${ getdate(iteam.updated_at)} </p> 
+        <p>Created At: ${getdate(iteam.created_at)}</p>
+         <p>  Last Update: ${getdate(iteam.updated_at)} </p> 
         <p class="card-author" >Add By: ${iteam.user.username.toUpperCase()}  </p>
         </div>
         `;
     });
     return newDiv;
-  };
+};
 
+// NEW Summary Form 
 const AddNewSummary = () => {
     const newDiv = document.createElement("div");
     newDiv.className = "w-90";
@@ -101,12 +90,13 @@ const AddNewSummary = () => {
     </form>
     `;
     return newDiv;
-    
+
 };
 
+// Updat Summary 
 const updateSummaryForm = (data) => {
     const newDiv = document.createElement("div");
-    newDiv.className = "w-90";  
+    newDiv.className = "w-90";
     newDiv.innerHTML = `
     <h2 class="m-2"> Update Summary</h2>
     <hr>
@@ -126,7 +116,7 @@ const updateSummaryForm = (data) => {
 };
 
 
-
+// View One Summaryh
 const viewOneSummary = (data) => {
     const newDiv = document.createElement("div");
     newDiv.className = "w-90";
@@ -149,27 +139,27 @@ const viewOneSummary = (data) => {
     return newDiv;
 }
 
-// like , likeActive, unlike, unlikeActive, favorite, favoriteActive
-const favoriteLikeButtonGroup =  (data,userDatiles) => {
+// Like And Favorite Buttuns
+const favoriteLikeButtonGroup = (data, userDatiles) => {
     const newDiv = document.createElement("div");
     const userLike = data.likes.find((like) => like.user === userDatiles.id);
-    const userFavorite = data.favorites.find((favorite) => favorite.user.id == userDatiles.id);   
+    const userFavorite = data.favorites.find((favorite) => favorite.user.id == userDatiles.id);
     // add favorite and like button
-    newDiv.innerHTML =`<hr>`;   
+    newDiv.innerHTML = `<hr>`;
     // confirm user is follow or not
 
     if (userFavorite) {
         if (userFavorite.followStatus) {
-            newDiv.innerHTML +=`
+            newDiv.innerHTML += `
             <button class="btn" id='favorite' type="button" title="Romve From Favorite">${favoriteActive}</button>
             `;
         } else {
-            newDiv.innerHTML +=`
+            newDiv.innerHTML += `
             <button class="btn" id='favorite' type="button title="Add To Favorite" >${favorite}</button>
             `;
         }
     } else {
-        newDiv.innerHTML +=`
+        newDiv.innerHTML += `
         <button class="btn" id='favorite' type="button" title="Add To Favorite">${favorite}</button>
         `;
     }
@@ -177,164 +167,164 @@ const favoriteLikeButtonGroup =  (data,userDatiles) => {
     // confirm user is like or not
     if (userLike) {
         if (userLike.likes) {
-        newDiv.innerHTML +=`
+            newDiv.innerHTML += `
             <button class="btn" id="like-course" title="Romve Like"  >${likeActive}</button>
             <button class="btn" id="unlike-course" title="UnLike"  >${unlike}</button>
         `;
         } else {
-        newDiv.innerHTML +=`
+            newDiv.innerHTML += `
             <button class="btn" id="like-course" title="Like"  >${like}</button>
             <button class="btn" id="unlike-course" title="Romve Unlike" >${unlikeActive}</button>`;
         }
     } else {
-        newDiv.innerHTML +=`
+        newDiv.innerHTML += `
         <button class="btn" id="like-course" title="Like" >${like}</button>
         <button class="btn " id="unlike-course" title="UnLike" >${unlike}</button>
         `;
     }
-     newDiv.innerHTML +=`<hr>`;
+    newDiv.innerHTML += `<hr>`;
 
     return newDiv;
 }
 
 
-
-const delateEditButtonGroup = (data) => {
+// Delat And Edite Buttoun
+const delateEditButtonGroup = () => {
     const newDiv = document.createElement("div");
-    newDiv.innerHTML =`
+    newDiv.innerHTML = `
     <button class=" btn-bg" id="edit-course" >Edit</button>
     <button class=" btn-bg" id="delate-course" >Delate</button> 
     `;
     return newDiv;
 }
 
-const loginMassage = () => {   
+// Alert messag To login
+const loginMassage = () => {
     const newDiv = document.createElement("div");
-    newDiv.innerHTML =`
+    newDiv.innerHTML = `
     <p class="alert alert-warning"> Please Login to like or favorite and add Comments<a href="/login"> Login </a> </p>
     `;
     return newDiv;
 }
 
-
-const confiarmUserLike = (data,userDatiles ) => {
+//Add  like To like
+const confiarmUserLike = (data, userDatiles) => {
     const userLike = data.likes.find((like) => like.user === userDatiles.id);
-    var like=true;
+    var like = true;
     if (userLike) {
-        var LikesData={user:userDatiles.id,likes:like,course:userLike.course};
+        var LikesData = { user: userDatiles.id, likes: like, course: userLike.course };
         if (userLike.likes) {
-            delateLike(userLike.id,data.id);
+            delateLike(userLike.id, data.id);
         }
         else {
-
-            updateLike(userLike.id,LikesData);
-
+            updateLike(userLike.id, LikesData);
         }
     } else {
-
-        LikesData= {user:userDatiles.id,likes:like,course:data.id}
+        LikesData = { user: userDatiles.id, likes: like, course: data.id }
         addlike(LikesData);
-
     }
 }
 
-const confiarmUserFavorite = (data,userDatiles ) => {
+//ADD  Unlike to course
+const confiarmUserUnLike = (data, userDatiles) => {
+    const userLike = data.likes.find((like) => like.user === userDatiles.id);
+    var like = false;
+    if (userLike) {
+        var LikesData = { user: userDatiles.id, likes: like, course: userLike.course };
+        if (userLike.likes) {
+            updateLike(userLike.id, LikesData);
+        }
+        else {
+            delateLike(userLike.id, data.id);
+        }
+    } else {
+        LikesData = { user: userDatiles.id, likes: like, course: data.id }
+        addlike(LikesData);
+    }
+}
+
+// Add  Course  To Favorites
+const confiarmUserFavorite = (data, userDatiles) => {
     const userFavorite = data.favorites.find((favorite) => favorite.user.id === userDatiles.id);
-    var followStatus=true;
+    var followStatus = true;
     if (userFavorite) {
-        var FavoriteData={user:userDatiles.id,followStatus:followStatus,course:userFavorite.course};
+        var FavoriteData = { user: userDatiles.id, followStatus: followStatus, course: userFavorite.course };
 
         if (userFavorite.followStatus) {
-            delateFavorite(userFavorite.id,data.id);
+            delateFavorite(userFavorite.id, data.id);
         }
     } else {
 
-        FavoriteData= {user:userDatiles.id,followStatus:followStatus,course:data.id}
+        FavoriteData = { user: userDatiles.id, followStatus: followStatus, course: data.id }
         addFavorite(FavoriteData);
 
     }
 
 }
 
-
-const confiarmUserUnLike = (data,userDatiles ) => {
+// Add Summary Like 
+const addSummaryLikes = (data, userDatiles) => {
     const userLike = data.likes.find((like) => like.user === userDatiles.id);
-    var like=false;
+    var like = true;
     if (userLike) {
-        var LikesData={user:userDatiles.id,likes:like,course:userLike.course};
+        var likeSummaryData = { course: data.course, summary: data.id, user: userDatiles.id, likes: like };
         if (userLike.likes) {
-            updateLike(userLike.id,LikesData);
+            delatelikeSummary(userLike.id, data.id);
         }
         else {
-            delateLike(userLike.id,data.id);
+            updateLikeSummary(userLike.id, likeSummaryData);
         }
     } else {
-        LikesData= {user:userDatiles.id,likes:like,course:data.id}
-        addlike(LikesData);
-    }
-}
-
-const addSummaryLikes = (data,userDatiles ) => {
-    const userLike = data.likes.find((like) => like.user === userDatiles.id);
-    var like=true;
-    if (userLike) {
-        var likeSummaryData={course:data.course,summary:data.id,user:userDatiles.id,likes:like};
-        if (userLike.likes) {
-            delatelikeSummary(userLike.id,data);
-        }
-        else {
-
-            updateLikeSummary(userLike.id,likeSummaryData,data);
-
-        }
-    } else {
-        likeSummaryData={course:data.course,summary:data.id,user:userDatiles.id,likes:like};
-        likeSummary(likeSummaryData,data);
+        likeSummaryData = { course: data.course, summary: data.id, user: userDatiles.id, likes: like };
+        likeSummary(likeSummaryData);
 
     }
 }
 
-
-const addSummaryunLikes = (data,userDatiles ) => {
-    // updateLikeSummary,delatelikeSummary,favoriteSummary
-    console.log("dddd",data);
+// Add Summary Unlike 
+const addSummaryunLikes = (data, userDatiles) => {
     const userLike = data.likes.find((like) => like.user === userDatiles.id);
-    var like=false;
+    var like = false;
     if (userLike) {
-        var likeSummaryData={course:data.course,summary:data.id,user:userDatiles.id,likes:like};
+        var likeSummaryData = { course: data.course, summary: data.id, user: userDatiles.id, likes: like };
         if (userLike.likes) {
-            updateLikeSummary(userLike.id,likeSummaryData,data);
+            updateLikeSummary(userLike.id, likeSummaryData, data);
         }
         else {
-            delatelikeSummary(userLike.id,data);
+            delatelikeSummary(userLike.id, data.id);
         }
     } else {
-        likeSummaryData={course:data.course,summary:data.id,user:userDatiles.id,likes:like};
-        likeSummary(likeSummaryData,data);
+        likeSummaryData = { course: data.course, summary: data.id, user: userDatiles.id, likes: like };
+        likeSummary(likeSummaryData, data);
     }
 }
 
-const addSummaryFavorites = (data,userDatiles ) => {
-    console.log("dddd",data);
+// Add Summary To Favorites
+const addSummaryFavorites = (data, userDatiles) => {
+    console.log("dddd", data);
     const userFavorite = data.favorites.find((favorite) => favorite.user.id === userDatiles.id);
-    var followStatus=true;
+    var followStatus = true;
     if (userFavorite) {
-        var FavoriteData={user:userDatiles.id,followStatus:followStatus,summary:userFavorite.summary};
+        var FavoriteData = { user: userDatiles.id, followStatus: followStatus, summary: userFavorite.summary };
 
         if (userFavorite.followStatus) {
-            delateSummaryFavorite(userFavorite.id,data.id);
+            delateSummaryFavorite(userFavorite.id, data.id);
         }
     } else {
 
-        FavoriteData= {user:userDatiles.id,followStatus:followStatus,summary:data.id ,course:data.course}
+        FavoriteData = { user: userDatiles.id, followStatus: followStatus, summary: data.id, course: data.course }
         addSummaryFavorite(FavoriteData);
 
     }
 
 }
 
-export { AddCourseDataToHTml, viewCourseDatiles, viewSummary, viewOneSummary,
-    favoriteLikeButtonGroup, delateEditButtonGroup, loginMassage, confiarmUserLike,confiarmUserFavorite,confiarmUserUnLike,
-    AddNewSummary, addSummaryLikes,addSummaryunLikes,addSummaryFavorites,updateSummaryForm    };
+export {
+    AddCourseDataToHTml, viewCourseDatiles, viewSummary, viewOneSummary,
+    favoriteLikeButtonGroup, delateEditButtonGroup, loginMassage,
+    confiarmUserLike, confiarmUserFavorite, confiarmUserUnLike,
+    AddNewSummary, addSummaryLikes, addSummaryunLikes, addSummaryFavorites,
+    updateSummaryForm
+};
 
 

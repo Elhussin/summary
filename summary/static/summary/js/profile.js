@@ -1,36 +1,24 @@
-import {
-  getActiveUsre,
-  addCourseData,
-  getCourses,
-  getSummaries,
-  getOneSummary,
-} from "./api.js";
+import {getActiveUsre,addCourseData,getCourses,getSummaries,refreshToken} from "./api.js";
 import { logout } from "./login.js";
 import {
   alertMessage,
-  toggleVisibility,
   viewUploudImage,
-  checkAccessToken,
   checkUserLogin,
   displayIteam,
-  updatpageurl,
   favoriteCourses,
 } from "./function.js";
 import {
   viewCourses,
   viewSummary,
   summaryViewEventListeners,
-  fetchOneSummary,
 } from "./dat_view_html.js";
+
 const CourseForm = document.getElementById("course_form");
 const FormBox = document.getElementById("coress-add");
 const viewBox = document.getElementById("view-box");
 const coressAddBox = document.getElementById("course-add-box");
 const courseViewBox = document.getElementById("course-view-box");
 const viewContinear = document.getElementById("cours-container");
-
-// to view course details
-const viewDatilesBox = document.getElementById("cours-detieals");
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -50,7 +38,6 @@ const checkUserLoggedIn = async () => {
     const response = await getActiveUsre(accessToken);
     displayUserProfile(response);
   } catch (error) {
-    console.log("error", error);
     console.error(
       "Failed to fetch user profile:",
       error.response ? error.response.data : error.message
@@ -67,6 +54,7 @@ const checkUserLoggedIn = async () => {
   }
 };
 
+// View User deatiles
 const displayUserProfile = (data) => {
   document.getElementById("user-profile").style.display = "block";
   document.getElementById("user-username").innerText = data.username;
@@ -87,6 +75,8 @@ const displayUserProfile = (data) => {
     viewBox.style.display = "none";
   }
 };
+
+// to creat new course
 if (coressAddBox) {
   coressAddBox.addEventListener("click", function () {
     displayIteam(FormBox, viewContinear, "block");
@@ -96,8 +86,6 @@ if (coressAddBox) {
 
 //  Add New Course+
 CourseForm.addEventListener("submit", function (event) {
-  // block out Send form
-
   event.preventDefault();
   for (let instance in CKEDITOR.instances) {
     CKEDITOR.instances[instance].updateElement();
@@ -108,27 +96,24 @@ CourseForm.addEventListener("submit", function (event) {
     addCourseData(formData);
     CourseForm.reset();
   } catch (error) {
-    message = `Error adding course : ${error}`;
-    alertMessage(message);
+    alertMessage( `Error adding course : ${error}`);
   }
 });
 
+// get course add by user 
 courseViewBox.addEventListener("click", () => {
   displayIteam(viewContinear, FormBox, "flex");
   getUerCourses();
 });
 
-// view all courses active user
-// get all courses
+// view all courses For  active user
 const getUerCourses = async () => {
   let userdatiles = checkUserLogin();
   try {
     const response = await getCourses();
 
     // filter courses by user id
-    const userCourses = response.filter(
-      (course) => course.user.id === userdatiles.id
-    );
+    const userCourses = response.filter((course) => course.user.id === userdatiles.id);
     viewCourses(userCourses);
   } catch (error) {
     console.error("Error fetching courses:", error);
@@ -136,14 +121,12 @@ const getUerCourses = async () => {
   }
 };
 
+// view liked courses bu avctive user
 const getLikedCourses = async () => {
   let user = checkUserLogin();
   try {
     const response = await getCourses();
-    const likedCourses = response.filter((course) =>
-      course.likes.some((like) => like.user === user.id)
-    );
-    console.log("likedCourses", likedCourses);
+    const likedCourses = response.filter((course) =>course.likes.some((like) => like.user === user.id));
     viewCourses(likedCourses);
   } catch (error) {
     console.error("Error fetching courses:", error);
@@ -151,6 +134,7 @@ const getLikedCourses = async () => {
   }
 };
 
+//  get Uulike iteam bu active user
 const getUnlikedCourses = async () => {
   let user = checkUserLogin();
   try {
@@ -165,6 +149,7 @@ const getUnlikedCourses = async () => {
   }
 };
 
+// Get Inlike Summary for Active USer
 const getUnlikedsummary = async () => {
   const user = checkUserLogin();
   try {
@@ -175,10 +160,6 @@ const getUnlikedsummary = async () => {
     viewContinear.innerHTML = "";
     viewContinear.appendChild(viewSummary(unlikedSummary));
     document.querySelectorAll(".summary-box").forEach((card) => {
-      // card.addEventListener("click", async (event) => {
-      //   // getSummariesAndFetch(card.id);
-        
-      // });
       summaryViewEventListeners();
     });
   } catch (error) {
@@ -187,6 +168,7 @@ const getUnlikedsummary = async () => {
   }
 };
 
+// Get liked Summary for Active user
 const getikedsummary = async () => {
   const user = checkUserLogin();
   try {
@@ -203,19 +185,9 @@ const getikedsummary = async () => {
   }
 };
 
-// const getSummariesAndFetch = async (SummaryId) => {
-//   try {
-//     const response = await getOneSummary(SummaryId);
-//     fetchOneSummary(response);
-//   } catch (error) {
-//     console.error("Error fetching courses:", error);
-//     throw error;
-//   }
-// };
-
+// get Favorites summary add by Active user
 const favoriteSummaries = async () => {
   const user = checkUserLogin();
-
   if (user) {
     try {
       const summaries = await getSummaries();
@@ -231,7 +203,7 @@ const favoriteSummaries = async () => {
 };
 
 
-
+// Add event listener
 document
   .getElementById("liked-summary")
   .addEventListener("click", getikedsummary);

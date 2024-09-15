@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
   if (document.getElementById("login-form")){
   document.getElementById("login-form").addEventListener("submit", async function (e) {
       e.preventDefault();
-
       const username = document.getElementById("user-name").value;
       const password = document.getElementById("password").value;
       try {
@@ -18,8 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-
-// // دالة تسجيل الدخول
+// // Log In Functian
 async function login(username, password) {
   try {
     const response = await api.post("token/", {
@@ -45,7 +43,6 @@ async function login(username, password) {
   }
 }
 
-
 // Function to check login status
 function checkLoginStatus() {
 
@@ -57,7 +54,6 @@ function checkLoginStatus() {
       document.getElementById("logout-item").style.display = "block";
       document.getElementById("profile-item").style.display = "block";
 
-      // fetch user profile
       fetchUserProfile(accessToken);
 
     } else {
@@ -70,10 +66,8 @@ function checkLoginStatus() {
     }
   }
 
-
-  //fetch user profile
-  async function fetchUserProfile(token) {
-
+//fetch user profile
+async function fetchUserProfile(token) {
     try {
       const response = await api.get("/user-profile/", {
         headers: {
@@ -83,10 +77,10 @@ function checkLoginStatus() {
         
 
       const userData = response.data;
+
       // Save user data to local storage
       localStorage.setItem("user", JSON.stringify(userData));
-      if(localStorage.getItem("user")){
-      }
+
       document.getElementById("username").innerText = userData.username;
 
       // Display the Admin profile data
@@ -96,21 +90,19 @@ function checkLoginStatus() {
         document.getElementById("summary-upload").style.display = "block";
       }
       document.getElementById("favourites-item").style.display = "block";
-      
-      
+       
     } catch (error) {
       console.error("Failed to fetch user profile:", error);
       alertMessage("Failed to fetch user profile. Please log in again.");
       // Romve tokens from local storage
       logout();
     }
-  }
+}
 
 
-  // log out
-  if (document.getElementById("log-out")){
+// lesson to log out button
+if (document.getElementById("log-out")){
   document.getElementById("log-out").addEventListener("click", () => {
-    // remove tokens from local storage
     logout();
 
   });
@@ -119,15 +111,14 @@ function checkLoginStatus() {
 
 
 
-  // logout 
-  function logout() {
+  // logout remove date storge
+function logout() {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('user');
     alertMessage("Logged out successfully");
-
     setTimeout(() => { window.location.href = "/login/"; }, 1000);
-  }
+}
 
 
 export { logout };

@@ -2,122 +2,144 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{% block title %}Summaries{% endblock %}</title>
-    <link rel="shortcut icon" href="{% static 'summary/img/logo.PNG' %}" type="image/x-icon">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'summary/css/styles.css' %}">
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>{% block title %}Summaries{% endblock %}</title>
+        <link rel="shortcut icon" href="{% static 'summary/img/logo.PNG' %}"
+            type="image/x-icon">
+        <link rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+            integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+            crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'summary/css/styles.css' %}">
+        <script
+            src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
+    </head>
 
+    <body>
+        <!-- headr -->
+        <header id="header" class="header">
+            <div class="logo">
+                <a href="{% url 'index' %}" title="Home"> <img
+                        class="img-header"
+                        src="{% static 'summary/img/logo.PNG' %}"
+                        alt="icon"></a>
+            </div>
+            <div class="title">
+                <h1 id="mainTitle">Summaries </h1>
+            </div>
+            <div class="nav-small-screen">
+                <span id="nav-view" class="nav-small-button">
+                    {% include 'summary/layout/svg_nav.html' %}
+                </span>
+                <span>
+                    <select id="languageSwitcher" class="leng-select">
+                        <option value="en">EN</option>
+                        <option value="ar">AR</option>
+                    </select>
+                    <!-- Rounded switch -->
+                    <label class="switch">
+                        <input id="dark-mode" type="checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                </span>
+            </div>
+        </header>
+        <!-- header End -->
+      
+        <!-- NAV bar -->
+        <nav id="navigation" class="navigation">
+            <ul class id="nav-items">
+                <li class id="Courses">
+                    <a class="nav-link btn nav-list" id="home"
+                        href="{% url 'index' %}" title="Home "> <strong
+                            id="username"></strong></a>
+                </li>
+                <li class id="profile-item" style="display: none;">
+                    <a class="nav-link btn nav-list" href="{% url 'profile' %}"
+                        title="View Profile"> <strong
+                            id="username"></strong></a>
+                </li>
+                <li  id="admin-item" style="display: none;">
+                    <a class="nav-link btn" id="userAdmin" href="/admin/"
+                        title="Admin">Admin</a>
+                </li>
+                <li  id="favourites-item" style="display: none;">
+                    <a class="nav-link btn" id="favourites"
+                        href="{% url 'favorite' %}"
+                        title="View Favourites">Favourites</a>
+                </li>
+                <li  style="display: none;">
+                    <a class="nav-link btn" id="uploud-course"
+                        href="{% url 'upload_csv' %}"
+                        title="Uploud Course">Upload Courses</a>
+                </li>
+                <li  style="display: none;">
+                    <a class="nav-link btn" id="summary-upload"
+                        href="{% url 'summary_upload' %}"
+                        title="Uploud Summary">Upload Summary</a>
+                </li>
+            </ul>
 
-
-</head>
-
-<body>
-    <header id="header" class="header">
-        <div class="logo">
-            <a href="{% url 'index' %}" title="Home"> <img class="img-header" src="{% static 'summary/img/logo.PNG' %}"
-                    alt="icon"></a>
-        </div>
-        <div class="title">
-            <h1 id="mainTitle">Summaries </h1>
-        </div>
-        <div class="nav-small-screen">
-            <span id="nav-view" class="nav-small-button">
-               {% include 'summary/layout/svg_nav.html' %} 
-            </span>
-            <span>
-                <select id="languageSwitcher" class="leng-select">
-                    <option value="en">EN</option>
-                    <option value="ar">AR</option>
-                </select>
-                <!-- Rounded switch -->
-                <label class="switch">
-                    <input id="dark-mode" type="checkbox">
-                    <span class="slider round"></span>
-                </label>
-            </span>
-        </div>
-    </header>
-
-    <nav id="navigation" class="navigation">
-        <ul class="" id="nav-items">
-            <li class="" id="Courses">
-                <a class="nav-link btn nav-list" id="home"  href="{% url 'index' %}" title="Home "> <strong id="username"></strong></a>
-            </li>
-            <!-- User but   -->
-            <li class="" id="profile-item" style="display: none;">
-                <a class="nav-link btn nav-list" href="{% url 'profile' %}" title="View Profile"> <strong id="username"></strong></a>
-            </li>
-            <li class="" id="admin-item" style="display: none;">
-                <a class="nav-link btn" href="/admin/"><strong id="userAdmin">Admin</strong></a>
-            </li>
-            <li class="" id="favourites-item" style="display: none;">
-                <a class="nav-link btn" id="favourites" href="{% url 'favorite' %}" title="View Favourites">Favourites</a>
-            </li>
-            <li class="" id="uploud-course" style="display: none;">
-                <a class="nav-link btn" id="uploud-course" href="{% url 'upload_csv' %}" title="Uploud Course">Upload Course</a>
-            </li>
-            <li class="" id="summary-upload" style="display: none;">
-                <a class="nav-link btn" id="summary-upload" href="{% url 'summary_upload' %}" title="Uploud Summary">Upload Summary</a>
-            </li>
-        </ul>
-        
-
-
-        <form class="form-inline my-2 my-lg-0" id="searchForm">
-            <input class="form-control mr-sm-2" type="search" id="search" name="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-bg  my-2 my-sm-0"id="search_send"  type="submit">Search</button>
-          </form>
+            <form class="form-inline my-2 my-lg-0" id="searchForm">
+                <input class="form-control mr-sm-2" type="search" id="search"
+                    name="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-bg  my-2 my-sm-0" id="search_send"
+                    type="submit">Search</button>
+            </form>
 
             <!-- Login and registear but-->
-        <ul>
-            <li class="" id="login-item">
-                <a class="nav-link btn" id="log-in " href="{% url 'login' %}"  title="Log In">Log In</a>
-            </li>
-            <li class="" id="register-item">
-                <a class="nav-link btn" id="register" href="{% url 'register' %}" title="Register">Register</a>
-            </li>
-            <li class="" id="logout-item" style="display: none;">
-                <a class="nav-link btn btn-danger" id="log-out" title="Log Out">Log Out</a>
-            </li>
+            <ul>
+                <li class id="login-item">
+                    <a class="nav-link btn" id="log-in"
+                        href="{% url 'login' %}" title="Log In">Log In</a>
+                </li>
+                <li class id="register-item">
+                    <a class="nav-link btn" id="register"
+                        href="{% url 'register' %}"
+                        title="Register">Register</a>
+                </li>
+                <li class id="logout-item" style="display: none;">
+                    <a class="nav-link btn btn-danger" id="log-out"
+                        title="Log Out">Log Out</a>
+                </li>
 
-        </ul>
-    </nav>
+            </ul>
+        </nav>
+        <!-- nav End -->
 
-    <main class="main">
+        <!-- main  -->
+        <main class="main">
+            <aside>
+                {% block left-side %}
+                {% endblock left-side %}
+            </aside>
+            <section>
 
-        <aside>
-            {% block left-side %}
-            {% endblock left-side %}
-        </aside>
-        <section>
+                <div class="message-alrt dislay-off" id="message-alrt"></div>
+                {% block body %}
+                {% endblock %}
+            </section>
+            <aside id="rightside">
+                {% block rightside %}
+                {% endblock %}
+            </aside>
+        </main>
+        <!-- Main End -->
 
-            <div class="message-alrt dislay-off" id="message-alrt"></div>
-            {% block body %}
-            {% endblock %}
-        </section>
-        <aside id="rightside" >
-            {% block rightside %}
-            {% endblock %}
-        </aside>
-    </main>
+        <footer class="footer">
+            {% include 'summary/layout/folwme.html' %}
+        </footer>
 
-    <footer class="footer">
-        {% include 'summary/layout/folwme.html' %}
-    </footer>
+        <script type="module"
+            src="{% static 'summary/js/layout.js' %}"></script>
+        <script type="module" src="{% static 'summary/js/login.js' %}"></script>
+        <script
+            src="https://cdn.ckeditor.com/4.20.0/standard/ckeditor.js"></script>
 
-    <script type="module" src="{% static 'summary/js/layout.js' %}"></script>
-    <script  type="module" src="{% static 'summary/js/login.js' %}"></script>
-    <script src="https://cdn.ckeditor.com/4.20.0/standard/ckeditor.js"></script>
-    <!-- <script src="https://cdn.ckeditor.com/ckeditor5/43.1.0/ckeditor5.js"></script> -->
-    <!-- <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.1.0/ckeditor5.css"> -->
-
-</body>
+    </body>
 
 </html>

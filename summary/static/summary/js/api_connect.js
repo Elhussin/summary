@@ -1,16 +1,8 @@
-import {    alertMessage, displayIteam, viewUploudImage, createCommaneElmeant, viewCommants,} from "./function.js";
-import {getCourses, getCourse, addCourseData, updateCourse, deleteCourse  } from "./api.js";
+import {alertMessage} from "./function.js";
+import {getCourses, getCourse, updateCourse, deleteCourse  } from "./api.js";
+import { viewCourses, displayItemDetails } from "./dat_view_html.js";
 
-import { viewCourses, displayItemDetails, summaryViewEventListeners, cardViewEventListeners,  fetchOneSummary, addDateToForm } from "./dat_view_html.js";
-// 
-
-//  fetch Courses 
-// يتم استدعاء الداله من ملف index
-// الداله تستدعي الداله getCourses من ملف api.js
-// وتقوم بعرض البيانات بعد استلامها من الداله getCourses
-// من خلال استدعاء الداله viewCourses
-// والتي تقوم بعرض البيانات بعد تحويلها الى عناصر html
-
+// fetch Courses End add to view
 const fetchCourses = async () => {
   try {
     const data = await getCourses();
@@ -23,7 +15,7 @@ const fetchCourses = async () => {
   }
 };
 
-// fetch one Ity
+// fetch one Cours
 const fetchOneCourses = async (id) => {
   try {
     // get one course from api
@@ -36,23 +28,6 @@ const fetchOneCourses = async (id) => {
 };
 
 
-//  to fetch one course
-
-//  Updat Course
-//  const modifyCourse = async (id, formData) => {
-//   try {
-//     const updatedCourse = await updateCourse(id, formData);
-//     fetchOneCourses(id);
-//   } catch (error) {
-//     console.error("Error:", error);
-//   }
-// };
-
-
-  
-
-
-  
 //  removeCourse
  const removeCourse = async (id) => {
     try {
@@ -68,7 +43,7 @@ const fetchOneCourses = async (id) => {
   };
   
 
-  //  Supmit View Course After  Edit
+  //  Edit course
 const updateCourseForm =async (courseID, formData) => {
         try {
           await updateCourse(courseID, formData);

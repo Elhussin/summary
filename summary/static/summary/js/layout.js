@@ -1,6 +1,5 @@
-import { alertMessage, setTheme ,initializeLanguageSwitcher,toggleNavItems,searchFunctian } from "./function.js";
+import {setTheme ,initializeLanguageSwitcher,toggleNavItems,searchFunctian } from "./function.js";
 
-// تحميل الصفحة والتحقق من الإعدادات الحالية
 document.addEventListener("DOMContentLoaded", () => {
     initializeDarkMode();
     initializeLanguageSwitcher();
@@ -31,10 +30,7 @@ function setupNavButton() {
     document.getElementById("nav-view").onclick = toggleNavItems;
   }
   
-  
-  
-
-// Add event listener to get search form data
+// search with seaerch button
 document.getElementById("searchForm").addEventListener("submit", async (e) => {
   e.preventDefault();
   const formData = new FormData(e.target);
@@ -42,9 +38,9 @@ document.getElementById("searchForm").addEventListener("submit", async (e) => {
   searchFunctian(searchQuery)
 });
 
+// search when write in the box
 document.getElementById("search").addEventListener("input", async (event) => {
   const searchQuery = event.target.value;
   searchFunctian(searchQuery)
   
 });
-// 

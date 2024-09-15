@@ -1,7 +1,8 @@
 import { getCourses,addRate } from "./api.js";
 import { viewCourses } from "./dat_view_html.js";
-
 import { translations } from "./translations.js";
+
+// Alert Message 
 const alertMessage = (message) => {
     const messageAlrt = document.getElementById("message-alrt");
     messageAlrt.style.display = "block";
@@ -11,6 +12,7 @@ const alertMessage = (message) => {
     }, 10 * 1000);
 };
 
+// Add iteam to view our romve 
 const displayIteam = (iteamView, IteamOff, diplayType) => {
     if (iteamView.style.display == "none") {
         iteamView.style.display = diplayType;
@@ -20,6 +22,7 @@ const displayIteam = (iteamView, IteamOff, diplayType) => {
     }
 };
 
+// View Uploud Image  
 const viewUploudImage = () => {
     document
         .getElementById("id_image")
@@ -38,7 +41,6 @@ const viewUploudImage = () => {
 
 // create Commane Elmeant
 const createCommaneElmeant = () => {
-
     const newDiv = document.createElement("div");
     newDiv.className = "w-90 m-auto-top10";
     newDiv.innerHTML = `
@@ -55,14 +57,11 @@ const createCommaneElmeant = () => {
 
 // view   Comments
 const viewCommants = (data) => {
-  console.log("data",data); 
-
     const newDiv = document.createElement("div");
     newDiv.className = "w-90 m-auto-top10";
     newDiv.innerHTML = `
     <h2 class="m-1">Comments</h2>
-    <hr>
-    `;
+    <hr>`;
     data.reverse().forEach((iteam) => {
         newDiv.innerHTML += `
         <div class="cmment-box">
@@ -78,13 +77,14 @@ const viewCommants = (data) => {
     return newDiv;
 };
 
+// Update Url And Page Title
 const updatpageurl = (data,title,itemId) => {
     document.title = `${title}`;
     const newUrl = `/view/${data}/${itemId}`;
     history.pushState({ path: newUrl }, "", newUrl);
 };
 
-
+// Change Page Theme 
 function setTheme(mode, body, header) {
     if (mode === "dark") {
       body.classList.add("dark-mode");
@@ -114,6 +114,7 @@ function applyTranslations(language) {
     document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
   }
 
+  // Save Selacte  Language
 function initializeLanguageSwitcher() {
     const languageSwitcher = document.getElementById("languageSwitcher");
     const savedLanguage = localStorage.getItem("selectedLanguage") || "en";
@@ -132,17 +133,16 @@ function initializeLanguageSwitcher() {
 
 
   //view nav items for mobile view
-  function toggleNavItems() {
+function toggleNavItems() {
     const navigation = document.getElementById("navigation");
     navigation.style.display = navigation.style.display === "none" ? "block" : "none";
   }
-
 
 //  display on and off
 const   toggleVisibility = (element)=> {
 
   if (element) {
-    // التبديل بين الإخفاء والإظهار
+    // Change Betwwen Display our none
     if (element.style.display === 'none') {
       element.style.display = 'block'; // إظهار العنصر
     } else {
@@ -153,34 +153,40 @@ const   toggleVisibility = (element)=> {
   }
 }
 
+// Check If Token Save
 const checkAccessToken = () => {
   const accessToken = localStorage.getItem("accessToken");
   if (!accessToken) {
     alertMessage("Please login to View course details");
-    console.log("NO accessToken");
+    return ;
   } else {
     return accessToken;
   }
 }
+
+// Check Use login And Get his Detiles
 const checkUserLogin = () => {
   let user = localStorage.getItem("user");
   user = JSON.parse(user);
   if (!user) {
     alertMessage("Please login to add course");
     console.log("NO accessToken");
+    return;
   } else {
     return user;
   }
 }
 
+// View Date Only 
 const getdate = (date) => {
   const currentDate = new Date(date);
   const dateOnly = currentDate.toISOString().split('T')[0];
   return dateOnly;
 };
 
+// Confiarm User With data
 const ConfiarmActifeUserWithData = async (user, data) => {
-  if (user.id == data.user.id) {
+  if (user.id === data.user.id) {
     console.log("user is the one who add the course");
     return true;
   } else {
@@ -188,14 +194,13 @@ const ConfiarmActifeUserWithData = async (user, data) => {
   }
 }
 
+// Capitalize First Lattear 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 }
 
-
-
+// Search In Data 
 const searchFunctian=async(searchQuery)=>{
-  
   var AllCourses=await getCourses()
   const findCourses = AllCourses.filter((course) => {
     return course.title.includes(searchQuery);
@@ -209,6 +214,7 @@ const searchFunctian=async(searchQuery)=>{
   }
 
 }
+
 const favoriteCourses = async () => {
   const user = checkUserLogin();
 
@@ -226,6 +232,7 @@ const favoriteCourses = async () => {
   }
 };
 
+// Get Rate And Calcoulte it
 const getRate=(data)=> {
   let rate= data.rate.reduce((acc, item) => acc + item.rate, 0) / data.rate.length
   rate=rate.toFixed(1);
@@ -235,7 +242,7 @@ const getRate=(data)=> {
   return rate;
 }
 
-
+// creat RAte Button 
 const createRateeButton=(data)=>{
   getRate(data);
   const CountRate =data.rate.length;
@@ -251,17 +258,11 @@ const createRateeButton=(data)=>{
   <input type="radio" name="star" id="star5" value="1"><label for="star5"></label>
   </div>
   <div><p>Rate: ${getRate(data)} <p>Votes:${CountRate} </p></p></div>
-
-
-
 `;
   return newDiv;
 }
 
-
-
-
-
+// get rate value And Add it 
 const getrateValue=()=>{
   var course_id = document.getElementById("course-id").dataset.courseid;
   const getActiveUsre = checkUserLogin().id;
@@ -281,10 +282,11 @@ const getrateValue=()=>{
   });
 }
 
-
 export {
-    alertMessage, displayIteam, viewUploudImage, createCommaneElmeant, viewCommants,updatpageurl ,
-    setTheme ,applyTranslations ,initializeLanguageSwitcher,toggleNavItems,
-    toggleVisibility,checkAccessToken,getdate, ConfiarmActifeUserWithData ,checkUserLogin,capitalizeFirstLetter,searchFunctian,favoriteCourses,getRate
+    alertMessage, displayIteam, viewUploudImage, createCommaneElmeant, 
+    viewCommants,updatpageurl ,setTheme ,applyTranslations ,
+    initializeLanguageSwitcher,toggleNavItems,toggleVisibility,
+    checkAccessToken,getdate, ConfiarmActifeUserWithData ,
+    checkUserLogin,capitalizeFirstLetter,searchFunctian,favoriteCourses,getRate
     ,createRateeButton,getrateValue
 };

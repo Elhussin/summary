@@ -11,3 +11,4 @@ media*
 
 # Ignore environment variables file
 .env
+arch*

@@ -1,4 +1,3 @@
-
 {% extends "summary/layout.html" %}
 {% load static %}
 
@@ -15,19 +14,21 @@
 <h1>Upload CSV File</h1>
 
 {% if messages %}
-    <ul class="message-list">
-        {% for message in messages %}
-            <li class="message {{ message.tags }}">
-                {{ message|safe }} 
-            </li>
-        {% endfor %}
-    </ul>
+<ul class="message-list">
+    {% for message in messages %}
+    <li class="message {{ message.tags }}">
+        {{ message|safe }}
+    </li>
+    {% endfor %}
+</ul>
 {% endif %}
 
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
+    <div class="mb-3">
     {{ form.as_p }}
-    <button type="submit">Upload</button>
+    </div>
+    <button class="btn-bg" type="submit">Upload</button>
 </form>
 
 <p>
@@ -35,9 +36,9 @@
     <a href="{% static 'summary/csv/course_template.csv' %}" download>Download CSV Template</a>
 </p>
 
-<p></p>
-    You Can Download CSV Template For Summary:
-    <a href="{% static 'summary/csv/summary_template.csv' %}" download>Download CSV Template</a>
+<p>
+You Can Download CSV Template For Summary:
+<a href="{% static 'summary/csv/summary_template.csv' %}" download>Download CSV Template</a>
 </p>
 
 {% endblock %}
@@ -48,8 +49,3 @@
 
 {% block rightside %}
 {% endblock %}
-
-
-                
-
-

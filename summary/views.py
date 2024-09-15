@@ -11,9 +11,6 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated, BasePermission
 from summary.forms import UserRegistraForm, CSVUploadForm
 import csv
-
-
-
 from .models import (
     Summary,
     Course,
@@ -298,21 +295,20 @@ def upload_csv(request):
         if form.is_valid():
             csv_file = request.FILES['file']
             
-            # التحقق من نوع الملف
+            # Confiarm File Type.
             if not csv_file.name.endswith('.csv'):
                 messages.error(request, 'File Type Should be  CSV.')
                 return redirect('upload_csv')
             
             try:
-                # قراءة الملف
+                #Reading File Type.
                 decoded_file = csv_file.read().decode('utf-8').splitlines()
                 reader = csv.DictReader(decoded_file)
 
-                # التحقق من صحة البيانات
+                # Confiarm Data.
                 for row in reader:
                     title = row.get('title')
                     description = row.get('description', '')
-                    image= row.get('image', '')
                     user_id = row.get('user_id', '')
                     
                     if not user_id:
@@ -330,7 +326,6 @@ def upload_csv(request):
                     Course.objects.create(
                             title=title,
                             description=description,
-                            image=image,
                             user_id = user_id
                         )
                     messages.success(request, 'All Courses uploaded successfully.')
@@ -347,29 +342,27 @@ def upload_csv(request):
     return render(request, 'summary/upload_csv.html', {'form': form})
 
 
-# @authentication_classes([JWTAuthentication])
-# @permission_classes([IsAuthenticated])
+
 def summary_upload(request):
     if request.method == "POST":
         form = CSVUploadForm(request.POST, request.FILES)
         if form.is_valid():
             csv_file = request.FILES['file']
             
-            # التحقق من نوع الملف
+            # confarm file Type
             if not csv_file.name.endswith('.csv'):
                 messages.error(request, 'File Type Should be  CSV.')
                 return redirect('upload_csv')
             
             try:
-                # قراءة الملف
+                #Readin File
                 decoded_file = csv_file.read().decode('utf-8').splitlines()
                 reader = csv.DictReader(decoded_file)
 
-                # التحقق من صحة البيانات
+                # Confiarm Data
                 for row in reader:
                     title = row.get('title')
                     description = row.get('description', '')
-                    image= row.get('image', '')
                     user_id = row.get('user_id', '')
                     course_id = row.get('course_id', '')
                     
@@ -389,10 +382,9 @@ def summary_upload(request):
                         continue
                     
 
-                    Course.objects.create(
+                    Summary.objects.create(
                             title=title,
                             description=description,
-                            image=image,
                             user_id = user_id,
                             course_id=course_id,
                         )

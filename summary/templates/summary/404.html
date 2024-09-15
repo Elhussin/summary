@@ -1,32 +1,38 @@
-<!-- templates/404.html -->
-<html>
-<head>
-    <title>Page Not Found</title>
-</head>
-<body>
-    <h1>Sorry, the page you are looking for does not exist.</h1>
-    <a href="{% url 'index' %}">Go back to the homepage</a>
-</body>
-</html>
 
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>صفحة غير موجودة</title>
-    <style>
-        /* هنا يمكنك إضافة أنماط CSS لتخصيص الصفحة */
-    </style>
-</head>
-<body>
-    <h1>عفواً، الصفحة التي تبحث عنها غير موجودة!</h1>
-    <p>سيتم إعادة توجيهك إلى الصفحة الرئيسية قريبًا.</p>
-        <script>
-            const redirectTime = 3000;
-            setTimeout(() => {
-                window.location.href = "/"; 
-            }, redirectTime);
-        </script>
 
-</body>
-</html>
+{% extends "summary/layout.html" %}
+{% load static %}
+
+
+
+{% block title %}Error {% endblock %}
+
+
+
+
+{% block body %}
+<h1>Sorry, the page you are looking for does not exist.</h1>
+<a href="{% url 'index' %}">Go back to the homepage</a>
+
+
+<p>You will redireact to home page</p>
+
+    <script>
+        const redirectTime = 3000;
+        setTimeout(() => {
+            window.location.href = "/"; 
+        }, redirectTime);
+    </script>
+
+
+
+{% endblock %}
+
+
+
+
+
+                
+
+
