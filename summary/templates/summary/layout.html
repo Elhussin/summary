@@ -67,18 +67,18 @@
                     <a class="nav-link btn" id="userAdmin" href="/admin/"
                         title="Admin">Admin</a>
                 </li>
-                <li  id="favourites-item" style="display: none;">
-                    <a class="nav-link btn" id="favourites"
+                <li  id="favourites-item" class="dislay-off">
+                    <a class="nav-link btn " id="favourites"
                         href="{% url 'favorite' %}"
                         title="View Favourites">Favourites</a>
                 </li>
-                <li  style="display: none;">
-                    <a class="nav-link btn" id="uploud-course"
+                <li >
+                    <a class="nav-link btn dislay-off" id="uploud-course"
                         href="{% url 'upload_csv' %}"
                         title="Uploud Course">Upload Courses</a>
                 </li>
-                <li  style="display: none;">
-                    <a class="nav-link btn" id="summary-upload"
+                <li  style=>
+                    <a class="nav-link btn dislay-off" id="summary-upload"
                         href="{% url 'summary_upload' %}"
                         title="Uploud Summary">Upload Summary</a>
                 </li>

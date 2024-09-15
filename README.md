@@ -12,7 +12,6 @@
 - [Contributing](#contributing)
 - [Contact](#contact)
 
-
 ## Overview
 
 The **Summaries Project** is a web application built using **Django** and **Django REST Framework** for the backend, and **Axios** and **JWT (JSON Web Tokens)** for handling authentication and API requests on the frontend. The project allows users to interact with courses and summaries by liking, commenting, favoriting, and rating them. The application provides a clean and secure authentication mechanism using JWT for both protected and public API endpoints.
@@ -120,9 +119,6 @@ Summaries/
 ├── requirements.txt           # Required libraries and dependencies
 └── README.md                  # This README file
 
-
-
-
 ### Modules Included:
 
 1. **Summary**: Represents the main summary content.
@@ -229,7 +225,8 @@ pip install -r requirements.txt
 ### 4. Apply Migrations
 
 ```bash
-python manage.py migrate
+python manage.py makemigrations
+ python manage.py migrate
 ```
 
 ### 5. Create a Superuser
@@ -382,5 +379,3 @@ For any questions or feedback, please feel free to reach out to the project owne
 3. Make your changes and commit (`git commit -m 'Add feature'`).
 4. Push to the branch (`git push origin feature-branch`).
 5. Open a Pull Request.
-
-

@@ -255,7 +255,7 @@ def register(request):
             user = form.save(commit=False)
             user.set_password(form.cleaned_data["password"])
             user.save()
-            messages.success(request, f"Account created successfully ! <a href='/login'>Login</a>")
+            messages.success(request, f"Account created successfully ! <a href='/login/'>Login</a>")
             return render(request, "summary/auth/register.html", {"form": form})
 
             # return redirect("login")

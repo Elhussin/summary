@@ -16,8 +16,6 @@ const AddCourseDataToHTml = (data) => {
     newDiv.className = "card-datiles";
     newDiv.innerHTML = `
         <img src="${data.image}" alt="${data.title}">
-        <div class="card-content">
-        </div>
     `;
     return newDiv;
 };
@@ -31,8 +29,8 @@ const viewCourseDatiles = (data) => {
     const newDiv = document.createElement("div");
     newDiv.className = " w-90 m-auto-top10";
     newDiv.innerHTML = `   
-        <h1>Title: ${capitalizeFirstLetter(data.title)}  </h1>
-        <p> Description: ${data.description} </p>
+        <h1 class="white-space" >Title: ${capitalizeFirstLetter(data.title)}  </h1>
+        <p class="white-space"> Description: ${data.description} </p>
         <div class="Cardnavgation">
         <p id="course-id" data-courseid="${data.id}">Course No : ${data.id} </p>
         <p>By <a href="/users" class="user_id"   id="${data.user.id}">${capitalizeFirstLetter(data.user.username)}</a> </p> 
@@ -55,8 +53,8 @@ const viewSummary = (data) => {
     data.reverse().forEach((iteam) => {
         newDiv.innerHTML += `
         <div id="${iteam.id}" class="summary-box">
-        <h3 class="card-title"> ${iteam.title} </h3> 
-        <div style="white-space: pre-wrap;"> ${iteam.description} </div>
+        <h3 class="card-title white-space"> ${iteam.title} </h3> 
+        <div class="white-space"> ${iteam.description} </div>
         <div class="Cardnavgation">
         <p> Likes: ${iteam.likes.filter((item) => item.likes).length} </p>
         <p> Unlikes: ${iteam.likes.filter((item) => !item.likes).length} </p>
@@ -124,7 +122,7 @@ const viewOneSummary = (data) => {
     <h2>Summary : ${capitalizeFirstLetter(data.title)}</h2>
     <hr>
     <div>
-    <div style="white-space: pre-wrap;"> ${data.description} </div>
+    <div class="white-space"> ${data.description} </div>
     <div class="Cardnavgation">
     <p> Likes: ${data.likes.filter((item) => item.likes).length} </p>
     <p> Unlikes: ${data.likes.filter((item) => !item.likes).length} </p>
