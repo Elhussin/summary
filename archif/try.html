@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>عرض بيانات الدورة</title>
+</head>
+<body>
+  <h1>{{title}}</h1>
+  <p>{{content}}</p>
+  <h2>منشئ الدورة:</h2>
+  <p>بواسطة: {{user.username}}</p>
+  <h2>الدورة:</h2>
+  <p>{{course.name}}</p>
+  <p>وصف الدورة: {{course.description}}</p>
+
+  <script>
+
+
+    let title = document.querySelector('h1');
+    let content = document.querySelector('p:nth-child(2)');
+    let username = document.querySelector('p:nth-child(4)');
+    let courseName = document.querySelector('p:nth-child(6)');
+    let courseDescription = document.querySelector('p:nth-child(7)');
+
+    title.textContent = data.title;
+    content.textContent = data.content;
+    username
+
+<!-- 
+  <ul id="comments-list"></ul>
+
+  <script>
+
+
+    const commentsList = document.getElementById('comments-list');
+
+    data.course.comments.forEach(comment => {
+      const li = document.createElement('li');
+      li.innerHTML = `
+        ${comment.comment}
+        <span>(${comment.likes.length} إعجاب)</span>
+        <button class="edit">تعديل</button>
+        <button class="delete">حذف</button>
+      `;
+
+      commentsList.appendChild(li);
+    });
+
+    // إضافة حدث النقر لأزرار التعديل والحذف (هذا مثال بسيط)
+    document.addEventListener('click', (event) => {
+      if (event.target.classList.contains('edit')) {
+        console.log('تم النقر على زر التعديل');
+        // هنا يمكنك تنفيذ وظيفة التعديل
+      } else if (event.target.classList.contains('delete')) {
+        console.log('تم النقر على زر الحذف');
+        // هنا يمكنك تنفيذ وظيفة الحذف
+      }
+    });
+  </script> -->

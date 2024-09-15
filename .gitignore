@@ -11,4 +11,5 @@ media*
 
 # Ignore environment variables file
 .env
-arch*
+# Ignore the Archife file in the root 
+arch/

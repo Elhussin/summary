@@ -1,0 +1,41 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منع إعادة التحميل وتخصيص الزر</title>
+</head>
+<body>
+
+    <h1>منع إعادة التحميل وتحويله إلى مستمع مخصص</h1>
+    <p>اضغط على زر F5 أو Ctrl + R لترى الرسالة المخصصة.</p>
+
+    <script>
+        // منع إعادة التحميل عند الضغط على F5 أو Ctrl + R
+        window.addEventListener('keydown', function(event) {
+            // إذا كان الزر المضغوط هو F5
+            if (event.key === 'F5') {
+                event.preventDefault(); // منع إعادة التحميل
+                alert('لقد تم تعطيل زر إعادة التحميل F5 وتم تخصيصه لوظيفة أخرى.');
+            }
+            // إذا كان الزر المضغوط هو Ctrl + R
+            if ((event.ctrlKey || event.metaKey) && event.key === 'r') {
+                event.preventDefault(); // منع إعادة التحميل
+                alert('لقد تم تعطيل إعادة التحميل باستخدام Ctrl + R وتم تخصيصه لوظيفة أخرى.');
+            }
+        });
+
+        // منع إعادة التحميل التلقائي عند إغلاق الصفحة
+        window.addEventListener('beforeunload', function (event) {
+            // منع إعادة التحميل التلقائي أو إغلاق الصفحة
+            event.preventDefault();
+            event.returnValue = ''; // هذه العبارة لازمة لبعض المتصفحات لإظهار رسالة التأكيد
+        });
+    </script>
+
+</body>
+</html>
