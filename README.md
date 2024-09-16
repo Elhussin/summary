@@ -18,6 +18,19 @@ The **Summaries Project** is a web application built using **Django** and **Djan
 
 ## Project Name: **Summaries**
 
+## Distinctiveness and Complexity
+### Distinctiveness:
+    - Modular Design: Custom modules like Summary, Course, Likes, Comments, and Ratings, tailored for content curation and user interaction.
+    - User Engagement Tools: Likes, favorites, and rating systems that encourage user interaction around educational content.
+    - API-Driven: Django REST Framework (DRF) with JWT-based authentication allows for scalable, secure, and efficient communication between frontend (Axios) and backend.
+    - Customizable Content Flow: Focus on user-generated educational content distinguishes the app from typical static content apps.
+### Complexity:
+    - Interconnected Models: Managing many-to-many and one-to-many relationships (e.g., Summary, Course, Likes) requires careful data handling.
+    - User Interaction Management: Handling actions like likes, favorites, and ratings efficiently adds layers of complexity.
+    - Form Handling: JavaScript integration for real-time user actions (like/unlike) adds frontend-backend complexity.
+    - Efficient Querying: Ensuring performant data querying, caching, and API token management (JWT) increases backend complexity.
+    - Real-time Updates: Adding real-time features (if applicable) would involve technologies like Django Channels or WebSockets.
+
 ## Features
 
 1. **User Authentication**:

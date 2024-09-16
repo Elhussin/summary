@@ -1,0 +1,8 @@
+__pycache__*
+
+venv/
+archif/
+media/
+.env
+migrations*
+styles.css.map

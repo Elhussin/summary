@@ -50,11 +50,13 @@ import {
 
 const viewContinear = document.getElementById("cours-container");
 const viewDatilesBox = document.getElementById("cours-detieals");
-
+const buttonContinear = document.getElementById("buttonContinear");
 // View AllCourses
 const viewCourses = (data) => {
   viewDatilesBox.innerHTML = "";
   viewContinear.innerHTML = "";
+
+  
   // view all courses
   //  return all courses data in html elements
   viewContinear.innerHTML += data
@@ -113,6 +115,9 @@ const cardViewEventListeners = (data) => {
 const displayItemDetails = async (data) => {
   viewDatilesBox.innerHTML = "";
   viewContinear.innerHTML = "";
+  if(buttonContinear){
+    buttonContinear.innerHTML = "";
+    }
 
   // AddCourseDataToHTml will return the course data in html elements
   viewDatilesBox.appendChild(AddCourseDataToHTml(data));
@@ -246,6 +251,9 @@ const summaryViewEventListeners = () => {
 const fetchOneSummary = async (data) => {
   viewDatilesBox.innerHTML = "";
   viewContinear.innerHTML = "";
+  if(buttonContinear){
+  buttonContinear.innerHTML = "";
+  }
 
   const token = checkAccessToken();
   if (token) {

@@ -262,7 +262,7 @@ header.dark-mode {
   flex-grow: 2;
 }
 .main aside {
-  min-width: 300px;
+  min-width: 200px;
 }
 
 .message-alrt {
