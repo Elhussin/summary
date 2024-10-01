@@ -14,8 +14,10 @@ SECRET_KEY = config("DJANGO_SECRET_KEY", default="unsafe-secret-key-for-dev")
 DEBUG = config("DJANGO_DEBUG", default=False, cast=bool)
 
 #
-ALLOWED_HOSTS = config("DJANGO_ALLOWED_HOSTS",
-                    default="localhost,127.0.0.1").split(",")
+# ALLOWED_HOSTS = config("DJANGO_ALLOWED_HOSTS",
+#                     default="localhost,127.0.0.1").split(",")
+ALLOWED_HOSTS = ['summayies_app.up.railway.app', 'localhost', '127.0.0.1']
+
 
 
 # Application definition
