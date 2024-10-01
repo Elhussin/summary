@@ -30,6 +30,10 @@ RUN pip install --upgrade pip \
 # جمع الملفات الثابتة
 RUN python manage.py collectstatic --noinput
 
+# إعداد البيئة لـ Railway
+ENV DJANGO_SETTINGS_MODULE=summayies_app.settings
+  # تأكد من تحديث هذا إذا كان لديك إعدادات خاصة
+
 # فتح المنفذ 8000
 EXPOSE 8000
 
