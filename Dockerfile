@@ -1,7 +1,7 @@
 # استخدام صورة Python الأساسية
 FROM python:3.10-slim
 
-# تثبيت المكتبات الأساسية المطلوبة للحزم
+# تثبيت المكتبات الأساسية المطلوبة
 RUN apt-get update && apt-get install -y \
     python3-dev \
     default-libmysqlclient-dev \
@@ -30,9 +30,9 @@ RUN pip install --upgrade pip \
 # جمع الملفات الثابتة
 RUN python manage.py collectstatic --noinput
 
-# إعداد البيئة لـ Railway
-ENV DJANGO_SETTINGS_MODULE=summayies_app.settings
-  # تأكد من تحديث هذا إذا كان لديك إعدادات خاصة
+# تشغيل أوامر الترحيل
+RUN python manage.py makemigrations
+RUN python manage.py migrate
 
 # فتح المنفذ 8000
 EXPOSE 8000
