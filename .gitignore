@@ -5,4 +5,8 @@ archif/
 media/
 .env
 migrations*
-styles.css.map
+
+.git/
+.idea/
+docker-compose
+Dockerfile

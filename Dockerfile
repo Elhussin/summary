@@ -9,13 +9,16 @@ RUN apt-get update && apt-get install -y \
     libssl-dev \
     libffi-dev \
     pkg-config \
-    && apt-get clean
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # تعيين دليل العمل
 WORKDIR /app
 
 # نسخ ملفات المشروع
 COPY . /app/
+# قم بنسخ ملفات المشروع بدون مجلد venv
+WORKDIR /app
 
 # إنشاء بيئة افتراضية
 RUN python -m venv /opt/venv
@@ -29,10 +32,6 @@ RUN pip install --upgrade pip \
 
 # جمع الملفات الثابتة
 RUN python manage.py collectstatic --noinput
-
-# تشغيل أوامر الترحيل
-RUN python manage.py makemigrations
-RUN python manage.py migrate
 
 # فتح المنفذ 8000
 EXPOSE 8000

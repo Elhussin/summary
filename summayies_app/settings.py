@@ -11,13 +11,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = config("DJANGO_SECRET_KEY", default="unsafe-secret-key-for-dev")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config("DJANGO_DEBUG", default=False, cast=bool)
+# DEBUG = config("DJANGO_DEBUG", default=False, cast=bool)
+DEBUG=False
 
 #
 # ALLOWED_HOSTS = config("DJANGO_ALLOWED_HOSTS",
 #                     default="localhost,127.0.0.1").split(",")
-# ALLOWED_HOSTS = ['summayies_app.up.railway.app', 'localhost', '127.0.0.1']
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['summayies_app.up.railway.app', 'localhost', '127.0.0.1','31.166.91.32']
+# ALLOWED_HOSTS = ['*']
+
 
 
 
@@ -34,6 +36,10 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
 ]
 
+# summayies_app
+# gunicorn --workers 3 summayies_app.wsgi:application --bind 127.0.0.1:8001
+        # gunicorn -w 4 -b 127.0.0.1:8000 summayies_app:summayies_app --log-level debug
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -43,6 +49,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = "summayies_app.urls"
@@ -80,7 +87,16 @@ DATABASES = {
     }
 }
 
-
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'cs50_summary',
+#         'USER': 'root',
+#         'PASSWORD': 'yourpassword',
+#         'HOST': 'db',  # يجب أن يتطابق مع اسم الخدمة في docker-compose.yml
+#         'PORT': '3306',
+#     }
+# }
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 AUTH_PASSWORD_VALIDATORS = [
@@ -106,13 +122,18 @@ STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Set the static files directory
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "summary/static")]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 # Media settings
 MEDIA_URL = "/media/"
 
 # Set the media files directory
 MEDIA_ROOT = os.path.join(BASE_DIR, "summary/media")
+
+# اعدادت تفعل مع النشر
+SECURE_SSL_REDIRECT = True
+CSRF_COOKIE_SECURE = True
+SECURE_HSTS_PRELOAD = True
 
 
 # Default primary key field type
@@ -165,3 +186,24 @@ SECURE_CONTENT_TYPE_NOSNIFF = True     # to prevent MIME type sniffing
 SESSION_COOKIE_SECURE = True           # to prevent session cookie from being sent over HTTP
 CSRF_COOKIE_SECURE = False             # to prevent CSRF cookie from being sent over HTTP
 X_FRAME_OPTIONS = "DENY"               # to prevent clickjacking
+
+
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "file": {
+            "level": "ERROR",
+            "class": "logging.FileHandler",
+            "filename": os.path.join(BASE_DIR, "error.log"),
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["file"],
+            "level": "ERROR",
+            "propagate": True,
+        },
+    },
+}

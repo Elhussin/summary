@@ -1,27 +1,49 @@
 version: '3'
 
+
 services:
   web:
     build: .
-    command: gunicorn --bind 0.0.0.0:8000 summayies_app.wsgi:application
+    command: >
+      sh -c "python manage.py migrate &&
+             gunicorn --bind 0.0.0.0:8000 summayies_app.wsgi:application"
     volumes:
       - .:/app
     ports:
       - "8000:8000"
     depends_on:
       - db
+    env_file:
+      - .env  # استيراد المتغيرات من ملف .env
 
+  # db:
+  #   image: mysql:8.0
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: ""
+  #     MYSQL_DATABASE: ${DB_NAME}
+  #     MYSQL_USER: ${DB_USER}
+  #     MYSQL_PASSWORD: ${DB_PASSWORD}
+  #   ports:
+  #     - "3306:3306"
+  #   volumes:
+  #     - mysql_data:/var/lib/mysql
   db:
     image: mysql:8.0
     environment:
       MYSQL_ROOT_PASSWORD: ''
       MYSQL_DATABASE: cs50_summary
-      MYSQL_USER: 'root'
-      MYSQL_PASSWORD: ''
+      # MYSQL_USER: 'root'
+      # MYSQL_PASSWORD: ''
+      # - YSQL_ALLOW_EMPTY_PASSWORD
+      # - MYSQL_RANDOM_ROOT_PASSWORD
     ports:
       - "3306:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
 
 volumes:
   mysql_data:

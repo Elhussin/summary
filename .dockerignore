@@ -1,0 +1,11 @@
+# تجاهل ملفات البيئة الافتراضية
+venv/
+path/to/venv/lib64/
+
+__pycache__
+*.pyc
+.venv
+.git
+.idea
+node_modules
+
