@@ -71,30 +71,30 @@ TEMPLATES = [
 WSGI_APPLICATION = "summayies_app.wsgi.application"
 
 # Set the database configuration
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.mysql",
-#         "NAME": config("DB_NAME", default="cs50_summary"),
-#         "USER": config("DB_USER", default="root"),
-#         "PASSWORD": config("DB_PASSWORD", default=""),
-#         "HOST": config("DB_HOST", default="localhost"),
-#         "PORT": config("DB_PORT", default="3306"),
-#         "OPTIONS": {  # to avoid the error of strict mode
-#             "init_command": "SET sql_mode='STRICT_TRANS_TABLES'"
-#         },
-#     }
-# }
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'summary_db_l5f2',
-        'USER': 'summary_db_l5f2_user',
-        'PASSWORD': 'Fcj805LpIQOinqpv1UyEV5daG5WLfbdX',
-        'HOST': 'postgresql://summary_db_l5f2_user:Fcj805LpIQOinqpv1UyEV5daG5WLfbdX@dpg-csv5otrqf0us739j36p0-a/summary_db_l5f2',
-        'PORT': '5432',
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": config("DB_NAME", default="cs50_summary"),
+        "USER": config("DB_USER", default="root"),
+        "PASSWORD": config("DB_PASSWORD", default=""),
+        "HOST": config("DB_HOST", default="localhost"),
+        "PORT": config("DB_PORT", default="3306"),
+        "OPTIONS": {  # to avoid the error of strict mode
+            "init_command": "SET sql_mode='STRICT_TRANS_TABLES'"
+        },
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'summary_db_l5f2',
+#         'USER': 'summary_db_l5f2_user',
+#         'PASSWORD': 'Fcj805LpIQOinqpv1UyEV5daG5WLfbdX',
+#         'HOST': 'postgresql://summary_db_l5f2_user:Fcj805LpIQOinqpv1UyEV5daG5WLfbdX@dpg-csv5otrqf0us739j36p0-a/summary_db_l5f2',
+#         'PORT': '5432',
+#     }
+# }
 
 
 
