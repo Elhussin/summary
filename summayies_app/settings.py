@@ -113,9 +113,11 @@ STATICFILES_DIRS = [os.path.join(os.path.dirname(os.path.abspath(__file__)), "st
 STATIC_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "staticfiles")
 
 # Media files settings
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "media")
-
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "media")
+# Media files settings
+MEDIA_URL = '/media/'  # المسار الذي تستخدمه في التطبيق للوصول إلى الوسائط
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # الموقع الفعلي للوسائط في الخادم
 
 
 # اعدادت تفعل مع النشر
@@ -175,27 +177,48 @@ SESSION_COOKIE_SECURE = True           # to prevent session cookie from being se
 CSRF_COOKIE_SECURE = True             # to prevent CSRF cookie from being sent over HTTP
 X_FRAME_OPTIONS = "DENY"               # to prevent clickjacking
 
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         # 'console': {
+#         #     'level': 'DEBUG',
+#         #     'class': 'logging.StreamHandler',
+#         # },
+#         'file': {
+#             'level': 'DEBUG',
+#             'class': 'logging.FileHandler',
+#             'filename': os.path.join(BASE_DIR, 'debug.log'),
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['console', 'file'],
+#             'level': 'DEBUG',
+#         },
+#         'decouple': {
+#             'handlers': ['console', 'file'],
+#             'level': 'DEBUG',
+#         },
+#     },
+# }
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'handlers': {
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-        },
         'file': {
-            'level': 'DEBUG',
+            'level': 'DEBUG',  # مستوى التسجيل
             'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'debug.log'),
+            'filename': os.path.join(BASE_DIR, 'debug.log'),  # مسار ملف السجلات
         },
     },
     'loggers': {
         'django': {
-            'handlers': ['console', 'file'],
-            'level': 'DEBUG',
+            'handlers': ['file'],  # استخدم معالج الملفات فقط
+            'level': 'DEBUG',  # مستوى التسجيل
         },
         'decouple': {
-            'handlers': ['console', 'file'],
+            'handlers': ['file'],  # استخدم معالج الملفات فقط
             'level': 'DEBUG',
         },
     },
