@@ -13,3 +13,6 @@ migrations*
 docker-compose
 Dockerfile
 settings1.py
+
+debug.log
+error.log

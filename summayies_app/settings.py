@@ -1,25 +1,32 @@
 import os
 from decouple import config
 from datetime import timedelta
+from decouple import AutoConfig
 
+import dj_database_url
+
+
+
+config = AutoConfig(search_path=os.path.dirname(os.path.abspath(__file__)))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+print(config('DATABASE_URL', default='Not Found'))
 
+# Secret Key
+SECRET_KEY = config('DJANGO_SECRET_KEY', default='unsafe-secret-key-for-dev')
 
-# SECRET_KEY
-SECRET_KEY = config("DJANGO_SECRET_KEY", default="unsafe-secret-key-for-dev")
+# Debug Mode
+DEBUG = config('DJANGO_DEBUG', default=False, cast=bool)
 
-# SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = config("DJANGO_DEBUG", default=False, cast=bool)
-DEBUG=False
+# Allowed Hosts
 
-#
-# ALLOWED_HOSTS = config("DJANGO_ALLOWED_HOSTS",
-#                     default="localhost,127.0.0.1").split(",")
-ALLOWED_HOSTS = ['summary-lio1.onrender.com','localhost', '127.0.0.1','31.166.91.32','summayies_app.up.railway.app']
-# ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = config('DJANGO_ALLOWED_HOSTS', default='localhost,127.0.0.1').split(',')
 
+# Database Configuration
+DATABASES = {
+    'default': dj_database_url.config(default=config('DATABASE_URL'))
+}
 
 
 
@@ -70,33 +77,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "summayies_app.wsgi.application"
 
-# Set the database configuration
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": config("DB_NAME", default="cs50_summary"),
-        "USER": config("DB_USER", default="root"),
-        "PASSWORD": config("DB_PASSWORD", default=""),
-        "HOST": config("DB_HOST", default="localhost"),
-        "PORT": config("DB_PORT", default="3306"),
-        "OPTIONS": {  # to avoid the error of strict mode
-            "init_command": "SET sql_mode='STRICT_TRANS_TABLES'"
-        },
-    }
-}
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'summary_db_l5f2',
-#         'USER': 'summary_db_l5f2_user',
-#         'PASSWORD': 'Fcj805LpIQOinqpv1UyEV5daG5WLfbdX',
-#         'HOST': 'postgresql://summary_db_l5f2_user:Fcj805LpIQOinqpv1UyEV5daG5WLfbdX@dpg-csv5otrqf0us739j36p0-a/summary_db_l5f2',
-#         'PORT': '5432',
-#     }
-# }
-
-
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -117,15 +97,26 @@ USE_I18N = True
 USE_TZ = True
 
 # # Static files Settings
-STATIC_URL = "/static/"
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# STATIC_URL = "/static/"
+# # STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
     
     
-MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "summary/media")
+# MEDIA_URL = "/media/"
+# MEDIA_ROOT = os.path.join(BASE_DIR, "summary/media")
+
+# Static files settings
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")]
+STATIC_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "staticfiles")
+
+# Media files settings
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "media")
+
+
 
 # اعدادت تفعل مع النشر
 SECURE_SSL_REDIRECT = True
@@ -184,52 +175,28 @@ SESSION_COOKIE_SECURE = True           # to prevent session cookie from being se
 CSRF_COOKIE_SECURE = True             # to prevent CSRF cookie from being sent over HTTP
 X_FRAME_OPTIONS = "DENY"               # to prevent clickjacking
 
-
-
 LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "handlers": {
-        "file": {
-            "level": "ERROR",
-            "class": "logging.FileHandler",
-            "filename": os.path.join(BASE_DIR, "error.log"),
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        },
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'debug.log'),
         },
     },
-    "loggers": {
-        "django": {
-            "handlers": ["file"],
-            "level": "ERROR",
-            "propagate": True,
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'file'],
+            'level': 'DEBUG',
+        },
+        'decouple': {
+            'handlers': ['console', 'file'],
+            'level': 'DEBUG',
         },
     },
 }
-
-
-# LOGGING = {
-#     "version": 1,
-#     "disable_existing_loggers": False,
-#     "handlers": {
-#         "file": {  # لتسجيل الأخطاء في ملف
-#             "level": "ERROR",
-#             "class": "logging.FileHandler",
-#             "filename": os.path.join(BASE_DIR, "error.log"),
-#         },
-#         "console": {  # لتسجيل الأحداث في وحدة التحكم (الطرفية)
-#             "level": "DEBUG",
-#             "class": "logging.StreamHandler",
-#         },
-#     },
-#     "loggers": {
-#         "django": {  # مخصص لإطار عمل Django
-#             "handlers": ["file", "console"],  # يمكن استخدام كلا المعالجين
-#             "level": "DEBUG",  # يحدد المستوى الأدنى للتسجيل
-#             "propagate": True,  # يسمح بتمرير السجلات إلى loggers أخرى
-#         },
-#         "myapp": {  # مخصص لتطبيق معين (مثل "summary")
-#             "handlers": ["console"],
-#             "level": "INFO",
-#             "propagate": False,
-#         },
-#     },
-# }

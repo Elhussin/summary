@@ -1,0 +1,613 @@
+$font-stack: Arial, sans-serif;
+$transition: background-color 0.5s, color, 01s;
+$primary-color: #344e41;
+$secand-color: #3a5a40;
+$therd-color: #5c7650;
+$forth-color: #a3b18a;
+$color: #dad7cd;
+$font-color: white;
+$w-90: 90%;
+
+
+%flex-containers {
+  display: flex;
+  justify-content: space-between;
+  align-items: top;
+
+}
+
+%grid {
+  // margin: 20px auto;
+  background-color: #eee;
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: 1rem;
+}
+
+%grid-iteam {
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+
+}
+
+%CardNagat {
+  background-color: $primary-color;
+  padding: 10px;
+  border: 1px;
+  border-radius: 10px;
+  color: $color;
+  font-size: small;
+  font-style: italic;
+  text-align: center;
+  margin: 10px;
+}
+
+%ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+%ul-a {
+  text-decoration: none;
+  padding: 6px 12px;
+}
+
+%Cards-Containers {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+%cards {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.2s;
+  position: relative;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+.w-90 {
+  width: $w-90;
+}
+
+.bg-primary-color {
+  background-color: $primary-color;
+  color: $font-color;
+  font-size: small;
+  font-style: italic;
+}
+
+.m-auto-top10 {
+  margin: auto 10px;
+}
+
+.buttonContinear {
+  max-width: 350px;
+  margin: auto;
+  padding: 10px;
+}
+
+.white-space {
+  white-space: pre-wrap;
+}
+
+.btn-bg {
+  background-color: $forth-color;
+  color: $font-color;
+  border: 0px;
+  border-radius: 10px;
+  padding: 10px;
+  cursor: pointer;
+  transition: $transition;
+  // margin: 10px;
+  margin-top: 10px;
+  text-align: center;
+  min-width: 100px;
+  display: inline-block;
+  text-decoration: none;
+
+}
+
+.a-btn {
+  color: $font-color;
+  padding: 0px;
+}
+
+.btn-bg:hover {
+  background-color: $therd-color;
+
+  // color: $primary-color;
+}
+
+.btn-bg:focus {
+  outline: $color auto 1px;
+}
+
+
+.dislay-off {
+  display: none;
+}
+
+.certfi-grid {
+  @extend %grid;
+
+}
+
+.grid-iteam {
+  @extend %grid-iteam;
+
+  img {
+    width: auto;
+    height: auto;
+  }
+}
+
+body {
+  transition: $transition;
+  font: 100% $font-stack;
+  // margin: 0;
+  background-color: $color;
+  color: $primary-color;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+}
+
+body.light-mode {
+  background-color: $color;
+  color: $primary-color;
+}
+
+body.dark-mode {
+  background-color: $primary-color;
+  color: $font-color;
+}
+
+
+
+.Cardnavgation {
+  @extend %flex-containers;
+  @extend %CardNagat;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.header {
+  @extend %flex-containers;
+  transition: $transition;
+  padding: 1em;
+  align-items: center;
+
+
+  img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+  }
+
+
+  .leng-select {
+    // opacity: 0;
+    width: 43;
+    height: 25;
+    // margin: 0px;
+    padding: 0px 5px 4px 4px;
+    text-align: center;
+    border: 0px;
+    background-color: #344e41;
+    color: #a3b18a;
+    border-radius: 34px;
+    cursor: pointer;
+  }
+
+  option {
+    border-radius: 50%;
+
+
+  }
+
+
+  .title {
+    text-align: center;
+    margin: auto;
+    padding: 0;
+  }
+
+  .leng-select:focus-visible {
+    outline: $color auto 0px;
+  }
+
+
+}
+
+header.light-mode {
+  background-color: $therd-color;
+
+}
+
+header.dark-mode {
+  background-color: $primary-color;
+}
+
+.nav-small-button {
+  display: none;
+}
+
+/* dark mode button */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 25px;
+
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 3px;
+    background-color: $primary-color;
+    transition: 0.4s;
+  }
+
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 15px;
+    width: 15px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+  }
+
+  input:checked+.slider {
+    background-color: $color;
+  }
+
+  input:focus+.slider {
+    box-shadow: 0 0 1px $color;
+  }
+
+  input:checked+.slider:before {
+    transform: translateX(26px);
+  }
+
+  .slider.round {
+    border-radius: 34px;
+  }
+
+  .slider.round:before {
+    border-radius: 50%;
+  }
+}
+
+
+/* nav box */
+.navigation {
+  @extend %flex-containers;
+  flex-direction: row;
+  background-color: $forth-color;
+
+  ul {
+    @extend %ul;
+    display: flex;
+    flex-direction: row;
+
+  }
+
+  li {
+    display: flex;
+
+
+  }
+
+  li:hover {
+    background-color: $color
+  }
+
+
+}
+
+
+// main
+.main {
+  @extend %flex-containers;
+
+  section {
+    flex-grow: 2;
+  }
+
+  aside {
+    min-width: 200px;
+
+  }
+}
+
+.message-alrt {
+  @extend %ul;
+  background-color: $forth-color;
+  color: $font-color ;
+  margin: 10px;
+  padding: 10px;
+  text-align: center;
+  width: calc(100% - 20px);
+}
+
+.footer {
+  background-color: $therd-color;
+  justify-content: space-between;
+  display: flex;
+  margin-top: auto;
+  padding: 10px;
+  align-items: center;
+  color: $color;
+
+  a {
+    color: $color;
+    ;
+  }
+}
+
+// card view 
+.cards-container {
+  @extend %Cards-Containers;
+}
+
+.card {
+  width: 300px;
+  @extend %cards;
+
+  img {
+    width: 100%;
+    height: 300px;
+  }
+}
+
+.card-datiles {
+  @extend %cards;
+  width: 95%;
+  margin: 10px auto;
+
+  img {
+    width: 100%;
+    height: 300px;
+  }
+}
+
+
+.card-title {
+  font-size: 1.5em;
+  margin: 0;
+  color: $primary-color;
+}
+
+.card-content {
+  padding: 15px;
+}
+
+.card-description {
+  // color: #555;
+  color: $primary-color;
+  margin: 10px 0 0;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card-button {
+  position: absolute;
+  top: 0;
+  border: 0 solid rgba(255, 0, 0, 0);
+  border-radius: 34px;
+  padding: 0;
+  margin: 0;
+  all: unset;
+  cursor: pointer;
+
+}
+
+.card-button:hover {
+  border-color: $font-color;
+}
+
+.summary-box {
+  border: 1px solid $color;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+  background-color: $forth-color;
+  cursor: pointer;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cmment-box {
+  border: 1px solid $color;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+  background-color: $forth-color;
+  cursor: pointer;
+  justify-content: space-between;
+  align-items: center;
+  color: $color;
+}
+
+// class for the rating
+.rating {
+  @extend %CardNagat;
+  display: flex;
+  direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rating input {
+  display: none;
+}
+
+.rating label {
+  font-size: 2rem;
+  color: $color;
+  cursor: pointer;
+  padding: 0 5px;
+}
+
+.rating label:before {
+  content: '★';
+}
+
+.rating input:checked~label {
+  color: #ffc107;
+}
+
+.rating label:hover,
+.rating label:hover~label,
+.rating input:checked~label:hover,
+.rating input:checked~label:hover~label {
+  color: #ffc107;
+}
+
+
+// alert message 
+.message-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.message {
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+
+.message.success {
+  background-color: #d4edda;
+  color: $primary-color;
+  border: 1px solid #c3e6cb;
+}
+
+.message.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.message.info {
+  background-color: #d1ecf1;
+  color: #0c5460;
+  border: 1px solid #bee5eb;
+}
+
+.message.warning {
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeeba;
+}
+
+@media (max-width:1275px) {
+  .main {
+    flex-direction: column;
+    justify-content: center;
+
+    aside {
+      display: flex;
+      flex-direction: row;
+      order: -1;
+    }
+
+  }
+
+
+  
+}
+
+
+@media (max-width: 900px) {
+  .certfi-grid {
+    grid-template-columns: auto;
+  }
+
+  .header {
+    flex-direction: column;
+
+    img {
+      width: 100px;
+      height: 100px;
+      margin: 20px;
+      order: -1;
+    }
+  }
+
+  .nav-small-screen {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+
+  }
+
+  .nav-small-button {
+    display: block;
+  }
+
+  .main {
+    flex-direction: column;
+    justify-content: center;
+
+    aside {
+      width: auto;
+      order: -1;
+    }
+
+  }
+
+  .navigation {
+    display: none;
+
+    ul {
+      display: block;
+    }
+  }
+
+  .Cardnavgation {
+    flex-direction: column;
+  }
+
+  .buttonContinear {
+    max-width: 100%;
+
+  }
+
+
+
+}
+
+
