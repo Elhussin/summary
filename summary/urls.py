@@ -1,5 +1,5 @@
-from django.urls import path, include,re_path
 from django.conf.urls.static import static
+from django.urls import path, include,re_path
 from django.conf import settings
 from django.views.generic import TemplateView
 from rest_framework.routers import DefaultRouter
@@ -41,3 +41,10 @@ urlpatterns = [
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT), # To Allow media files urls
     re_path(r'^.*$', TemplateView.as_view(template_name='summary/index.html')),   # To Render the Unkown Urls to the index.html
 ]
+
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+else:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # غير موصى به في الإنتاج

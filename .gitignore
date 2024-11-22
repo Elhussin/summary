@@ -1,12 +1,15 @@
 __pycache__*
 
-venv/
+env/
+path/
 archif/
 media/
 .env
+
 migrations*
 
 .git/
 .idea/
 docker-compose
 Dockerfile
+settings1.py

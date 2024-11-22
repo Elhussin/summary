@@ -17,7 +17,7 @@ DEBUG=False
 #
 # ALLOWED_HOSTS = config("DJANGO_ALLOWED_HOSTS",
 #                     default="localhost,127.0.0.1").split(",")
-ALLOWED_HOSTS = ['summayies_app.up.railway.app', 'localhost', '127.0.0.1','31.166.91.32']
+ALLOWED_HOSTS = ['summary-lio1.onrender.com','localhost', '127.0.0.1','31.166.91.32','summayies_app.up.railway.app']
 # ALLOWED_HOSTS = ['*']
 
 
@@ -36,20 +36,18 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
 ]
 
-# summayies_app
-# gunicorn --workers 3 summayies_app.wsgi:application --bind 127.0.0.1:8001
-        # gunicorn -w 4 -b 127.0.0.1:8000 summayies_app:summayies_app --log-level debug
-
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
+
+    
 ]
 
 ROOT_URLCONF = "summayies_app.urls"
@@ -73,32 +71,34 @@ TEMPLATES = [
 WSGI_APPLICATION = "summayies_app.wsgi.application"
 
 # Set the database configuration
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.mysql",
+#         "NAME": config("DB_NAME", default="cs50_summary"),
+#         "USER": config("DB_USER", default="root"),
+#         "PASSWORD": config("DB_PASSWORD", default=""),
+#         "HOST": config("DB_HOST", default="localhost"),
+#         "PORT": config("DB_PORT", default="3306"),
+#         "OPTIONS": {  # to avoid the error of strict mode
+#             "init_command": "SET sql_mode='STRICT_TRANS_TABLES'"
+#         },
+#     }
+# }
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": config("DB_NAME", default="cs50_summary"),
-        "USER": config("DB_USER", default="root"),
-        "PASSWORD": config("DB_PASSWORD", default=""),
-        "HOST": config("DB_HOST", default="localhost"),
-        "PORT": config("DB_PORT", default="3306"),
-        "OPTIONS": {  # to avoid the error of strict mode
-            "init_command": "SET sql_mode='STRICT_TRANS_TABLES'"
-        },
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'summary_db_l5f2',
+        'USER': 'summary_db_l5f2_user',
+        'PASSWORD': 'Fcj805LpIQOinqpv1UyEV5daG5WLfbdX',
+        'HOST': 'postgresql://summary_db_l5f2_user:Fcj805LpIQOinqpv1UyEV5daG5WLfbdX@dpg-csv5otrqf0us739j36p0-a/summary_db_l5f2',
+        'PORT': '5432',
     }
 }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'cs50_summary',
-#         'USER': 'root',
-#         'PASSWORD': 'yourpassword',
-#         'HOST': 'db',  # يجب أن يتطابق مع اسم الخدمة في docker-compose.yml
-#         'PORT': '3306',
-#     }
-# }
-# Password validation
-# https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
+
+
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
@@ -109,25 +109,22 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.0/topics/i18n/
+
 
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
-# Static files Settings
+# # Static files Settings
 STATIC_URL = "/static/"
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Set the static files directory
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
-# Media settings
+    
+    
 MEDIA_URL = "/media/"
-
-# Set the media files directory
 MEDIA_ROOT = os.path.join(BASE_DIR, "summary/media")
 
 # اعدادت تفعل مع النشر
@@ -184,7 +181,7 @@ SECURE_SSL_REDIRECT = False            # True # to redirect http to https
 SECURE_BROWSER_XSS_FILTER = True       # to enable XSS protection
 SECURE_CONTENT_TYPE_NOSNIFF = True     # to prevent MIME type sniffing
 SESSION_COOKIE_SECURE = True           # to prevent session cookie from being sent over HTTP
-CSRF_COOKIE_SECURE = False             # to prevent CSRF cookie from being sent over HTTP
+CSRF_COOKIE_SECURE = True             # to prevent CSRF cookie from being sent over HTTP
 X_FRAME_OPTIONS = "DENY"               # to prevent clickjacking
 
 
@@ -207,3 +204,32 @@ LOGGING = {
         },
     },
 }
+
+
+# LOGGING = {
+#     "version": 1,
+#     "disable_existing_loggers": False,
+#     "handlers": {
+#         "file": {  # لتسجيل الأخطاء في ملف
+#             "level": "ERROR",
+#             "class": "logging.FileHandler",
+#             "filename": os.path.join(BASE_DIR, "error.log"),
+#         },
+#         "console": {  # لتسجيل الأحداث في وحدة التحكم (الطرفية)
+#             "level": "DEBUG",
+#             "class": "logging.StreamHandler",
+#         },
+#     },
+#     "loggers": {
+#         "django": {  # مخصص لإطار عمل Django
+#             "handlers": ["file", "console"],  # يمكن استخدام كلا المعالجين
+#             "level": "DEBUG",  # يحدد المستوى الأدنى للتسجيل
+#             "propagate": True,  # يسمح بتمرير السجلات إلى loggers أخرى
+#         },
+#         "myapp": {  # مخصص لتطبيق معين (مثل "summary")
+#             "handlers": ["console"],
+#             "level": "INFO",
+#             "propagate": False,
+#         },
+#     },
+# }
