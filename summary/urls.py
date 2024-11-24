@@ -39,12 +39,6 @@ urlpatterns = [
     path('summary-upload/',summary_upload, name='summary_upload'),
     *static(settings.STATIC_URL, document_root=settings.STATIC_ROOT), # To Allow  static files  Urls
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT), # To Allow media files urls
-    re_path(r'^.*$', TemplateView.as_view(template_name='summary/index.html')),   # To Render the Unkown Urls to the index.html
+    # re_path(r'^.*$', TemplateView.as_view(template_name='summary/index.html')),   # To Render the Unkown Urls to the index.html
 ]
 
-
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-else:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # غير موصى به في الإنتاج

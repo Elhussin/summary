@@ -22,22 +22,36 @@ const displayIteam = (iteamView, IteamOff, diplayType) => {
     }
 };
 
-// View Uploud Image  
-const viewUploudImage = () => {
-    document
-        .getElementById("id_image")
-        .addEventListener("change", function (event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    // Set image preview source
-                    document.getElementById("imagePreview").src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-};
+// View Uploud Image   
+// const viewUploudImage = () => {
+//     document
+//         .getElementById("id_image")
+//         .addEventListener("change", function (event) {
+//             const file = event.target.files[0];
+//             if (file) {
+//                 const reader = new FileReader();
+//                 reader.onload = function (e) {
+//                     // Set image preview source
+//                     document.getElementById("imagePreview").src = e.target.result;
+//                 };
+//                 reader.readAsDataURL(file);
+//             }
+//         });
+// };
+
+function viewUploudImage() {
+  const imageUrlInput = document.getElementById("id_image");
+  const imagePreview = document.getElementById("imagePreview");
+
+  const url = imageUrlInput.value;
+
+  if (url) {
+      imagePreview.src = url;
+      imagePreview.style.display = "block"; // Show the image preview
+  } else {
+      imagePreview.style.display = "none"; // Hide the image preview if the input is empty
+  }
+}
 
 // create Commane Elmeant
 const createCommaneElmeant = () => {

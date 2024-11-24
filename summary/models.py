@@ -63,10 +63,12 @@ class Course(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    image = models.ImageField(
-        upload_to="course_images/", blank=True, null=True)
+    # image = models.ImageField(
+    #     upload_to="course_images/", blank=True, null=True)
+    # updated_at = models.DateTimeField(auto_now=True)
+    image = models.URLField(
+        max_length=500, blank=True, null=True, help_text="Enter the URL of the image")
     updated_at = models.DateTimeField(auto_now=True)
-
     def __str__(self):
         return self.title
 

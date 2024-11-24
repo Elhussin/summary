@@ -18,7 +18,7 @@ SECRET_KEY = config('DJANGO_SECRET_KEY', default='unsafe-secret-key-for-dev')
 
 # Debug Mode
 DEBUG = config('DJANGO_DEBUG', default=False, cast=bool)
-
+# DEBUG = False
 # Allowed Hosts
 
 ALLOWED_HOSTS = config('DJANGO_ALLOWED_HOSTS', default='localhost,127.0.0.1').split(',')
@@ -116,9 +116,14 @@ STATIC_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "staticfi
 # MEDIA_URL = '/media/'
 # MEDIA_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "media")
 # Media files settings
-MEDIA_URL = '/media/'  # المسار الذي تستخدمه في التطبيق للوصول إلى الوسائط
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # الموقع الفعلي للوسائط في الخادم
+# MEDIA_URL = '/media/'  # المسار الذي تستخدمه في التطبيق للوصول إلى الوسائط
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # الموقع الفعلي للوسائط في الخادم
 
+# Media settings
+# MEDIA_URL = "/media/"
+
+# # Set the media files directory
+# MEDIA_ROOT = os.path.join(BASE_DIR, "summary/media")
 
 # اعدادت تفعل مع النشر
 SECURE_SSL_REDIRECT = True
