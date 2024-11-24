@@ -326,7 +326,8 @@ const addDateToForm = async (data) => {
   document.getElementById("page-title").innerHTML = "Edit Course";
   document.getElementById("title").value = data.title;
   document.getElementById("description").value = data.description;
-  document.getElementById("imagePreview").src = data.image;
+  document.getElementById("id_image").value = data.image;
+  // document.getElementById("imagePreview").src = data.image;
   document.getElementById("send").value = "Update";
   displayIteam(coressAdd, viewContinear, "block");
   viewUploudImage();
